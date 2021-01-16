@@ -5,13 +5,17 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Dialog;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -23,7 +27,9 @@ public class AudioConfActivity extends AppCompatActivity {
     ConstraintLayout this_activity;
     CardView placeholder_1_1, placeholder_1_2;
     SwitchCompat placeholder_switch_1_1;
-    TextView placeholder_dump_text_1;
+    Button placeholder_button_1;
+    Dialog po;
+    TextView title, desc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,7 @@ public class AudioConfActivity extends AppCompatActivity {
         placeholder_1_1 = findViewById(R.id.placeholder_1_1);
         placeholder_1_2 = findViewById(R.id.placeholder_1_2);
         placeholder_switch_1_1 = findViewById(R.id.placeholder_switch_1);
-        placeholder_dump_text_1 = findViewById(R.id.placeholder_dump_1);
+        placeholder_button_1 = findViewById(R.id.placeholder_button_1);
 
         // Hide title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -61,22 +67,49 @@ public class AudioConfActivity extends AppCompatActivity {
         AudioNode an = new AudioNode();
         AudioUtils au = new AudioUtils();
 
-        // Import kernel files
-        au.DumpFile(an.uhqa_kernel_4_x, an.uhqa_force_file);
-        placeholder_dump_text_1.setText(readFromFile(this, an.uhqa_file));
+        // Read kernel files
+        au.ExportKernelFile(an.kernel_dump);
+        String kernel_ver = readFromFile(this, an.kernel_file);
 
-        placeholder_switch_1_1.setOnClickListener(new View.OnClickListener() {
+        if (!kernel_ver.equals("4.9.")) {
+            Toast.makeText(AudioConfActivity.this, "Sucess ! | Kernel version : " + kernel_ver, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(AudioConfActivity.this, "Kernel version : " + kernel_ver, Toast.LENGTH_SHORT).show();
+        }
 
-            @Override
-            public void onClick(View v) {
-                if (placeholder_switch_1_1.isChecked()) {
-                    au.writeToFile(an.uhqa_kernel_4_x, "1");
-                    au.DropFile(an.uhqa_file);
-                } else {
-                    au.writeToFile(an.uhqa_kernel_4_x, "0");
-                    au.DropFile(an.uhqa_file);
-                }
+
+        placeholder_switch_1_1.setOnClickListener(v -> {
+            if (placeholder_switch_1_1.isChecked()) {
+                au.writeToFile(an.uhqa_kernel_4_x, "1");
+                au.DropFile(an.uhqa_file);
+            } else {
+                au.writeToFile(an.uhqa_kernel_4_x, "0");
+                au.DropFile(an.uhqa_file);
             }
         });
+
+        placeholder_button_1.setOnClickListener(v -> {
+            // Initiate dialog
+            po = new Dialog(AudioConfActivity.this);
+            String title = getResources().getString(R.string.PLACEHOLDER);
+            String desc = getResources().getString(R.string.PLACEHOLDER_LONG_DESC);
+
+            // Call dialog
+            ShowPopup(placeholder_button_1, title, desc);
+        });
+    }
+
+    public void ShowPopup(View v, String text_1, String text_2) {
+        po.setContentView(R.layout.activity_pop_up);
+
+        title = po.findViewById(R.id.placeholder_pop_up_1);
+        desc = po.findViewById(R.id.placeholder_pop_up_desc_1);
+
+        title.setText(text_1);
+        desc.setText(text_2);
+
+        title.setOnClickListener(v1 -> po.dismiss());
+        po.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        po.show();
     }
 }

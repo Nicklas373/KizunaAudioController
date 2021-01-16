@@ -2,4 +2,6 @@
     <string name="app_name">Kizuna Audio Controller</string>
     <string name="PLACEHOLDER">PLACEHOLDER</string>
     <string name="PLACEHOLDER_DESC">PLACEHOLDER DESCRIPTION</string>
+    <string name="PLACEHOLDER_LONG_DESC">THIS IS PLACEHOLDER DESCRIPTION LONG TEXT, STILL ON PROGRESS.. PLEASE WAIT!</string>
+    <string name="PLACEHOLDER_BUTTON">Click Me!</string>
 </resources>
