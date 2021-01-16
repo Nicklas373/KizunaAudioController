@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class AudioRoot {
     private final AtomicBoolean execute = new AtomicBoolean();
 
-    public static boolean checkRooted()
+    public boolean checkRooted()
     {
         try
         {

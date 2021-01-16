@@ -33,12 +33,8 @@ public class AudioUtils {
             line = stringBuilder.toString();
 
             bufferedReader.close();
-        }
-        catch(FileNotFoundException fnfe) {
+        } catch(IOException fnfe) {
             Log.e("Exception", "File not found " + fnfe.toString());
-        }
-        catch(IOException ex) {
-            Log.e("Exception", "File not found " + ex.toString());
         }
 
         return line;
@@ -65,7 +61,16 @@ public class AudioUtils {
     void DropFile(String local_dir) {
         try
         {
-            CommandResult dump = Shell.SU.run("rm" + " " + local_dir);
+            CommandResult drop = Shell.SU.run("rm" + " " + local_dir);
+        } catch (Exception e) {
+            Log.e("Exception", "File drop failed: " + e.toString());
+        }
+    }
+
+    void ExportKernelFile(String local_dir) {
+        try
+        {
+            CommandResult rkf = Shell.SU.run("uname -r | head -c 4 >" + " " + local_dir);
         } catch (Exception e) {
             Log.e("Exception", "File drop failed: " + e.toString());
         }
