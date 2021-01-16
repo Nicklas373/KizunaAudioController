@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Declare controller
     CardView placeholder_1;
 
+    // Declare variables
     private static final int REQUEST_PERMISSIONS = 20;
 
     @Override
@@ -24,21 +26,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Bind controller
         placeholder_1 = findViewById(R.id.placeholder_1);
 
+        // Ask necessary permission for storage access
         ask_perm();
 
-        placeholder_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AudioConfActivity.class);
+        // Ask necessary root access
+        AudioRoot ar = new AudioRoot();
+        ar.run(ar::checkRooted);
 
-                View sharedView = placeholder_1;
-                String transitionName = getString(R.string.PLACEHOLDER);
+        placeholder_1.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, AudioConfActivity.class);
 
-                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, sharedView, transitionName);
-                startActivity(i, transitionActivityOptions.toBundle());
-            }
+            View sharedView = placeholder_1;
+            String transitionName = getString(R.string.PLACEHOLDER);
+
+            ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, sharedView, transitionName);
+            startActivity(i, transitionActivityOptions.toBundle());
         });
     }
 
