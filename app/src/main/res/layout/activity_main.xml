@@ -7,36 +7,40 @@
     tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/placeholder_1"
-        android:layout_gravity="center"
+        android:id="@+id/cv_app_main_menu_1"
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:layout_gravity="center"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
-        android:transitionName="@string/PLACEHOLDER"
-        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:transitionName="@string/PLACEHOLDER"
+        app:cardBackgroundColor="@color/blue_500"
+        app:cardCornerRadius="4dp"
         app:cardElevation="15dp"
         app:cardMaxElevation="20dp"
-        app:cardCornerRadius="4dp"
-        app:cardBackgroundColor="@color/white_card_alt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.163">
+        app:layout_constraintVertical_bias="0.140">
 
         <TextView
             android:id="@+id/info_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/PLACEHOLDER"
-            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/mandorin_font"
             android:textColor="@color/white"
+            android:text="@string/app_main_menu_1"
             android:textSize="20sp"
             android:textStyle="bold" />
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -44,12 +48,12 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        app:cardBackgroundColor="@color/white_card_alt"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/blue_500"
         app:cardCornerRadius="4dp"
         app:cardElevation="15dp"
         app:cardMaxElevation="20dp"
@@ -58,18 +62,67 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499">
+        app:layout_constraintVertical_bias="0.42">
 
         <TextView
             android:id="@+id/info_text_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/PLACEHOLDER"
-            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
+
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/placeholder_3"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/blue_500"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="15dp"
+        app:cardMaxElevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.69">
+
+        <TextView
+            android:id="@+id/info_text_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/PLACEHOLDER"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/theme_switcher"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/theme_switcher"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
