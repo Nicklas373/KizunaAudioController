@@ -5,17 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/placeholder_card_pop_up_1"
+        android:id="@+id/cv_pop_up_1"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
         app:cardBackgroundColor="#64b5f6"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="4dp"
         app:cardElevation="15dp"
         app:cardMaxElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,24 +24,40 @@
         app:layout_constraintVertical_bias="0.302">
 
         <TextView
-            android:id="@+id/placeholder_pop_up_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/text_pop_up_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/PLACEHOLDER"
             android:textAlignment="viewStart"
+            android:fontFamily="@font/mandorin_font"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/placeholder_pop_up_desc_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/text_pop_up_desc_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="45dp"
+            android:fontFamily="@font/mandorin_font"
+            android:text="@string/PLACEHOLDER"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text_pop_up_desc_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="115dp"
+            android:fontFamily="@font/mandorin_font"
             android:text="@string/PLACEHOLDER"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
