@@ -10,12 +10,11 @@ import com.jaredrummler.android.shell.Shell;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AudioUtils {
-
+    
     static String readFromFile(Context context, String filename){
         String line = null;
 
@@ -40,7 +39,7 @@ public class AudioUtils {
         return line;
     }
 
-    void writeToFile(String data, String value) {
+    void WriteToFile(String value, String data) {
         try
         {
             CommandResult write = Shell.SU.run("echo" + " " + value + " " + ">" + " " + data);
@@ -70,7 +69,7 @@ public class AudioUtils {
     void ExportKernelFile(String local_dir) {
         try
         {
-            CommandResult rkf = Shell.SU.run("uname -r | head -c 4 >" + " " + local_dir);
+            CommandResult rkf = Shell.SU.run("uname -r | head -c 3 >" + " " + local_dir);
         } catch (Exception e) {
             Log.e("Exception", "File drop failed: " + e.toString());
         }
