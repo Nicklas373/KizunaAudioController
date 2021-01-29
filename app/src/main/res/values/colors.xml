@@ -5,9 +5,15 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#29434e</color>
-    <color name="black_orig">#FF000000</color>
+    <color name="blue_200">#9be7ff</color>
+    <color name="blue_500">#64b5f6</color>
+    <color name="blue_700">#2286c3</color>
+    <color name="red_200">#ff6f60</color>
+    <color name="red_500">#e53935</color>
+    <color name="red_700">#ab000d</color>
+    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="white_card_alt">#64b5f6</color>
-    <color name="black_card_alt">#1565c0</color>
+
+    <!-- Begin app color scheme !-->
+
 </resources>

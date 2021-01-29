@@ -1,7 +1,30 @@
 <resources>
+    <!-- Begin PLACEHOLDER !-->
     <string name="app_name">Kizuna Audio Controller</string>
     <string name="PLACEHOLDER">PLACEHOLDER</string>
     <string name="PLACEHOLDER_DESC">PLACEHOLDER DESCRIPTION</string>
     <string name="PLACEHOLDER_LONG_DESC">THIS IS PLACEHOLDER DESCRIPTION LONG TEXT, STILL ON PROGRESS.. PLEASE WAIT!</string>
     <string name="PLACEHOLDER_BUTTON">Click Me!</string>
+    <!-- End of PLACEHOLDER !-->
+
+    <string name="theme_switcher">Theme Switcher</string>
+    <string name="app_main_menu_1">Audio Controller</string>
+    <string name="app_menu_1_text">UHQA (Ultra High Quality Audio)</string>
+    <string name="app_menu_1_desc">UHQA mode allows to have high performance audio when using headset at primary.</string>
+    <string name="app_menu_1_desc_ext">Turn off/on UHQA to switch the amplifier for HPH path.</string>
+    <string name="app_menu_1_info">Details</string>
+    <string name="app_menu_1_toast_uhqa_scs">Ultra High Quality Audio is active</string>
+    <string name="app_menu_1_toast_uhqa_fid">Ultra High Quality Audio is not active</string>
+    <string name="app_menu_1_toast_uhqa_ne">UHQA (Ultra High Quality Audio) is not available</string>
+    <string name="app_menu_2_text">Headset High Performance Mode</string>
+    <string name="app_menu_2_desc">Invoke class AB mode for headset path when sample rate is set to 192KHz and bit depth is set to 24.</string>
+    <string name="app_menu_2_desc_ext">Enable it to set headset path in UHQA mode.</string>
+    <string name="app_menu_2_toast_hph_scs">Headset High Performance Mode is active</string>
+    <string name="app_menu_2_toast_hph_fid">Headset High Performance Mode is not active</string>
+    <string name="app_menu_2_toast_hph_ne">Headset High Performance feature is not available</string>
+    <string name="state_info">Current State :</string>
+    <string name="state_support">Support</string>
+    <string name="state_unsupport">Not Supported</string>
+    <string name="state_enable">Enable</string>
+    <string name="state_disable">Disable</string>
 </resources>
