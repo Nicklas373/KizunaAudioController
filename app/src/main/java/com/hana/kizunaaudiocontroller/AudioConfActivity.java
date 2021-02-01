@@ -125,21 +125,22 @@ public class AudioConfActivity extends AppCompatActivity {
                     uhqa_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_enable)));
                 } else {
                     au.WriteToFile("0", an.uhqa_kernel_4_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_1_toast_uhqa_fid));
                     uhqa_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_disable)));
                 }
-                uhqa_stats.setVisibility(View.VISIBLE);
-                au.DropFile(an.uhqa_file);
             } else if (kernel_ver.compareTo(legacy) > 0) {
                 if (switch_uhqa.isChecked()) {
                     au.WriteToFile("1", an.uhqa_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_1_toast_uhqa_scs));
                     uhqa_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_enable)));
                 } else {
                     au.WriteToFile("0", an.uhqa_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_1_toast_uhqa_fid));
                     uhqa_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_disable)));
                 }
-                uhqa_stats.setVisibility(View.VISIBLE);
-                au.DropFile(an.uhqa_file);
             }
+            uhqa_stats.setVisibility(View.VISIBLE);
+            au.DropFile(an.uhqa_file);
         });
 
         switch_hph.setOnClickListener(v -> {
@@ -147,51 +148,47 @@ public class AudioConfActivity extends AppCompatActivity {
                 switch_hph.setChecked(false);
                 switch_hph.setClickable(false);
                 switch_hph.setEnabled(false);
-                setSnackBar(findViewById(android.R.id.content), "Your kernel doesn't support HPH Module");
+                setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_2_toast_hph_ne));
                 hph_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_unsupport), getResources().getString(R.string.state_disable)));
-                hph_stats.setVisibility(View.VISIBLE);
-                au.DropFile(an.hph_file);
             } else if (kernel_ver.compareTo(legacy) > 0) {
                 if (switch_hph.isChecked()) {
                     au.WriteToFile("1", an.hph_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_2_toast_hph_scs));
                     hph_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_enable)));
-                    hph_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.hph_file);
                 } else {
                     au.WriteToFile("0", an.hph_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_2_toast_hph_fid));
                     hph_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_disable)));
-                    hph_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.hph_file);
                 }
             }
+            hph_stats.setVisibility(View.VISIBLE);
+            au.DropFile(an.hph_file);
         });
 
         switch_amp.setOnClickListener(v -> {
             if (kernel_ver.compareTo(upstream) > 0) {
                 if (switch_amp.isChecked()) {
                     au.WriteToFile("1", an.amp_kernel_4_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_3_toast_amp_scs));
                     amp_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_enable)));
-                    amp_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.amp_file);
                 } else {
                     au.WriteToFile("0", an.amp_kernel_4_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_3_toast_amp_fid));
                     amp_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_disable)));
-                    amp_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.amp_file);
                 }
             } else if (kernel_ver.compareTo(legacy) > 0) {
                 if (switch_amp.isChecked()) {
                     au.WriteToFile("1", an.amp_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_3_toast_amp_scs));
                     amp_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_enable)));
-                    amp_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.amp_file);
                 } else {
                     au.WriteToFile("0", an.amp_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_3_toast_amp_fid));
                     amp_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_disable)));
-                    amp_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.amp_file);
                 }
             }
+            amp_stats.setVisibility(View.VISIBLE);
+            au.DropFile(an.amp_file);
         });
 
         switch_impedance.setOnClickListener(v -> {
@@ -199,23 +196,21 @@ public class AudioConfActivity extends AppCompatActivity {
                 switch_impedance.setChecked(false);
                 switch_impedance.setClickable(false);
                 switch_impedance.setEnabled(false);
-                setSnackBar(findViewById(android.R.id.content), "Your kernel doesn't support Headphone Impedance Detection Module");
+                setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_4_toast_impedance_ne));
                 impedance_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_unsupport), getResources().getString(R.string.state_disable)));
-                impedance_stats.setVisibility(View.VISIBLE);
-                au.DropFile(an.hph_file);
             } else if (kernel_ver.compareTo(legacy) > 0) {
                 if (switch_impedance.isChecked()) {
                     au.WriteToFile("1", an.impedance_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_4_toast_impedance_scs));
                     impedance_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_enable)));
-                    impedance_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.impedance_file);
                 } else {
                     au.WriteToFile("0", an.impedance_kernel_3_x);
+                    setSnackBar(findViewById(android.R.id.content), getResources().getString(R.string.app_menu_4_toast_impedance_fid));
                     impedance_stats.setText(String.format("%s %s | %s", getResources().getString(R.string.state_info), getResources().getString(R.string.state_support), getResources().getString(R.string.state_disable)));
-                    impedance_stats.setVisibility(View.VISIBLE);
-                    au.DropFile(an.impedance_file);
                 }
             }
+            impedance_stats.setVisibility(View.VISIBLE);
+            au.DropFile(an.impedance_file);
         });
 
         button_uhqa.setOnClickListener(v -> {
