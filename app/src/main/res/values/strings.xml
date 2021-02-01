@@ -31,9 +31,9 @@
     <string name="app_menu_4_text">Headphone Impedance Detection</string>
     <string name="app_menu_4_desc">Provide impedance of headphones to be able to adjust gain according to impedance</string>
     <string name="app_menu_4_desc_ext">so user can have consistent volume level with different headphones.</string>
-    <string name="app_menu_4_toast_amp_scs">>Headphone Impedance Detection is active</string>
-    <string name="app_menu_4_toast_amp_fid">Headphone Impedance Detection is not active</string>
-    <string name="app_menu_4_toast_amp_ne">Headphone Impedance Detection feature is not available</string>
+    <string name="app_menu_4_toast_impedance_scs">>Headphone Impedance Detection is active</string>
+    <string name="app_menu_4_toast_impedance_fid">Headphone Impedance Detection is not active</string>
+    <string name="app_menu_4_toast_impedance_ne">Headphone Impedance Detection feature is not available</string>
     <string name="state_info">Current State :</string>
     <string name="state_support">Support</string>
     <string name="state_unsupport">Not Supported</string>
