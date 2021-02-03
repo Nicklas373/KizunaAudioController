@@ -1,33 +1,30 @@
-package com.hana.kizunaaudiocontroller;
+package com.hana.kizunaaudiocontroller
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.io.DataOutputStream
+import java.io.File
+import java.util.concurrent.atomic.AtomicBoolean
 
-public class AudioRoot {
-    private final AtomicBoolean execute = new AtomicBoolean();
-
-    public boolean checkRooted()
-    {
-        try
-        {
-            Process p = Runtime.getRuntime().exec("su", null, new File("/"));
-            DataOutputStream os = new DataOutputStream( p.getOutputStream());
-            os.writeBytes("pwd\n");
-            os.writeBytes("exit\n");
-            os.flush();
-            p.waitFor();
-            p.destroy();
-        } catch (Exception e) {
-            return false;
+class AudioRoot {
+    private val execute = AtomicBoolean()
+    fun checkRooted(): Boolean {
+        try {
+            val p = Runtime.getRuntime().exec("su", null, File("/"))
+            val os = DataOutputStream(p.outputStream)
+            os.writeBytes("pwd\n")
+            os.writeBytes("exit\n")
+            os.flush()
+            p.waitFor()
+            p.destroy()
+        } catch (e: Exception) {
+            return false
         }
-        return true;
+        return true
     }
 
-    public void run(Runnable task) {
-        if (execute.get()) return;
+    fun run(task: Runnable) {
+        if (execute.get()) return
         if (execute.compareAndSet(false, true)) {
-            task.run();
+            task.run()
         }
     }
 }

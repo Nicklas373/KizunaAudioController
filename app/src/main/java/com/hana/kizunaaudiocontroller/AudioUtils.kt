@@ -1,77 +1,62 @@
-package com.hana.kizunaaudiocontroller;
+package com.hana.kizunaaudiocontroller
 
-import android.content.Context;
-import android.os.Environment;
-import android.util.Log;
+import android.content.Context
+import android.os.Environment
+import android.util.Log
+import com.jaredrummler.android.shell.Shell
+import java.io.*
 
-import com.jaredrummler.android.shell.CommandResult;
-import com.jaredrummler.android.shell.Shell;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-public class AudioUtils {
-    
-    static String readFromFile(Context context, String filename){
-        String line = null;
-
+class AudioUtils {
+    fun WriteToFile(value: String, data: String) {
         try {
-            FileInputStream fileInputStream = new FileInputStream (new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),filename));
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuilder stringBuilder = new StringBuilder();
+            val write = Shell.SU.run("echo $value > $data")
+        } catch (e: Exception) {
+            Log.e("Exception", "File write failed: $e")
+        }
+    }
 
-            while ( (line = bufferedReader.readLine()) != null )
-            {
-                stringBuilder.append(line + System.getProperty("line.separator"));
+    fun DumpFile(filename: String, local_dir: String) {
+        try {
+            val dump = Shell.SU.run("cp $filename $local_dir")
+        } catch (e: Exception) {
+            Log.e("Exception", "File read failed: $e")
+        }
+    }
+
+    fun DropFile(local_dir: String) {
+        try {
+            val drop = Shell.SU.run("rm $local_dir")
+        } catch (e: Exception) {
+            Log.e("Exception", "File drop failed: $e")
+        }
+    }
+
+    fun ExportKernelFile(local_dir: String) {
+        try {
+            val rkf = Shell.SU.run("uname -r | head -c 3 > $local_dir")
+        } catch (e: Exception) {
+            Log.e("Exception", "File drop failed: $e")
+        }
+    }
+
+    companion object {
+        fun readFromFile(context: Context, filename: String?): String? {
+            var line: String? = null
+            try {
+                val fileInputStream = FileInputStream(File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename))
+                val inputStreamReader = InputStreamReader(fileInputStream)
+                val bufferedReader = BufferedReader(inputStreamReader)
+                val stringBuilder = StringBuilder()
+                while (bufferedReader.readLine().also { line = it } != null) {
+                    stringBuilder.append(line + System.getProperty("line.separator"))
+                }
+                fileInputStream.close()
+                line = stringBuilder.toString()
+                bufferedReader.close()
+            } catch (fnfe: IOException) {
+                Log.e("Exception", "File not found $fnfe")
             }
-            fileInputStream.close();
-            line = stringBuilder.toString();
-
-            bufferedReader.close();
-        } catch(IOException fnfe) {
-            Log.e("Exception", "File not found " + fnfe.toString());
-        }
-
-        return line;
-    }
-
-    void WriteToFile(String value, String data) {
-        try
-        {
-            CommandResult write = Shell.SU.run("echo" + " " + value + " " + ">" + " " + data);
-        } catch (Exception e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    void DumpFile(String filename, String local_dir) {
-        try
-        {
-            CommandResult dump = Shell.SU.run("cp" + " " + filename + " " + local_dir);
-        } catch (Exception e) {
-            Log.e("Exception", "File read failed: " + e.toString());
-        }
-    }
-
-    void DropFile(String local_dir) {
-        try
-        {
-            CommandResult drop = Shell.SU.run("rm" + " " + local_dir);
-        } catch (Exception e) {
-            Log.e("Exception", "File drop failed: " + e.toString());
-        }
-    }
-
-    void ExportKernelFile(String local_dir) {
-        try
-        {
-            CommandResult rkf = Shell.SU.run("uname -r | head -c 3 >" + " " + local_dir);
-        } catch (Exception e) {
-            Log.e("Exception", "File drop failed: " + e.toString());
+            return line
         }
     }
 }

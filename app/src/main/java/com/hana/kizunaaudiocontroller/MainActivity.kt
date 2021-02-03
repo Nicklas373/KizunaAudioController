@@ -1,99 +1,93 @@
-package com.hana.kizunaaudiocontroller;
+package com.hana.kizunaaudiocontroller
 
-import android.Manifest;
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.view.View;
-import android.widget.Toast;
+import android.Manifest
+import android.app.ActivityOptions
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Bundle
+import android.transition.Explode
+import android.transition.Fade
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.material.switchmaterial.SwitchMaterial
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.google.android.material.switchmaterial.SwitchMaterial;
-
-public class MainActivity extends AppCompatActivity {
-
+class MainActivity : AppCompatActivity() {
     // Declare controller
-    CardView mm_1;
-    SwitchMaterial theme_switcher;
+    lateinit var mm_1: CardView
+    lateinit var theme_switcher: SwitchMaterial
 
-    // Declare variables
-    private static final int REQUEST_PERMISSIONS = 20;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         // Bind controller
-        mm_1 = findViewById(R.id.cv_app_main_menu_1);
-        theme_switcher = findViewById(R.id.theme_switcher);
+        mm_1 = findViewById(R.id.cv_app_main_menu_1)
+        theme_switcher = findViewById(R.id.theme_switcher)
 
         // Binding root class
-        AudioRoot ar = new AudioRoot();
+        val ar = AudioRoot()
 
         // Ask necessary permission for storage access
-        ar.run(this::ask_perm);
+        ar.run(Runnable { ask_perm() })
 
         // Ask necessary root access
-        ar.run(ar::checkRooted);
+        ar.run(Runnable { ar.checkRooted() })
 
         // Sharedprefences begin
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("KAO_MAIN_PREF", 0);
-        SharedPreferences.Editor save = pref.edit();
+        val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
+        val save = pref.edit()
 
         // Getting sharedpreferences value if exist
-        boolean night_mode = pref.getBoolean("MODE_NIGHT", false);
+        val night_mode = pref.getBoolean("MODE_NIGHT", false)
         if (night_mode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
         // Set an animation transition
-        getWindow().setEnterTransition(new Explode());
-        getWindow().setReturnTransition(new Fade());
+        window.enterTransition = Explode()
+        window.returnTransition = Fade()
 
-        mm_1.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, AudioConfActivity.class);
+        mm_1.setOnClickListener {
+            val i = Intent(this@MainActivity, AudioConfActivity::class.java)
+            val sharedView: View = mm_1
+            val transitionName = getString(R.string.PLACEHOLDER)
+            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity, sharedView, transitionName)
+            startActivity(i, transitionActivityOptions.toBundle())
+        }
 
-            View sharedView = mm_1;
-            String transitionName = getString(R.string.PLACEHOLDER);
-
-            ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, sharedView, transitionName);
-            startActivity(i, transitionActivityOptions.toBundle());
-        });
-
-        theme_switcher.setOnClickListener(v -> {
-            if (theme_switcher.isChecked()) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                save.putBoolean("MODE_NIGHT", false);
-                save.apply();
+        theme_switcher.setOnClickListener {
+            if (theme_switcher.isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                save.putBoolean("MODE_NIGHT", false)
+                save.apply()
             } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                save.putBoolean("MODE_NIGHT", true);
-                save.apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                save.putBoolean("MODE_NIGHT", true)
+                save.apply()
             }
-        });
-    }
-
-    private void ask_perm() {
-        // start runtime permission
-        boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED);
-        if (!hasPermission) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
-        } else {
-            Toast.makeText(MainActivity.this, "Permissions already granted :3", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private fun ask_perm() {
+        // start runtime permission
+        val hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED)
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSIONS)
+        } else {
+            Toast.makeText(this@MainActivity, "Permissions already granted :3", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    companion object {
+        // Declare variables
+        private const val REQUEST_PERMISSIONS = 20
+    }
 }
