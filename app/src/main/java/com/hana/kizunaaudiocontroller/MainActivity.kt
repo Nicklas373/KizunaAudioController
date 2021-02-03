@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
@@ -85,8 +84,6 @@ class MainActivity : AppCompatActivity() {
                 == PackageManager.PERMISSION_GRANTED)
         if (!hasPermission) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSIONS)
-        } else {
-            Toast.makeText(this@MainActivity, "Permissions already granted :3", Toast.LENGTH_SHORT).show()
         }
     }
 }
