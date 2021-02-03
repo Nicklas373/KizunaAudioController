@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var mm_1: CardView
     lateinit var theme_switcher: SwitchMaterial
 
+    // Declare variables
+    private val REQUEST_PERMISSIONS = 20
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         val night_mode = pref.getBoolean("MODE_NIGHT", false)
         if (night_mode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            theme_switcher.isChecked = true
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
@@ -64,12 +68,12 @@ class MainActivity : AppCompatActivity() {
 
         theme_switcher.setOnClickListener {
             if (theme_switcher.isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                save.putBoolean("MODE_NIGHT", false)
-                save.apply()
-            } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 save.putBoolean("MODE_NIGHT", true)
+                save.apply()
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                save.putBoolean("MODE_NIGHT", false)
                 save.apply()
             }
         }
@@ -84,10 +88,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this@MainActivity, "Permissions already granted :3", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    companion object {
-        // Declare variables
-        private const val REQUEST_PERMISSIONS = 20
     }
 }
