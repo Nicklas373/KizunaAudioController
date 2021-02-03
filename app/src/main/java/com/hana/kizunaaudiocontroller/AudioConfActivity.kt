@@ -83,7 +83,7 @@ class AudioConfActivity : AppCompatActivity() {
 
         // Read kernel files
         au.ExportKernelFile(an.kernel_dump)
-        val kernel_ver = AudioUtils.readFromFile(this, an.kernel_file)
+        val kernel_ver = au.readFromFile(this, an.kernel_file)
 
         // Declare static string for kernel version
         val upstream = "4.9"
@@ -106,10 +106,10 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         // Set switch value on init
-        val uhqa_value = AudioUtils.readFromFile(this, an.uhqa_file)
-        val hph_value = AudioUtils.readFromFile(this, an.hph_file)
-        val amp_value = AudioUtils.readFromFile(this, an.amp_file)
-        val impedance_value = AudioUtils.readFromFile(this, an.impedance_file)
+        val uhqa_value = au.readFromFile(this, an.uhqa_file)
+        val hph_value = au.readFromFile(this, an.hph_file)
+        val amp_value = au.readFromFile(this, an.amp_file)
+        val impedance_value = au.readFromFile(this, an.impedance_file)
 
         switch_uhqa.isChecked = uhqa_value?.compareTo("1")!! > 0
         switch_hph.isChecked = hph_value?.compareTo("1")!! > 0
