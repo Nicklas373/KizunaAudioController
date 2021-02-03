@@ -17,6 +17,8 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -28,14 +30,20 @@ class AudioConfActivity : AppCompatActivity() {
     lateinit var cv_hph: CardView
     lateinit var cv_amp: CardView
     lateinit var cv_impedance: CardView
+    lateinit var cv_ef: CardView
+    lateinit var cv_gating: CardView
     lateinit var switch_uhqa: SwitchCompat
     lateinit var switch_hph: SwitchCompat
     lateinit var switch_amp: SwitchCompat
     lateinit var switch_impedance: SwitchCompat
+    lateinit var switch_ef: SwitchCompat
+    lateinit var switch_gating: SwitchCompat
     lateinit var button_uhqa: Button
     lateinit var button_hph: Button
     lateinit var button_amp: Button
     lateinit var button_impedance: Button
+    lateinit var button_ef: Button
+    lateinit var button_gating: Button
     lateinit var po: Dialog
     lateinit var title: TextView
     lateinit var desc: TextView
@@ -44,7 +52,7 @@ class AudioConfActivity : AppCompatActivity() {
     lateinit var hph_stats: TextView
     lateinit var amp_stats: TextView
     lateinit var impedance_stats: TextView
-
+    lateinit var gating_stats: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,18 +65,25 @@ class AudioConfActivity : AppCompatActivity() {
         cv_hph = findViewById(R.id.cv_app_menu_1_2)
         cv_amp = findViewById(R.id.cv_app_menu_1_3)
         cv_impedance = findViewById(R.id.cv_app_menu_1_4)
+        cv_ef = findViewById(R.id.cv_app_menu_1_5)
+        cv_gating = findViewById(R.id.cv_app_menu_1_6)
         uhqa_stats = findViewById(R.id.switch_app_menu_1_1_text)
         hph_stats = findViewById(R.id.switch_app_menu_1_2_1_text)
         amp_stats = findViewById(R.id.switch_app_menu_1_3_1_text)
         impedance_stats = findViewById(R.id.switch_app_menu_1_4_1_text)
+        gating_stats = findViewById(R.id.switch_app_menu_1_6_1_text)
         switch_uhqa = findViewById(R.id.switch_app_menu_1)
         switch_hph = findViewById(R.id.switch_app_menu_1_2)
         switch_amp = findViewById(R.id.switch_app_menu_1_3)
         switch_impedance = findViewById(R.id.switch_app_menu_1_4)
+        switch_ef = findViewById(R.id.switch_app_menu_1_5)
+        switch_gating = findViewById(R.id.switch_app_menu_1_6)
         button_uhqa = findViewById(R.id.button_app_menu_1)
         button_hph = findViewById(R.id.button_app_menu_1_2)
         button_amp = findViewById(R.id.button_app_menu_1_3)
         button_impedance = findViewById(R.id.button_app_menu_1_4)
+        button_ef = findViewById(R.id.button_app_menu_1_5)
+        button_gating = findViewById(R.id.button_app_menu_1_6)
 
         // Hide title bar
         Objects.requireNonNull(supportActionBar)?.hide()
@@ -76,6 +91,22 @@ class AudioConfActivity : AppCompatActivity() {
         // Set an animation transition
         window.enterTransition = Explode()
         window.returnTransition = Fade()
+
+        // Sharedprefences begin
+        val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
+        val save = pref.edit()
+
+        // Getting sharedpreferences value if exist
+        val exp = pref.getBoolean("EXP_FEATURES", false)
+        if (exp) {
+            switch_ef.isChecked = true
+            TransitionManager.beginDelayedTransition(cv_gating, AutoTransition())
+            cv_gating.visibility = View.VISIBLE
+        } else {
+            switch_ef.isChecked = false
+            TransitionManager.beginDelayedTransition(cv_gating, AutoTransition())
+            cv_gating.visibility = View.INVISIBLE
+        }
 
         // Call necessary class
         val an = AudioNode()
@@ -93,6 +124,7 @@ class AudioConfActivity : AppCompatActivity() {
         if (kernel_ver?.compareTo(upstream)!! > 0) {
             au.DumpFile(an.uhqa_kernel_4_x, an.uhqa_force_file)
             au.DumpFile(an.amp_kernel_4_x, an.amp_force_file)
+            au.DumpFile(an.gating_kernel_4_x, an.gating_force_file)
 
             // Not supported on 4.9 Kernel since techpack aren't
             // use older than wcd9335
@@ -103,6 +135,7 @@ class AudioConfActivity : AppCompatActivity() {
             au.DumpFile(an.hph_kernel_3_x, an.hph_force_file)
             au.DumpFile(an.amp_kernel_3_x, an.amp_force_file)
             au.DumpFile(an.impedance_kernel_3_x, an.impedance_file)
+            au.DumpFile(an.gating_kernel_3_x, an.gating_force_file)
         }
 
         // Set switch value on init
@@ -110,11 +143,13 @@ class AudioConfActivity : AppCompatActivity() {
         val hph_value = au.readFromFile(this, an.hph_file)
         val amp_value = au.readFromFile(this, an.amp_file)
         val impedance_value = au.readFromFile(this, an.impedance_file)
+        val gating_value = au.readFromFile(this, an.gating_file)
 
         switch_uhqa.isChecked = uhqa_value?.compareTo("1")!! > 0
         switch_hph.isChecked = hph_value?.compareTo("1")!! > 0
         switch_amp.isChecked = amp_value?.compareTo("1")!! > 0
         switch_impedance.isChecked = impedance_value?.compareTo("1")!! > 0
+        switch_gating.isChecked = gating_value?.compareTo("1")!! > 0
 
         cv_title.setOnClickListener {
             val i = Intent(this@AudioConfActivity, MainActivity::class.java)
@@ -220,6 +255,46 @@ class AudioConfActivity : AppCompatActivity() {
             au.DropFile(an.impedance_file)
         }
 
+        switch_ef.setOnClickListener {
+             if (switch_ef.isChecked) {
+                 TransitionManager.beginDelayedTransition(cv_gating, AutoTransition())
+                 cv_gating.visibility = View.VISIBLE
+                 save.putBoolean("EXP_FEATURES", true)
+                 save.apply()
+             } else {
+                 TransitionManager.beginDelayedTransition(cv_gating, AutoTransition())
+                 cv_gating.visibility = View.INVISIBLE
+                 save.putBoolean("EXP_FEATURES", false)
+                 save.apply()
+             }
+        }
+
+        switch_gating.setOnClickListener{
+            if (kernel_ver.compareTo(upstream) > 0) {
+                if (switch_gating.isChecked) {
+                    au.WriteToFile("1", an.gating_kernel_4_x)
+                    setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_6_toast_gating_scs))
+                    gating_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_support), resources.getString(R.string.state_enable))
+                } else {
+                    au.WriteToFile("0", an.gating_kernel_4_x)
+                    setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_6_toast_gating_fid))
+                    gating_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_support), resources.getString(R.string.state_disable))
+                }
+            } else if (kernel_ver.compareTo(legacy) > 0) {
+                if (switch_gating.isChecked) {
+                    au.WriteToFile("1", an.gating_kernel_3_x)
+                    setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_6_toast_gating_scs))
+                    gating_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_support), resources.getString(R.string.state_enable))
+                } else {
+                    au.WriteToFile("0", an.gating_kernel_3_x)
+                    setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_6_toast_gating_fid))
+                    gating_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_support), resources.getString(R.string.state_disable))
+                }
+            }
+            gating_stats.visibility = View.VISIBLE
+            au.DropFile(an.gating_file)
+        }
+
         button_uhqa.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioConfActivity)
@@ -250,6 +325,22 @@ class AudioConfActivity : AppCompatActivity() {
 
             // Call dialog
             ShowPopup(resources.getString(R.string.app_menu_4_text), resources.getString(R.string.app_menu_4_desc), resources.getString(R.string.app_menu_4_desc_ext))
+        }
+
+        button_ef.setOnClickListener {
+            // Initiate dialog
+            po = Dialog(this@AudioConfActivity)
+
+            // Call dialog
+            ShowPopup(resources.getString(R.string.app_menu_5_text), resources.getString(R.string.app_menu_5_desc), resources.getString(R.string.app_menu_5_desc_ext))
+        }
+
+        button_gating.setOnClickListener {
+            // Initiate dialog
+            po = Dialog(this@AudioConfActivity)
+
+            // Call dialog
+            ShowPopup(resources.getString(R.string.app_menu_6_text), resources.getString(R.string.app_menu_6_desc), resources.getString(R.string.app_menu_6_desc_ext))
         }
     }
 
