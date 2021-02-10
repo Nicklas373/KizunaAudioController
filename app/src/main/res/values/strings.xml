@@ -7,8 +7,13 @@
     <string name="PLACEHOLDER_BUTTON">Click Me!</string>
     <!-- End of PLACEHOLDER !-->
 
+    <!-- Main String !-->
     <string name="theme_switcher">Theme Switcher</string>
     <string name="app_main_menu_1">Audio Controller</string>
+    <string name="app_main_menu_2">Audio Information</string>
+    <!-- End of Main String !-->
+
+    <!-- Audio Conf String !-->
     <string name="app_menu_1_text">UHQA (Ultra High Quality Audio)</string>
     <string name="app_menu_1_desc">UHQA mode allows to have high performance audio when using headset at primary.</string>
     <string name="app_menu_1_desc_ext">Turn off/on UHQA to switch the amplifier for HPH path.</string>
@@ -49,4 +54,22 @@
     <string name="state_unsupport">Not Supported</string>
     <string name="state_enable">Enable</string>
     <string name="state_disable">Disable</string>
+    <!-- End of Audio Conf String !-->
+
+    <!-- Audio Info String !-->
+    <string name="audio_base">Audio State</string>
+    <string name="audio_out">Audio Output</string>
+    <string name="audio_io_process">Audio I/O PID</string>
+    <string name="audio_standby">Audio Standby</string>
+    <string name="audio_base_2">Audio HAL</string>
+    <string name="audio_sample_rate">Audio Sample Rate</string>
+    <string name="audio_hal_frame">Audio HAL Frame</string>
+    <string name="audio_hal_format">Audio HAL Format</string>
+    <string name="audio_base_3">Audio Channel</string>
+    <string name="audio_channel_count">Audio Channel Count</string>
+    <string name="audio_channel_mask">Audio Channel Route</string>
+    <string name="audio_base_4">Audio Process</string>
+    <string name="audio_format">Audio Format</string>
+    <string name="audio_frame">Audio Frame</string>
+    <!-- End of Audio Info String !-->
 </resources>
