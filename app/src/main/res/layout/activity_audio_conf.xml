@@ -16,7 +16,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:transitionName="@string/PLACEHOLDER"
+        android:transitionName="@string/app_main_menu_1"
         app:cardBackgroundColor="@color/blue_500"
         app:cardCornerRadius="4dp"
         app:cardElevation="15dp"

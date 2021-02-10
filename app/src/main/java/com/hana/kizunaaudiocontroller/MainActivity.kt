@@ -3,6 +3,7 @@ package com.hana.kizunaaudiocontroller
 import android.Manifest
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.transition.Explode
@@ -16,10 +17,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class MainActivity : AppCompatActivity() {
-    // Declare controller
-    lateinit var mm_1: CardView
-    lateinit var theme_switcher: SwitchMaterial
-
     // Declare variables
     private val REQUEST_PERMISSIONS = 20
 
@@ -28,8 +25,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Bind controller
-        mm_1 = findViewById(R.id.cv_app_main_menu_1)
-        theme_switcher = findViewById(R.id.theme_switcher)
+        val mm_1: CardView = findViewById(R.id.cv_app_main_menu_1)
+        val mm_2: CardView = findViewById(R.id.cv_app_main_menu_2)
+        val theme_switcher: SwitchMaterial = findViewById(R.id.theme_switcher)
 
         // Binding root class
         val ar = AudioRoot()
@@ -53,6 +51,9 @@ class MainActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
+        // Lock rotation to potrait by default
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
         // Set an animation transition
         window.enterTransition = Explode()
         window.returnTransition = Fade()
@@ -60,7 +61,15 @@ class MainActivity : AppCompatActivity() {
         mm_1.setOnClickListener {
             val i = Intent(this@MainActivity, AudioConfActivity::class.java)
             val sharedView: View = mm_1
-            val transitionName = getString(R.string.PLACEHOLDER)
+            val transitionName = getString(R.string.app_main_menu_1)
+            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity, sharedView, transitionName)
+            startActivity(i, transitionActivityOptions.toBundle())
+        }
+
+        mm_2.setOnClickListener {
+            val i = Intent(this@MainActivity, AudioInfoActivity::class.java)
+            val sharedView: View = mm_2
+            val transitionName = getString(R.string.app_main_menu_2)
             val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity, sharedView, transitionName)
             startActivity(i, transitionActivityOptions.toBundle())
         }

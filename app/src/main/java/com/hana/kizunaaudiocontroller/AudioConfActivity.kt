@@ -3,6 +3,7 @@ package com.hana.kizunaaudiocontroller
 import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,7 +16,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -24,69 +24,41 @@ import java.util.*
 
 class AudioConfActivity : AppCompatActivity() {
     // Declaring controller
-    lateinit var this_activity: ConstraintLayout
-    lateinit var cv_title: CardView
-    lateinit var cv_uhqa: CardView
-    lateinit var cv_hph: CardView
-    lateinit var cv_amp: CardView
-    lateinit var cv_impedance: CardView
-    lateinit var cv_ef: CardView
-    lateinit var cv_gating: CardView
-    lateinit var switch_uhqa: SwitchCompat
-    lateinit var switch_hph: SwitchCompat
-    lateinit var switch_amp: SwitchCompat
-    lateinit var switch_impedance: SwitchCompat
-    lateinit var switch_ef: SwitchCompat
-    lateinit var switch_gating: SwitchCompat
-    lateinit var button_uhqa: Button
-    lateinit var button_hph: Button
-    lateinit var button_amp: Button
-    lateinit var button_impedance: Button
-    lateinit var button_ef: Button
-    lateinit var button_gating: Button
     lateinit var po: Dialog
     lateinit var title: TextView
     lateinit var desc: TextView
     lateinit var desc_ext: TextView
-    lateinit var uhqa_stats: TextView
-    lateinit var hph_stats: TextView
-    lateinit var amp_stats: TextView
-    lateinit var impedance_stats: TextView
-    lateinit var gating_stats: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_conf)
 
         // Bind controller
-        this_activity = findViewById(R.id.activity_audio_conf)
-        cv_title = findViewById(R.id.cv_app_menu_1)
-        cv_uhqa = findViewById(R.id.cv_app_menu_1_1)
-        cv_hph = findViewById(R.id.cv_app_menu_1_2)
-        cv_amp = findViewById(R.id.cv_app_menu_1_3)
-        cv_impedance = findViewById(R.id.cv_app_menu_1_4)
-        cv_ef = findViewById(R.id.cv_app_menu_1_5)
-        cv_gating = findViewById(R.id.cv_app_menu_1_6)
-        uhqa_stats = findViewById(R.id.switch_app_menu_1_1_text)
-        hph_stats = findViewById(R.id.switch_app_menu_1_2_1_text)
-        amp_stats = findViewById(R.id.switch_app_menu_1_3_1_text)
-        impedance_stats = findViewById(R.id.switch_app_menu_1_4_1_text)
-        gating_stats = findViewById(R.id.switch_app_menu_1_6_1_text)
-        switch_uhqa = findViewById(R.id.switch_app_menu_1)
-        switch_hph = findViewById(R.id.switch_app_menu_1_2)
-        switch_amp = findViewById(R.id.switch_app_menu_1_3)
-        switch_impedance = findViewById(R.id.switch_app_menu_1_4)
-        switch_ef = findViewById(R.id.switch_app_menu_1_5)
-        switch_gating = findViewById(R.id.switch_app_menu_1_6)
-        button_uhqa = findViewById(R.id.button_app_menu_1)
-        button_hph = findViewById(R.id.button_app_menu_1_2)
-        button_amp = findViewById(R.id.button_app_menu_1_3)
-        button_impedance = findViewById(R.id.button_app_menu_1_4)
-        button_ef = findViewById(R.id.button_app_menu_1_5)
-        button_gating = findViewById(R.id.button_app_menu_1_6)
+        val cv_title: CardView = findViewById(R.id.cv_app_menu_1)
+        val cv_gating: CardView = findViewById(R.id.cv_app_menu_1_6)
+        val switch_uhqa: SwitchCompat = findViewById(R.id.switch_app_menu_1)
+        val switch_hph: SwitchCompat = findViewById(R.id.switch_app_menu_1_2)
+        val switch_amp: SwitchCompat = findViewById(R.id.switch_app_menu_1_3)
+        val switch_impedance: SwitchCompat = findViewById(R.id.switch_app_menu_1_4)
+        val switch_ef: SwitchCompat = findViewById(R.id.switch_app_menu_1_5)
+        val switch_gating: SwitchCompat = findViewById(R.id.switch_app_menu_1_6)
+        val button_uhqa: Button = findViewById(R.id.button_app_menu_1)
+        val button_hph: Button = findViewById(R.id.button_app_menu_1_2)
+        val button_amp: Button = findViewById(R.id.button_app_menu_1_3)
+        val button_impedance: Button = findViewById(R.id.button_app_menu_1_4)
+        val button_ef: Button = findViewById(R.id.button_app_menu_1_5)
+        val button_gating: Button = findViewById(R.id.button_app_menu_1_6)
+        val uhqa_stats: TextView = findViewById(R.id.switch_app_menu_1_1_text)
+        val hph_stats: TextView = findViewById(R.id.switch_app_menu_1_2_1_text)
+        val amp_stats: TextView = findViewById(R.id.switch_app_menu_1_3_1_text)
+        val impedance_stats: TextView = findViewById(R.id.switch_app_menu_1_4_1_text)
+        val gating_stats: TextView = findViewById(R.id.switch_app_menu_1_6_1_text)
 
         // Hide title bar
         Objects.requireNonNull(supportActionBar)?.hide()
+
+        // Lock rotation to potrait by default
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         // Set an animation transition
         window.enterTransition = Explode()
@@ -121,7 +93,7 @@ class AudioConfActivity : AppCompatActivity() {
         val legacy = "3.18"
 
         // Check kernel version
-        if (kernel_ver?.compareTo(upstream)!! > 0) {
+        if (kernel_ver.equals(upstream)) {
             au.DumpFile(an.uhqa_kernel_4_x, an.uhqa_force_file)
             au.DumpFile(an.amp_kernel_4_x, an.amp_force_file)
             au.DumpFile(an.gating_kernel_4_x, an.gating_force_file)
@@ -130,7 +102,7 @@ class AudioConfActivity : AppCompatActivity() {
             // use older than wcd9335
             au.WriteToFile("0", an.hph_force_file)
             au.WriteToFile("0", an.impedance_force_file)
-        } else if (kernel_ver.compareTo(legacy) > 0) {
+        } else if (kernel_ver.equals(legacy)) {
             au.DumpFile(an.uhqa_kernel_3_x, an.uhqa_force_file)
             au.DumpFile(an.hph_kernel_3_x, an.hph_force_file)
             au.DumpFile(an.amp_kernel_3_x, an.amp_force_file)
@@ -160,7 +132,7 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         switch_uhqa.setOnClickListener {
-            if (kernel_ver.compareTo(upstream) > 0) {
+            if (kernel_ver.equals(upstream)) {
                 if (switch_uhqa.isChecked) {
                     au.WriteToFile("1", an.uhqa_kernel_4_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_1_toast_uhqa_scs))
@@ -170,7 +142,7 @@ class AudioConfActivity : AppCompatActivity() {
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_1_toast_uhqa_fid))
                     uhqa_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_support), resources.getString(R.string.state_disable))
                 }
-            } else if (kernel_ver.compareTo(legacy) > 0) {
+            } else if (kernel_ver.equals(legacy)) {
                 if (switch_uhqa.isChecked) {
                     au.WriteToFile("1", an.uhqa_kernel_3_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_1_toast_uhqa_scs))
@@ -186,13 +158,13 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         switch_hph.setOnClickListener {
-            if (kernel_ver.compareTo(upstream) > 0) {
+            if (kernel_ver.equals(upstream)) {
                 switch_hph.isChecked = false
                 switch_hph.isClickable = false
                 switch_hph.isEnabled = false
                 setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_2_toast_hph_ne))
                 hph_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_unsupport), resources.getString(R.string.state_disable))
-            } else if (kernel_ver.compareTo(legacy) > 0) {
+            } else if (kernel_ver.equals(legacy)) {
                 if (switch_hph.isChecked) {
                     au.WriteToFile("1", an.hph_kernel_3_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_2_toast_hph_scs))
@@ -208,7 +180,7 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         switch_amp.setOnClickListener {
-            if (kernel_ver.compareTo(upstream) > 0) {
+            if (kernel_ver.equals(upstream)) {
                 if (switch_amp.isChecked) {
                     au.WriteToFile("1", an.amp_kernel_4_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_3_toast_amp_scs))
@@ -218,7 +190,7 @@ class AudioConfActivity : AppCompatActivity() {
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_3_toast_amp_fid))
                     amp_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_support), resources.getString(R.string.state_disable))
                 }
-            } else if (kernel_ver.compareTo(legacy) > 0) {
+            } else if (kernel_ver.equals(legacy)) {
                 if (switch_amp.isChecked) {
                     au.WriteToFile("1", an.amp_kernel_3_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_3_toast_amp_scs))
@@ -234,13 +206,13 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         switch_impedance.setOnClickListener {
-            if (kernel_ver.compareTo(upstream) > 0) {
+            if (kernel_ver.equals(upstream)) {
                 switch_impedance.isChecked = false
                 switch_impedance.isClickable = false
                 switch_impedance.isEnabled = false
                 setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_4_toast_impedance_ne))
                 impedance_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_unsupport), resources.getString(R.string.state_disable))
-            } else if (kernel_ver.compareTo(legacy) > 0) {
+            } else if (kernel_ver.equals(legacy)) {
                 if (switch_impedance.isChecked) {
                     au.WriteToFile("1", an.impedance_kernel_3_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_4_toast_impedance_scs))
@@ -270,7 +242,7 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         switch_gating.setOnClickListener{
-            if (kernel_ver.compareTo(upstream) > 0) {
+            if (kernel_ver.equals(upstream)) {
                 if (switch_gating.isChecked) {
                     au.WriteToFile("1", an.gating_kernel_4_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_6_toast_gating_scs))
@@ -280,7 +252,7 @@ class AudioConfActivity : AppCompatActivity() {
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_6_toast_gating_fid))
                     gating_stats.text = String.format("%s %s | %s", resources.getString(R.string.state_info), resources.getString(R.string.state_support), resources.getString(R.string.state_disable))
                 }
-            } else if (kernel_ver.compareTo(legacy) > 0) {
+            } else if (kernel_ver.equals(legacy)) {
                 if (switch_gating.isChecked) {
                     au.WriteToFile("1", an.gating_kernel_3_x)
                     setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.app_menu_6_toast_gating_scs))

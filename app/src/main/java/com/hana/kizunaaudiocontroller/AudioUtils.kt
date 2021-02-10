@@ -4,26 +4,16 @@ import android.content.Context
 import android.os.Environment
 import android.util.Log
 import com.jaredrummler.android.shell.Shell
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
+
 
 class AudioUtils {
-    fun readFromFile(context: Context, filename: String?): String? {
-        var line: String? = null
-        try {
-            val fileInputStream = FileInputStream(File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename))
-            val inputStreamReader = InputStreamReader(fileInputStream)
-            val bufferedReader = BufferedReader(inputStreamReader)
-            val stringBuilder = StringBuilder()
-            while (bufferedReader.readLine().also { line = it } != null) {
-                stringBuilder.append(line + System.getProperty("line.separator"))
-            }
-            fileInputStream.close()
-            line = stringBuilder.toString()
-            bufferedReader.close()
-        } catch (fnfe: IOException) {
-            Log.e("Exception", "File not found $fnfe")
-        }
-        return line
+    fun readFromFile(context: Context, filename: String): String {
+            val bufferedReader: BufferedReader = FileInputStream(File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename)).bufferedReader()
+            val inputString = bufferedReader.use { it.readText() }
+            return inputString
     }
 
     fun WriteToFile(value: String, data: String) {
