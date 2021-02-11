@@ -117,16 +117,16 @@ class AudioConfActivity : AppCompatActivity() {
         val impedance_value = au.readFromFile(this, an.impedance_file)
         val gating_value = au.readFromFile(this, an.gating_file)
 
-        switch_uhqa.isChecked = uhqa_value?.compareTo("1")!! > 0
-        switch_hph.isChecked = hph_value?.compareTo("1")!! > 0
-        switch_amp.isChecked = amp_value?.compareTo("1")!! > 0
-        switch_impedance.isChecked = impedance_value?.compareTo("1")!! > 0
-        switch_gating.isChecked = gating_value?.compareTo("1")!! > 0
+        switch_uhqa.isChecked = uhqa_value.compareTo("1") > 0
+        switch_hph.isChecked = hph_value.compareTo("1") > 0
+        switch_amp.isChecked = amp_value.compareTo("1") > 0
+        switch_impedance.isChecked = impedance_value.compareTo("1") > 0
+        switch_gating.isChecked = gating_value.compareTo("1") > 0
 
         cv_title.setOnClickListener {
             val i = Intent(this@AudioConfActivity, MainActivity::class.java)
             val sharedView: View = cv_title
-            val transitionName = getString(R.string.PLACEHOLDER)
+            val transitionName = getString(R.string.app_main_menu_1)
             val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@AudioConfActivity, sharedView, transitionName)
             startActivity(i, transitionActivityOptions.toBundle())
         }

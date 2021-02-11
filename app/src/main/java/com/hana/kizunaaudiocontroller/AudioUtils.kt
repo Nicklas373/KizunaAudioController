@@ -2,7 +2,6 @@ package com.hana.kizunaaudiocontroller
 
 import android.content.Context
 import android.os.Environment
-import android.util.Log
 import com.jaredrummler.android.shell.Shell
 import java.io.BufferedReader
 import java.io.File
@@ -17,34 +16,18 @@ class AudioUtils {
     }
 
     fun WriteToFile(value: String, data: String) {
-        try {
-            val write = Shell.SU.run("echo $value > $data")
-        } catch (e: Exception) {
-            Log.e("Exception", "File write failed: $e")
-        }
+       Shell.SU.run("echo $value > $data")
     }
 
     fun DumpFile(filename: String, local_dir: String) {
-        try {
-            val dump = Shell.SU.run("cp $filename $local_dir")
-        } catch (e: Exception) {
-            Log.e("Exception", "File read failed: $e")
-        }
+       Shell.SU.run("cp $filename $local_dir")
     }
 
     fun DropFile(local_dir: String) {
-        try {
-            val drop = Shell.SU.run("rm $local_dir")
-        } catch (e: Exception) {
-            Log.e("Exception", "File drop failed: $e")
-        }
+      Shell.SU.run("rm $local_dir")
     }
 
     fun ExportKernelFile(local_dir: String) {
-        try {
-            val rkf = Shell.SU.run("uname -r | head -c 3 > $local_dir")
-        } catch (e: Exception) {
-            Log.e("Exception", "File drop failed: $e")
-        }
+        Shell.SU.run("uname -r | head -c 3 > $local_dir")
     }
 }
