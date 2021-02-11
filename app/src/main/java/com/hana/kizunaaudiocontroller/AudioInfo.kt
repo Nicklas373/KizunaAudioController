@@ -1,71 +1,41 @@
 package com.hana.kizunaaudiocontroller
 
-import android.util.Log
 import com.jaredrummler.android.shell.Shell
 
 class AudioInfo {
     fun MediaFlinger(data: String) {
-        try {
-            val dump = Shell.SU.run("dumpsys media.audio_flinger > $data")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+       Shell.SU.run("dumpsys media.audio_flinger > $data")
     }
 
     fun LibraryEffects(aflinger: String, unfiltered_library:String, library:String){
-        try {
-            val dump = Shell.SU.run("grep -w Library $aflinger > $unfiltered_library && sed -i -e 's/ Library//g' $unfiltered_library && sed 's/[^ ]* //' $unfiltered_library > $library")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+        Shell.SU.run("grep -w Library $aflinger > $unfiltered_library && sed -i -e 's/ Library//g' $unfiltered_library && sed 's/[^ ]* //' $unfiltered_library > $library")
     }
 
-    fun LimitAudioClient(aflinger: String, filter: String, trim: String, aclient:String){
-        try {
-            val dump = Shell.SU.run("grep -n $filter $aflinger | sed 's/.//$trim+g' > $aclient")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+    fun LimitAudioClient(filter: String, aflinger: String, head: String, aclient:String){
+        Shell.SU.run("grep -n $filter $aflinger | head -c $head > $aclient")
     }
 
-    fun CurrentAudioClient(top_limit:String, bottom_limit:String, aflinger:String, aclient:String){
-        try {
-            val dump = Shell.SU.run("sed -n '$top_limit,$bottom_limit+p' $aflinger | sed 's/[^a-z,.]*//g' > $aclient")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+    fun CurrentAudioClient(top_limit: Int, bottom_limit: Int, aflinger:String, aclient:String){
+        Shell.SU.run("sed -n '$top_limit,$bottom_limit p' $aflinger | sed 's/[^a-z,.]*//g' > $aclient")
     }
 
     fun KAOAudioInit(type: String, aflinger: String,  sed: String, audio: String){
-        try {
-            val dump = Shell.SU.run("grep -w $type $aflinger | sed -n '$sed p' | cut -c 1 > $audio")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+        Shell.SU.run("grep -w $type $aflinger | sed -n '$sed p' | cut -c 1 > $audio")
     }
 
     fun KAOAudioInitExt(type: String, aflinger: String,  sed: String, tail: String, audio: String){
-        try {
-            val dump = Shell.SU.run("grep -w $type $aflinger | sed -n '$sed p' | tail -c $tail | sed 's/.\$//' > $audio")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+        Shell.SU.run("grep -w $type $aflinger | sed -n '$sed p' | tail -c $tail | sed 's/.\$//' > $audio")
     }
 
     fun KAOLimitAudioClient(type: String, aflinger: String, sed: String, trim: String, aclient: String){
-        try {
-            val dump = Shell.SU.run("grep -n $type $aflinger | sed -n '$sed p' | head -c$trim | tr -d \'[:space:]' > $aclient")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+        Shell.SU.run("grep -n $type $aflinger | sed -n '$sed p' | head -c$trim | tr -d \'[:space:]' > $aclient")
     }
 
     fun KAOAudioClient(top_limit: Int, bottom_limit: Int, aflinger: String, dir: String){
-        try {
-            val dump = Shell.SU.run("sed -n '$top_limit,$bottom_limit p' $aflinger | sed 's/^[[:space:]]*//' > $dir")
-        } catch (e: Exception) {
-            Log.e("Exception", "File dump failed: $e")
-        }
+        Shell.SU.run("sed -n '$top_limit,$bottom_limit p' $aflinger | sed 's/^[[:space:]]*//' > $dir")
     }
 
+    fun KAOReset(files: String) {
+        Shell.SU.run("rm * $files")
+    }
 }

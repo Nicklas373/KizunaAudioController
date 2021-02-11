@@ -71,5 +71,9 @@
     <string name="audio_base_4">Audio Process</string>
     <string name="audio_format">Audio Format</string>
     <string name="audio_frame">Audio Frame</string>
+    <string name="audio_flags">Audio Flags</string>
+    <string name="audio_base_5">Audio Session</string>
+    <string name="audio_effects">Active DSP Effects</string>
+    <string name="audio_session">Active Audio Session</string>
     <!-- End of Audio Info String !-->
 </resources>
