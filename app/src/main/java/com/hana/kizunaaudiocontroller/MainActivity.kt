@@ -5,6 +5,8 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
@@ -14,7 +16,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.material.switchmaterial.SwitchMaterial
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     // Declare variables
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         // Bind controller
         val mm_1: CardView = findViewById(R.id.cv_app_main_menu_1)
         val mm_2: CardView = findViewById(R.id.cv_app_main_menu_2)
-        val theme_switcher: SwitchMaterial = findViewById(R.id.theme_switcher)
+        val mm_3: CardView = findViewById(R.id.cv_app_main_menu_3)
 
         // Binding root class
         val ar = AudioRoot()
@@ -40,15 +43,24 @@ class MainActivity : AppCompatActivity() {
 
         // Sharedprefences begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
-        val save = pref.edit()
 
         // Getting sharedpreferences value if exist
         val night_mode = pref.getBoolean("MODE_NIGHT", false)
         if (night_mode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            theme_switcher.isChecked = true
+
+            val colorDrawable = ColorDrawable(Color.parseColor("#2286c3"))
+            val nightColor = Color.parseColor("#2286c3")
+
+            Objects.requireNonNull(supportActionBar)?.setBackgroundDrawable(colorDrawable)
+            mm_1.setCardBackgroundColor(nightColor)
+            mm_2.setCardBackgroundColor(nightColor)
+            mm_3.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+            val colorDrawable = ColorDrawable(Color.parseColor("#64b5f6"))
+            Objects.requireNonNull(supportActionBar)?.setBackgroundDrawable(colorDrawable)
         }
 
         // Lock rotation to potrait by default
@@ -74,16 +86,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(i, transitionActivityOptions.toBundle())
         }
 
-        theme_switcher.setOnClickListener {
-            if (theme_switcher.isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                save.putBoolean("MODE_NIGHT", true)
-                save.apply()
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                save.putBoolean("MODE_NIGHT", false)
-                save.apply()
-            }
+        mm_3.setOnClickListener {
+            val i = Intent(this@MainActivity, AudioSettingsActivity::class.java)
+            startActivity(i)
         }
     }
 
