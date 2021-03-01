@@ -10,8 +10,10 @@ import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import java.util.*
 
@@ -21,6 +23,7 @@ class AudioInfoActivity : AppCompatActivity() {
     lateinit var po: Dialog
     lateinit var title: TextView
     lateinit var desc: TextView
+    lateinit var desc_ant: TextView
     lateinit var desc_ext: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +32,11 @@ class AudioInfoActivity : AppCompatActivity() {
 
         // Bind controller
         val cv_title: CardView = findViewById(R.id.cv_app_menu_2)
+        val cv_1: CardView = findViewById(R.id.cv_achannel)
+        val cv_2: CardView = findViewById(R.id.cv_aformat)
+        val cv_3: CardView = findViewById(R.id.cv_asession)
+        val cv_4: CardView = findViewById(R.id.cv_astate)
+        val cv_5: CardView = findViewById(R.id.cv_ahal)
         val audio_out: TextView = findViewById(R.id.audio_out)
         val audio_pid: TextView = findViewById(R.id.audio_pid)
         val audio_standby: TextView = findViewById(R.id.audio_standby)
@@ -40,8 +48,9 @@ class AudioInfoActivity : AppCompatActivity() {
         val audio_format: TextView = findViewById(R.id.audio_format)
         val audio_frame: TextView = findViewById(R.id.audio_frame)
         val audio_flags: TextView = findViewById(R.id.audio_flags)
-        val audio_dsp: TextView = findViewById(R.id.audio_dsp)
-        val audio_session: TextView = findViewById(R.id.audio_session)
+        val audio_dsp: Button = findViewById(R.id.btn_audio_dsp)
+        val audio_session: Button = findViewById(R.id.btn_audio_session)
+        val audio_info: Button = findViewById(R.id.button_title)
 
         // Hide title bar
         Objects.requireNonNull(supportActionBar)?.hide()
@@ -52,6 +61,30 @@ class AudioInfoActivity : AppCompatActivity() {
         // Set an animation transition
         window.enterTransition = Explode()
         window.returnTransition = Fade()
+
+        // Sharedprefences begin
+        val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
+
+        // Getting sharedpreferences value if exist
+        // Configure theme interface
+        val night_mode = pref.getBoolean("MODE_NIGHT", false)
+        if (night_mode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+            val nightColor = Color.parseColor("#2286c3")
+
+            cv_title.setCardBackgroundColor(nightColor)
+            cv_1.setCardBackgroundColor(nightColor)
+            cv_2.setCardBackgroundColor(nightColor)
+            cv_3.setCardBackgroundColor(nightColor)
+            cv_4.setCardBackgroundColor(nightColor)
+            cv_5.setCardBackgroundColor(nightColor)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+            val colorDrawable = ColorDrawable(Color.parseColor("#64b5f6"))
+            Objects.requireNonNull(supportActionBar)?.setBackgroundDrawable(colorDrawable)
+        }
 
         // Export required class object
         val ai = AudioInfo()
@@ -158,19 +191,41 @@ class AudioInfoActivity : AppCompatActivity() {
             po = Dialog(this)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.audio_effects), au.readFromFile(this, an.library_files).trim(), "")
+            ShowPopup(resources.getString(R.string.audio_effects), resources.getString(R.string.audio_effects_details), resources.getString(R.string.audio_effects_list), au.readFromFile(this, an.library_files).trim())
         }
 
         audio_session.setOnClickListener{
             po = Dialog(this)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.audio_session), au.readFromFile(this, an.audio_client_init_file).trim(), "")
+            ShowPopup(resources.getString(R.string.audio_session), resources.getString(R.string.audio_session_details),resources.getString(R.string.audio_session_list),  au.readFromFile(this, an.audio_client_init_file).trim())
+        }
+
+        audio_info.setOnClickListener{
+            po = Dialog(this)
+
+            // Call dialog
+            ShowPopupAdd(resources.getString(R.string.app_menu_2_info_title), resources.getString(R.string.app_menu_2_info_details),resources.getString(R.string.app_menu_2_info_ext))
         }
     }
 
-    private fun ShowPopup(text_1: String?, text_2: String?, text_3: String?) {
-        po.setContentView(R.layout.activity_pop_up)
+    private fun ShowPopup(text_1: String?, text_2: String?, text_3: String?, text_4: String?) {
+        po.setContentView(R.layout.activity_pop_up_info)
+        title = po.findViewById(R.id.text_pop_up_1)
+        desc = po.findViewById(R.id.text_pop_up_desc_1)
+        desc_ant = po.findViewById(R.id.text_pop_up_desc_2)
+        desc_ext = po.findViewById(R.id.text_pop_up_desc_3)
+        title.text = text_1
+        desc.text = text_2
+        desc_ant.text = text_3
+        desc_ext.text = text_4
+        title.setOnClickListener { po.dismiss() }
+        po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        po.show()
+    }
+
+    private fun ShowPopupAdd(text_1: String?, text_2: String?, text_3: String) {
+        po.setContentView(R.layout.activity_pop_up_info_details)
         title = po.findViewById(R.id.text_pop_up_1)
         desc = po.findViewById(R.id.text_pop_up_desc_1)
         desc_ext = po.findViewById(R.id.text_pop_up_desc_2)

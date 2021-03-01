@@ -14,9 +14,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#e0e0e0</color>
+    <color name="ant_gray">#607d8b</color>
     <color name="text_1">#62757f</color>
     <color name="text_2">#90a4ae</color>
-
-    <!-- Begin app color scheme !-->
-
 </resources>

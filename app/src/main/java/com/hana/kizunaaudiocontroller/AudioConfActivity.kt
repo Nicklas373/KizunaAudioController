@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
@@ -35,6 +36,11 @@ class AudioConfActivity : AppCompatActivity() {
 
         // Bind controller
         val cv_title: CardView = findViewById(R.id.cv_app_menu_1)
+        val cv_1: CardView = findViewById(R.id.cv_app_menu_1_1)
+        val cv_2: CardView = findViewById(R.id.cv_app_menu_1_2)
+        val cv_3: CardView = findViewById(R.id.cv_app_menu_1_3)
+        val cv_4: CardView = findViewById(R.id.cv_app_menu_1_4)
+        val cv_5: CardView = findViewById(R.id.cv_app_menu_1_5)
         val cv_gating: CardView = findViewById(R.id.cv_app_menu_1_6)
         val switch_uhqa: SwitchCompat = findViewById(R.id.switch_app_menu_1)
         val switch_hph: SwitchCompat = findViewById(R.id.switch_app_menu_1_2)
@@ -42,6 +48,7 @@ class AudioConfActivity : AppCompatActivity() {
         val switch_impedance: SwitchCompat = findViewById(R.id.switch_app_menu_1_4)
         val switch_ef: SwitchCompat = findViewById(R.id.switch_app_menu_1_5)
         val switch_gating: SwitchCompat = findViewById(R.id.switch_app_menu_1_6)
+        val button_info: Button = findViewById(R.id.button_title)
         val button_uhqa: Button = findViewById(R.id.button_app_menu_1)
         val button_hph: Button = findViewById(R.id.button_app_menu_1_2)
         val button_amp: Button = findViewById(R.id.button_app_menu_1_3)
@@ -78,6 +85,28 @@ class AudioConfActivity : AppCompatActivity() {
             switch_ef.isChecked = false
             TransitionManager.beginDelayedTransition(cv_gating, AutoTransition())
             cv_gating.visibility = View.INVISIBLE
+        }
+
+        // Getting sharedpreferences value if exist
+        // Configure theme interface
+        val night_mode = pref.getBoolean("MODE_NIGHT", false)
+        if (night_mode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+            val nightColor = Color.parseColor("#2286c3")
+
+            cv_title.setCardBackgroundColor(nightColor)
+            cv_1.setCardBackgroundColor(nightColor)
+            cv_2.setCardBackgroundColor(nightColor)
+            cv_3.setCardBackgroundColor(nightColor)
+            cv_4.setCardBackgroundColor(nightColor)
+            cv_5.setCardBackgroundColor(nightColor)
+            cv_gating.setCardBackgroundColor(nightColor)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+            val colorDrawable = ColorDrawable(Color.parseColor("#64b5f6"))
+            Objects.requireNonNull(supportActionBar)?.setBackgroundDrawable(colorDrawable)
         }
 
         // Call necessary class
@@ -272,7 +301,7 @@ class AudioConfActivity : AppCompatActivity() {
             po = Dialog(this@AudioConfActivity)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.app_menu_1_text), resources.getString(R.string.app_menu_1_desc), resources.getString(R.string.app_menu_1_desc_ext))
+            ShowPopup(resources.getString(R.string.app_menu_1_text), resources.getString(R.string.app_menu_1_desc))
         }
 
         button_hph.setOnClickListener {
@@ -280,7 +309,7 @@ class AudioConfActivity : AppCompatActivity() {
             po = Dialog(this@AudioConfActivity)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.app_menu_2_text), resources.getString(R.string.app_menu_2_desc), resources.getString(R.string.app_menu_2_desc_ext))
+            ShowPopup(resources.getString(R.string.app_menu_2_text), resources.getString(R.string.app_menu_2_desc))
         }
 
         button_amp.setOnClickListener {
@@ -288,7 +317,7 @@ class AudioConfActivity : AppCompatActivity() {
             po = Dialog(this@AudioConfActivity)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.app_menu_3_text), resources.getString(R.string.app_menu_3_desc), resources.getString(R.string.app_menu_3_desc_ext))
+            ShowPopup(resources.getString(R.string.app_menu_3_text), resources.getString(R.string.app_menu_3_desc))
         }
 
         button_impedance.setOnClickListener {
@@ -296,7 +325,7 @@ class AudioConfActivity : AppCompatActivity() {
             po = Dialog(this@AudioConfActivity)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.app_menu_4_text), resources.getString(R.string.app_menu_4_desc), resources.getString(R.string.app_menu_4_desc_ext))
+            ShowPopup(resources.getString(R.string.app_menu_4_text), resources.getString(R.string.app_menu_4_desc))
         }
 
         button_ef.setOnClickListener {
@@ -304,7 +333,7 @@ class AudioConfActivity : AppCompatActivity() {
             po = Dialog(this@AudioConfActivity)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.app_menu_5_text), resources.getString(R.string.app_menu_5_desc), resources.getString(R.string.app_menu_5_desc_ext))
+            ShowPopup(resources.getString(R.string.app_menu_5_text), resources.getString(R.string.app_menu_5_desc))
         }
 
         button_gating.setOnClickListener {
@@ -312,12 +341,31 @@ class AudioConfActivity : AppCompatActivity() {
             po = Dialog(this@AudioConfActivity)
 
             // Call dialog
-            ShowPopup(resources.getString(R.string.app_menu_6_text), resources.getString(R.string.app_menu_6_desc), resources.getString(R.string.app_menu_6_desc_ext))
+            ShowPopup(resources.getString(R.string.app_menu_6_text), resources.getString(R.string.app_menu_6_desc))
+        }
+
+        button_info.setOnClickListener {
+            // Initiate dialog
+            po = Dialog(this@AudioConfActivity)
+
+            // Call dialog
+            ShowPopupAdd(resources.getString(R.string.app_menu_1_info_title), resources.getString(R.string.app_menu_1_info_details), resources.getString(R.string.app_menu_1_info_ext))
         }
     }
 
-    private fun ShowPopup(text_1: String?, text_2: String?, text_3: String?) {
-        po.setContentView(R.layout.activity_pop_up)
+    private fun ShowPopup(text_1: String?, text_2: String?) {
+        po.setContentView(R.layout.activity_pop_up_conf)
+        title = po.findViewById(R.id.text_pop_up_1)
+        desc = po.findViewById(R.id.text_pop_up_desc_1)
+        title.text = text_1
+        desc.text = text_2
+        title.setOnClickListener { po.dismiss() }
+        po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        po.show()
+    }
+
+    private fun ShowPopupAdd(text_1: String?, text_2: String?, text_3: String) {
+        po.setContentView(R.layout.activity_pop_up_info_details)
         title = po.findViewById(R.id.text_pop_up_1)
         desc = po.findViewById(R.id.text_pop_up_desc_1)
         desc_ext = po.findViewById(R.id.text_pop_up_desc_2)

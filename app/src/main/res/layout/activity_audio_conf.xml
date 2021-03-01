@@ -38,8 +38,22 @@
             android:fontFamily="@font/mandorin_font"
             android:textColor="@color/white"
             android:text="@string/app_main_menu_1"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/mandorin_font"
+            android:text="@string/app_menu_2_info"
+            android:textAllCaps="false"
+            android:textStyle="bold"/>
     </androidx.cardview.widget.CardView>
 
     <ScrollView
