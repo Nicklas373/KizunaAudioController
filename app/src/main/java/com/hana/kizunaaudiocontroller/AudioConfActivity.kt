@@ -27,6 +27,7 @@ class AudioConfActivity : AppCompatActivity() {
     // Declaring controller
     lateinit var po: Dialog
     lateinit var title: TextView
+    lateinit var title_1: CardView
     lateinit var desc: TextView
     lateinit var desc_ext: TextView
 
@@ -356,9 +357,27 @@ class AudioConfActivity : AppCompatActivity() {
     private fun ShowPopup(text_1: String?, text_2: String?) {
         po.setContentView(R.layout.activity_pop_up_conf)
         title = po.findViewById(R.id.text_pop_up_1)
+        title_1 = po.findViewById(R.id.cv_title_1)
         desc = po.findViewById(R.id.text_pop_up_desc_1)
         title.text = text_1
         desc.text = text_2
+
+        // Sharedprefences begin
+        val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
+
+        // Getting sharedpreferences value if exist
+        // Configure theme interface
+        val night_mode = pref.getBoolean("MODE_NIGHT", false)
+        if (night_mode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            val nightColor = Color.parseColor("#607d8b")
+            title_1.setCardBackgroundColor(nightColor)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            val dayColor = Color.parseColor("#2286c3")
+            title_1.setCardBackgroundColor(dayColor)
+        }
+
         title.setOnClickListener { po.dismiss() }
         po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         po.show()
@@ -367,11 +386,29 @@ class AudioConfActivity : AppCompatActivity() {
     private fun ShowPopupAdd(text_1: String?, text_2: String?, text_3: String) {
         po.setContentView(R.layout.activity_pop_up_info_details)
         title = po.findViewById(R.id.text_pop_up_1)
+        title_1 = po.findViewById(R.id.cv_title_1)
         desc = po.findViewById(R.id.text_pop_up_desc_1)
         desc_ext = po.findViewById(R.id.text_pop_up_desc_2)
         title.text = text_1
         desc.text = text_2
         desc_ext.text = text_3
+
+        // Sharedprefences begin
+        val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
+
+        // Getting sharedpreferences value if exist
+        // Configure theme interface
+        val night_mode = pref.getBoolean("MODE_NIGHT", false)
+        if (night_mode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            val nightColor = Color.parseColor("#607d8b")
+            title_1.setCardBackgroundColor(nightColor)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            val dayColor = Color.parseColor("#2286c3")
+            title_1.setCardBackgroundColor(dayColor)
+        }
+
         title.setOnClickListener { po.dismiss() }
         po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         po.show()

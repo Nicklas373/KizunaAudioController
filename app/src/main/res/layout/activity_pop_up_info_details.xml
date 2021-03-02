@@ -23,19 +23,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.302">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_title_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="#64b5f6"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="15dp"
+        app:cardMaxElevation="20dp">
+
         <TextView
             android:id="@+id/text_pop_up_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:text="@string/PLACEHOLDER"
             android:textAlignment="viewStart"
             android:fontFamily="@font/mandorin_font"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="18sp" />
+
+    </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/text_pop_up_desc_1"
@@ -44,7 +63,7 @@
             android:layout_gravity="start"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/mandorin_font"
             android:text="@string/PLACEHOLDER"

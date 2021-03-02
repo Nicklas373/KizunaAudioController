@@ -30,4 +30,8 @@ class AudioUtils {
     fun ExportKernelFile(local_dir: String) {
         Shell.SU.run("uname -r | head -c 3 > $local_dir")
     }
+
+    fun ExportFullKernelFile(local_dir: String) {
+        Shell.SU.run("uname -a > $local_dir")
+    }
 }
