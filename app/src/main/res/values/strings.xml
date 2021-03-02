@@ -85,6 +85,10 @@
 
     <!-- Settings String !-->
     <string name="audio_settings_title">Settings</string>
-    <string name="audio_settings_1">Dark Mode</string>
+    <string name="audio_settings_1">Theme</string>
+    <string name="audio_settings_1_1">Dark Mode</string>
+    <string name="audio_settings_2">Status</string>
+    <string name="audio_settings_2_1">Android Version</string>
+    <string name="audio_settings_2_2">Kernel Version</string>
     <!-- End of Settings String !-->
 </resources>
