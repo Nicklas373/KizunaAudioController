@@ -8,10 +8,9 @@
     <!-- End of PLACEHOLDER !-->
 
     <!-- Main String !-->
-    <string name="theme_switcher">Theme Switcher</string>
     <string name="app_main_menu_1">Audio Module</string>
     <string name="app_main_menu_2">Audio Information</string>
-    <string name="app_main_menu_3">App Settings</string>
+    <string name="app_main_menu_3">Settings</string>
     <!-- End of Main String !-->
 
     <!-- Audio Conf String !-->
@@ -83,4 +82,9 @@
     <string name="audio_session_list">Current Audio Service</string>
     <string name="audio_btn_info">Status</string>
     <!-- End of Audio Info String !-->
+
+    <!-- Settings String !-->
+    <string name="audio_settings_title">Settings</string>
+    <string name="audio_settings_1">Dark Mode</string>
+    <!-- End of Settings String !-->
 </resources>

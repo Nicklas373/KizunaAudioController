@@ -4,6 +4,8 @@ import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.transition.Explode
+import android.transition.Fade
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -17,6 +19,16 @@ class AudioSettingsActivity: AppCompatActivity() {
 
         val theme_switcher: SwitchMaterial = findViewById(R.id.theme_switcher)
 
+        // Hide title bar
+        Objects.requireNonNull(supportActionBar)?.hide()
+
+        // Lock rotation to potrait by default
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
+        // Set an animation transition
+        window.enterTransition = Explode()
+        window.returnTransition = Fade()
+        
         // Sharedprefences begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
         val save = pref.edit()

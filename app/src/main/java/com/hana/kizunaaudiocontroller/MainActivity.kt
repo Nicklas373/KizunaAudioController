@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
 
         // Getting sharedpreferences value if exist
+        // Configure theme interface
         val night_mode = pref.getBoolean("MODE_NIGHT", false)
         if (night_mode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -88,7 +89,10 @@ class MainActivity : AppCompatActivity() {
 
         mm_3.setOnClickListener {
             val i = Intent(this@MainActivity, AudioSettingsActivity::class.java)
-            startActivity(i)
+            val sharedView: View = mm_3
+            val transitionName = getString(R.string.audio_settings_title)
+            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity, sharedView, transitionName)
+            startActivity(i, transitionActivityOptions.toBundle())
         }
     }
 
