@@ -119,12 +119,28 @@
             android:text="@string/PLACEHOLDER"
             android:textSize="15sp" />
 
-        <View
+        <TextView
+            android:id="@+id/setting_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/mandorin_font"
+            android:textColor="@color/blue_700"
+            android:textStyle="bold"
+            android:text="@string/audio_settings_3"
+            android:textSize="20sp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/language_switcher"
             android:layout_width="match_parent"
-            android:layout_height="1dip"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mandorin_font"
+            android:textSize="15sp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@color/ant_gray" />
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/setting_theme"

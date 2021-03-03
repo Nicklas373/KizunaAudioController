@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kizuna Audio Module</string>
+    <string name="audio_settings_3_2">Inggris</string>
+    <string name="audio_settings_3_1">Bahasa Indonesia</string>
+    <string name="audio_settings_3">Bahasa</string>
+    <string name="audio_settings_2_2">Versi Kernel</string>
+    <string name="audio_settings_2_1">Versi Android</string>
+    <string name="audio_settings_2">Status</string>
+    <string name="audio_settings_1_1">Mode Gelap</string>
+    <string name="audio_settings_1">Tema</string>
+    <string name="audio_settings_title">Pengaturan</string>
+    <string name="audio_btn_info">Status</string>
+</resources>

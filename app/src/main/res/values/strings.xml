@@ -1,94 +1,83 @@
 <resources>
-    <!-- Begin PLACEHOLDER !-->
     <string name="app_name">Kizuna Audio Module</string>
-    <string name="PLACEHOLDER">PLACEHOLDER</string>
-    <string name="PLACEHOLDER_DESC">PLACEHOLDER DESCRIPTION</string>
-    <string name="PLACEHOLDER_LONG_DESC">THIS IS PLACEHOLDER DESCRIPTION LONG TEXT, STILL ON PROGRESS.. PLEASE WAIT!</string>
-    <string name="PLACEHOLDER_BUTTON">Click Me!</string>
-    <!-- End of PLACEHOLDER !-->
-
-    <!-- Main String !-->
-    <string name="app_main_menu_1">Audio Module</string>
-    <string name="app_main_menu_2">Audio Information</string>
-    <string name="app_main_menu_3">Settings</string>
-    <!-- End of Main String !-->
-
-    <!-- Audio Conf String !-->
-    <string name="app_menu_1_text">UHQA (Ultra High Quality Audio)</string>
-    <string name="app_menu_1_desc">UHQA mode allows to have high performance audio when using headset at primary, switch off/on toggles UHQA to switch the amplifier for HPH path.</string>
-    <string name="app_menu_1_info">Details</string>
-    <string name="app_menu_2_info">Info</string>
-    <string name="app_menu_1_info_title">Kizuna Audio Module</string>
-    <string name="app_menu_1_info_details">This module show audio module switch which can control several audio features directly from your kernel, current value in here was taken from kernel file that converted to actual value in the switch. However not all features in here will support in your device, switch will block access when it is not supported from your kernel</string>
-    <string name="app_menu_1_info_ext">NOTE: Need to re-plug headset or restart audio player app when switch one of this toggles</string>
-    <string name="app_menu_1_toast_uhqa_scs">Ultra High Quality Audio is active</string>
-    <string name="app_menu_1_toast_uhqa_fid">Ultra High Quality Audio is not active</string>
-    <string name="app_menu_1_toast_uhqa_ne">UHQA (Ultra High Quality Audio) is not available</string>
-    <string name="app_menu_2_text">Headset High Performance Mode</string>
-    <string name="app_menu_2_desc">Invoke class AB mode for headset path when sample rate is set to 192KHz and bit depth is set to 24, switch off/on toggles HPH to set headset path in UHQA mode.</string>
-    <string name="app_menu_2_toast_hph_scs">Headset High Performance Mode is active</string>
-    <string name="app_menu_2_toast_hph_fid">Headset High Performance Mode is not active</string>
-    <string name="app_menu_2_toast_hph_ne">Headset High Performance feature is not available</string>
-    <string name="app_menu_3_text">Low Distortion AMP</string>
-    <string name="app_menu_3_desc">Provide low distortion audio quality by enable/disable AB Class Mode directly on amplifier, switch off/on toggles AMP to configure low distortion mode.</string>
-    <string name="app_menu_3_toast_amp_scs">Low Distortion AMP is active</string>
-    <string name="app_menu_3_toast_amp_fid">Low Distortion AMP is not active</string>
-    <string name="app_menu_3_toast_amp_ne">Low Distortion AMP feature is not available</string>
-    <string name="app_menu_4_text">Headphone Impedance Detection</string>
-    <string name="app_menu_4_desc">Provide impedance of headphones to be able to adjust gain according to impedance, switch off/on toggles IMPEDANCE to have consistent volume level with different headphones.</string>
-    <string name="app_menu_4_toast_impedance_scs">>Headphone Impedance Detection is active</string>
-    <string name="app_menu_4_toast_impedance_fid">Headphone Impedance Detection is not active</string>
-    <string name="app_menu_4_toast_impedance_ne">Headphone Impedance Detection feature is not available</string>
-    <string name="app_menu_5_text">Experimental Features</string>
-    <string name="app_menu_5_desc">NOTE: Experimental features can make problem with audio process, if you are use some service that need exclusive access like BiQuads service or other.</string>
-    <string name="app_menu_5_toast_ef_scs">Experimental Features is active</string>
-    <string name="app_menu_5_toast_ef_fid">Experimental Features is not active</string>
-    <string name="app_menu_6_text">Qualcomm Power Gating</string>
-    <string name="app_menu_6_desc">Qualcomm power gating features is only useful if user want to use BiQuads filter, it should save power for other users. (Active it if you want to use BiQuads)</string>
-    <string name="app_menu_6_toast_gating_scs">BiQuads features is active</string>
-    <string name="app_menu_6_toast_gating_fid">BiQuads features is not active</string>
-    <string name="state_info">Current State :</string>
-    <string name="state_support">Support</string>
-    <string name="state_unsupport">Not Supported</string>
-    <string name="state_enable">Enable</string>
-    <string name="state_disable">Disable</string>
-    <!-- End of Audio Conf String !-->
-
-    <!-- Audio Info String !-->
-    <string name="app_menu_2_info_title">Kizuna Audio Information</string>
-    <string name="app_menu_2_info_details">This module show current audio state from android media services (Media Flinger) that was dump and got processed with severral algorithm to filter and show out several audio information on this app</string>
-    <string name="app_menu_2_info_ext">NOTE: Value adapted when you re-open this module, this is not a static information that only load in one time</string>
-    <string name="audio_base">Audio State</string>
-    <string name="audio_out">Audio Output</string>
-    <string name="audio_io_process">Audio I/O PID</string>
-    <string name="audio_standby">Audio Standby</string>
-    <string name="audio_base_2">Audio HAL</string>
-    <string name="audio_sample_rate">Audio Sample Rate</string>
-    <string name="audio_hal_frame">Audio HAL Frame</string>
-    <string name="audio_hal_format">Audio HAL Format</string>
-    <string name="audio_base_3">Audio Channel</string>
-    <string name="audio_channel_count">Audio Channel Count</string>
-    <string name="audio_channel_mask">Audio Channel Route</string>
-    <string name="audio_base_4">Audio Process</string>
-    <string name="audio_format">Audio Format</string>
-    <string name="audio_frame">Audio Frame</string>
-    <string name="audio_flags">Audio Flags</string>
-    <string name="audio_base_5">Audio Session</string>
-    <string name="audio_effects">ADSP Effects</string>
-    <string name="audio_effects_details">Current active android audio digital signal processing (ADSP) effects on this session, this refer to internal android ROM library which usually active when audio session or standby</string>
-    <string name="audio_effects_list">Current ADSP</string>
-    <string name="audio_session">Audio Service</string>
-    <string name="audio_session_details">Current active android audio services information which show what are services or application that use audio service on this session</string>
-    <string name="audio_session_list">Current Audio Service</string>
+    <string name="PLACEHOLDER" translatable="false">PLACEHOLDER</string>
+    <string name="PLACEHOLDER_DESC" translatable="false">PLACEHOLDER DESCRIPTION</string>
+    <string name="PLACEHOLDER_LONG_DESC" translatable="false">THIS IS PLACEHOLDER DESCRIPTION LONG TEXT, STILL ON PROGRESS.. PLEASE WAIT!</string>
+    <string name="PLACEHOLDER_BUTTON" translatable="false">Click Me!</string>
+    <string name="app_main_menu_1" translatable="false">Audio Module</string>
+    <string name="app_main_menu_2" translatable="false">Audio Information</string>
+    <string name="app_main_menu_3" translatable="false">Settings</string>
+    <string name="app_menu_1_text" translatable="false">UHQA (Ultra High Quality Audio)</string>
+    <string name="app_menu_1_desc" translatable="false">UHQA mode allows to have high performance audio when using headset at primary, switch off/on toggles UHQA to switch the amplifier for HPH path.</string>
+    <string name="app_menu_1_info" translatable="false">Details</string>
+    <string name="app_menu_2_info" translatable="false">Info</string>
+    <string name="app_menu_1_info_title" translatable="false">Kizuna Audio Module</string>
+    <string name="app_menu_1_info_details" translatable="false">This module show audio module switch which can control several audio features directly from your kernel, current value in here was taken from kernel file that converted to actual value in the switch. However not all features in here will support in your device, switch will block access when it is not supported from your kernel</string>
+    <string name="app_menu_1_info_ext" translatable="false">NOTE: Need to re-plug headset or restart audio player app when switch one of this toggles</string>
+    <string name="app_menu_1_toast_uhqa_scs" translatable="false">Ultra High Quality Audio is active</string>
+    <string name="app_menu_1_toast_uhqa_fid" translatable="false">Ultra High Quality Audio is not active</string>
+    <string name="app_menu_1_toast_uhqa_ne" translatable="false">UHQA (Ultra High Quality Audio) is not available</string>
+    <string name="app_menu_2_text" translatable="false">Headset High Performance Mode</string>
+    <string name="app_menu_2_desc" translatable="false">Invoke class AB mode for headset path when sample rate is set to 192KHz and bit depth is set to 24, switch off/on toggles HPH to set headset path in UHQA mode.</string>
+    <string name="app_menu_2_toast_hph_scs" translatable="false">Headset High Performance Mode is active</string>
+    <string name="app_menu_2_toast_hph_fid" translatable="false">Headset High Performance Mode is not active</string>
+    <string name="app_menu_2_toast_hph_ne" translatable="false">Headset High Performance feature is not available</string>
+    <string name="app_menu_3_text" translatable="false">Low Distortion AMP</string>
+    <string name="app_menu_3_desc" translatable="false">Provide low distortion audio quality by enable/disable AB Class Mode directly on amplifier, switch off/on toggles AMP to configure low distortion mode.</string>
+    <string name="app_menu_3_toast_amp_scs" translatable="false">Low Distortion AMP is active</string>
+    <string name="app_menu_3_toast_amp_fid" translatable="false">Low Distortion AMP is not active</string>
+    <string name="app_menu_3_toast_amp_ne" translatable="false">Low Distortion AMP feature is not available</string>
+    <string name="app_menu_4_text" translatable="false">Headphone Impedance Detection</string>
+    <string name="app_menu_4_desc" translatable="false">Provide impedance of headphones to be able to adjust gain according to impedance, switch off/on toggles IMPEDANCE to have consistent volume level with different headphones.</string>
+    <string name="app_menu_4_toast_impedance_scs" translatable="false">>Headphone Impedance Detection is active</string>
+    <string name="app_menu_4_toast_impedance_fid" translatable="false">Headphone Impedance Detection is not active</string>
+    <string name="app_menu_4_toast_impedance_ne" translatable="false">Headphone Impedance Detection feature is not available</string>
+    <string name="app_menu_5_text" translatable="false">Experimental Features</string>
+    <string name="app_menu_5_desc" translatable="false">NOTE: Experimental features can make problem with audio process, if you are use some service that need exclusive access like BiQuads service or other.</string>
+    <string name="app_menu_5_toast_ef_scs" translatable="false">Experimental Features is active</string>
+    <string name="app_menu_5_toast_ef_fid" translatable="false">Experimental Features is not active</string>
+    <string name="app_menu_6_text" translatable="false">Qualcomm Power Gating</string>
+    <string name="app_menu_6_desc" translatable="false">Qualcomm power gating features is only useful if user want to use BiQuads filter, it should save power for other users. (Active it if you want to use BiQuads)</string>
+    <string name="app_menu_6_toast_gating_scs" translatable="false">BiQuads features is active</string>
+    <string name="app_menu_6_toast_gating_fid" translatable="false">BiQuads features is not active</string>
+    <string name="state_info" translatable="false">Current State :</string>
+    <string name="state_support" translatable="false">Support</string>
+    <string name="state_unsupport" translatable="false">Not Supported</string>
+    <string name="state_enable" translatable="false">Enable</string>
+    <string name="state_disable" translatable="false">Disable</string>
+    <string name="app_menu_2_info_title" translatable="false">Kizuna Audio Information</string>
+    <string name="app_menu_2_info_details" translatable="false">This module show current audio state from android media services (Media Flinger) that was dump and got processed with severral algorithm to filter and show out several audio information on this app</string>
+    <string name="app_menu_2_info_ext" translatable="false">NOTE: Value adapted when you re-open this module, this is not a static information that only load in one time</string>
+    <string name="audio_base" translatable="false">Audio State</string>
+    <string name="audio_out" translatable="false">Audio Output</string>
+    <string name="audio_io_process" translatable="false">Audio I/O PID</string>
+    <string name="audio_standby" translatable="false">Audio Standby</string>
+    <string name="audio_base_2" translatable="false">Audio HAL</string>
+    <string name="audio_sample_rate" translatable="false">Audio Sample Rate</string>
+    <string name="audio_hal_frame" translatable="false">Audio HAL Frame</string>
+    <string name="audio_hal_format" translatable="false">Audio HAL Format</string>
+    <string name="audio_base_3" translatable="false">Audio Channel</string>
+    <string name="audio_channel_count" translatable="false">Audio Channel Count</string>
+    <string name="audio_channel_mask" translatable="false">Audio Channel Route</string>
+    <string name="audio_base_4" translatable="false">Audio Process</string>
+    <string name="audio_format" translatable="false">Audio Format</string>
+    <string name="audio_frame" translatable="false">Audio Frame</string>
+    <string name="audio_flags" translatable="false">Audio Flags</string>
+    <string name="audio_base_5" translatable="false">Audio Session</string>
+    <string name="audio_effects" translatable="false">ADSP Effects</string>
+    <string name="audio_effects_details" translatable="false">Current active android audio digital signal processing (ADSP) effects on this session, this refer to internal android ROM library which usually active when audio session or standby</string>
+    <string name="audio_effects_list" translatable="false">Current ADSP</string>
+    <string name="audio_session" translatable="false">Audio Service</string>
+    <string name="audio_session_details" translatable="false">Current active android audio services information which show what are services or application that use audio service on this session</string>
+    <string name="audio_session_list" translatable="false">Current Audio Service</string>
     <string name="audio_btn_info">Status</string>
-    <!-- End of Audio Info String !-->
-
-    <!-- Settings String !-->
     <string name="audio_settings_title">Settings</string>
     <string name="audio_settings_1">Theme</string>
     <string name="audio_settings_1_1">Dark Mode</string>
     <string name="audio_settings_2">Status</string>
     <string name="audio_settings_2_1">Android Version</string>
     <string name="audio_settings_2_2">Kernel Version</string>
-    <!-- End of Settings String !-->
+    <string name="audio_settings_3">Language</string>
+    <string name="audio_settings_3_1">Bahasa Indonesia</string>
+    <string name="audio_settings_3_2">English</string>
 </resources>
