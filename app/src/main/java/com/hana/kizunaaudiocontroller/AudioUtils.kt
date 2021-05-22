@@ -27,11 +27,19 @@ class AudioUtils {
       Shell.SU.run("rm $local_dir")
     }
 
+    fun BackupLogFiles(bak_dir: String, name: String) {
+        Shell.SU.run("cd $bak_dir && tar -cvzf $name *.txt")
+    }
+
     fun ExportKernelFile(local_dir: String) {
         Shell.SU.run("uname -r | head -c 3 > $local_dir")
     }
 
     fun ExportFullKernelFile(local_dir: String) {
         Shell.SU.run("uname -a > $local_dir")
+    }
+
+    fun ExportLogFiles(bak_dir: String, name: String, dest_dir: String) {
+        Shell.SU.run("cd $bak_dir && mv $name $dest_dir")
     }
 }

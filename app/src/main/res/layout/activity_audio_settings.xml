@@ -166,6 +166,30 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"/>
 
+        <TextView
+            android:id="@+id/setting_backup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/mandorin_font"
+            android:textColor="@color/blue_700"
+            android:textStyle="bold"
+            android:text="@string/audio_settings_4"
+            android:textSize="20sp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/backup_switcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_settings_4_1"
+            android:fontFamily="@font/mandorin_font"
+            android:textSize="15sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"/>
+
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

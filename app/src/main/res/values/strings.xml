@@ -80,4 +80,6 @@
     <string name="audio_settings_3">Language</string>
     <string name="audio_settings_3_1">Bahasa Indonesia</string>
     <string name="audio_settings_3_2">English</string>
+    <string name="audio_settings_4">Backup</string>
+    <string name="audio_settings_4_1">Backup log files</string>
 </resources>

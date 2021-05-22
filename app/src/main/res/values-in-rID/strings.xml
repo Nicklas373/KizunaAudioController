@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Kizuna Audio Module</string>
+    <string name="audio_settings_4_1">Cadangkan berkas catatan</string>
+    <string name="audio_settings_4">Cadangkan</string>
     <string name="audio_settings_3_2">Inggris</string>
     <string name="audio_settings_3_1">Bahasa Indonesia</string>
     <string name="audio_settings_3">Bahasa</string>
