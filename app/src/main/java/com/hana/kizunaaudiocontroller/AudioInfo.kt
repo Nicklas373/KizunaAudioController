@@ -15,7 +15,11 @@ class AudioInfo {
         Shell.SU.run("grep -n $filter $aflinger | head -c $head > $aclient")
     }
 
-    fun CurrentAudioClient(top_limit: Int, bottom_limit: Int, aflinger:String, aclient:String){
+    fun CurrentAudioClient_10(top_limit: Int, bottom_limit: Int, aflinger:String, aclient:String){
+        Shell.SU.run("sed -n '$top_limit,$bottom_limit p' $aflinger | sed 's/^[[:space:]]*//' > $aclient")
+    }
+
+    fun CurrentAudioClient_11(top_limit: Int, bottom_limit: Int, aflinger:String, aclient:String){
         Shell.SU.run("sed -n '$top_limit,$bottom_limit p' $aflinger | sed 's/[^a-z,.]*//g' > $aclient")
     }
 

@@ -108,9 +108,25 @@ class AudioInfoActivity : AppCompatActivity() {
         ai.LibraryEffects(an.mediaflinger_dump, an.unfiltered_library, an.library)
         ai.LimitAudioClient("Notification", an.mediaflinger_dump, "3", an.audio_client_tl_init)
         ai.LimitAudioClient("Global", an.mediaflinger_dump, "3", an.audio_client_bl_init)
-        val aclient_tl = au.readFromFile(this, an.audio_client_tl_init_file).toInt().plus(2)
-        val aclient_bl = au.readFromFile(this, an.audio_client_bl_init_file).toInt().minus(1)
-        ai.CurrentAudioClient(aclient_tl, aclient_bl, an.mediaflinger_dump, an.audio_client_init)
+
+        /* Show current app or services that was using audio services in the system
+         *
+         * NOTE: Android 10 or below doesn't support to show directly app name or service name
+         * on Notification or Global usage in audioflinger services, instead show only pid number
+         * without pid name just like on Android 11.
+         *
+         * So create decision to separate based on Android version to show prepare pid with number
+         * or pid with name from the services in audioflinger.
+         */
+        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.Q) {
+            val aclient_tl = au.readFromFile(this, an.audio_client_tl_init_file).toInt().plus(3)
+            val aclient_bl = au.readFromFile(this, an.audio_client_bl_init_file).toInt().minus(1)
+            ai.CurrentAudioClient_10(aclient_tl, aclient_bl, an.mediaflinger_dump, an.audio_client_init)
+        } else {
+            val aclient_tl = au.readFromFile(this, an.audio_client_tl_init_file).toInt().plus(2)
+            val aclient_bl = au.readFromFile(this, an.audio_client_bl_init_file).toInt().minus(1)
+            ai.CurrentAudioClient_11(aclient_tl, aclient_bl, an.mediaflinger_dump, an.audio_client_init)
+        }
 
         // Begin bash processing for specific condition
         ai.KAOAudioInit("DIRECT", an.mediaflinger_dump, "1", an.kao_audio_init)
