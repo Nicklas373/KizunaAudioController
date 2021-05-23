@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="audio_settings_4_1_1_4">Kosong</string>
+    <string name="audio_settings_4_1_1_3">Pencadangan Gagal !, Proses Pencadangan gagal di saat tahap pertama !</string>
+    <string name="audio_settings_4_1_1_2">Pencadangan Gagal !, Proses Pencadangan gagal di saat mengekspor !</string>
+    <string name="audio_settings_4_1_1_1">Pencadangan Berhasil !, Berkas Catatan Tersedia di Folder Download</string>
     <string name="app_name">Kizuna Audio Module</string>
+    <string name="audio_settings_5">Lainnya</string>
+    <string name="audio_settings_4_1_4">Cadangan Terakhir</string>
+    <string name="audio_settings_4_1_3">Cadangkan Sekarang</string>
+    <string name="audio_settings_4_1_2">Cadangkan log aplikasi ke penyimpanan internal anda untuk tujuan pemecahan masalah atau perbaikan aplikasi</string>
+    <string name="audio_settings_4_1_1">Cadangkan log</string>
     <string name="audio_settings_4_1">Cadangkan berkas catatan</string>
     <string name="audio_settings_4">Cadangkan</string>
     <string name="audio_settings_3_2">Inggris</string>

@@ -6,7 +6,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_pop_up_1"
-        android:layout_width="350dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:clickable="true"
@@ -61,7 +61,7 @@
             android:layout_gravity="center|top"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="70dp"
             android:fontFamily="@font/mandorin_font"
             android:text="@string/PLACEHOLDER"
             android:textColor="@color/white"
@@ -71,8 +71,7 @@
             android:id="@+id/cv_title_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="10dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="150dp"
             android:clickable="true"
             android:focusable="true"
@@ -96,7 +95,7 @@
                 android:textAlignment="viewStart"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
 
         </androidx.cardview.widget.CardView>
 
@@ -104,35 +103,54 @@
             android:id="@+id/text_pop_up_desc_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="210dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="220dp"
             android:fontFamily="@font/mandorin_font"
             android:text="@string/PLACEHOLDER"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/text_pop_up_desc_4"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_title_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_marginTop="300dp"
             android:layout_marginStart="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="250dp"
-            android:fontFamily="@font/mandorin_font"
-            android:text="@string/PLACEHOLDER"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="#64b5f6"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="15dp"
+            app:cardMaxElevation="20dp">
+
+            <TextView
+                android:id="@+id/text_pop_up_desc_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/PLACEHOLDER"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="15sp" />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/text_pop_up_desc_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="290dp"
-            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="310dp"
+            android:layout_marginBottom="60dp"
             android:fontFamily="@font/mandorin_font"
             android:text="@string/PLACEHOLDER"
             android:textColor="@color/white"

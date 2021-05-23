@@ -132,15 +132,27 @@
             android:text="@string/audio_settings_3"
             android:textSize="20sp" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/language_switcher"
+        <RadioButton
+            android:id="@+id/language_switcher_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/mandorin_font"
             android:textSize="15sp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:text="@string/audio_settings_3_1" />
+
+        <RadioButton
+            android:id="@+id/language_switcher_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mandorin_font"
+            android:textSize="15sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/audio_settings_3_2" />
 
         <TextView
             android:id="@+id/setting_theme"
@@ -148,7 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|bottom"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/mandorin_font"
             android:textColor="@color/blue_700"
             android:textStyle="bold"
@@ -179,16 +191,20 @@
             android:text="@string/audio_settings_4"
             android:textSize="20sp" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/backup_switcher"
+        <Button
+            android:id="@+id/button_backup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:text="@string/audio_settings_4_1"
             android:fontFamily="@font/mandorin_font"
             android:textSize="15sp"
+            android:textAllCaps="false"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:focusable="true" />
 
     </LinearLayout>
     </ScrollView>

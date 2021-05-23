@@ -28,7 +28,7 @@ class AudioUtils {
     }
 
     fun BackupLogFiles(bak_dir: String, name: String) {
-        Shell.SU.run("cd $bak_dir && tar -cvzf $name *.txt")
+        Shell.SU.run("cd $bak_dir && tar -czf $name *.txt")
     }
 
     fun ExportKernelFile(local_dir: String) {

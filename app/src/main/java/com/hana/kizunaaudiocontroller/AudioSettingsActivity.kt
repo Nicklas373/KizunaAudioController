@@ -8,10 +8,13 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.transition.Explode
 import android.transition.Fade
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -41,16 +44,17 @@ class AudioSettingsActivity: AppCompatActivity() {
         // Bind controller
         val cv_title: CardView = findViewById(R.id.cv_title)
         val txt_settings_1: TextView = findViewById(R.id.setting_info)
-        val txt_settings_2: TextView = findViewById(R.id.setting_theme)
-        val txt_settings_3: TextView = findViewById(R.id.setting_language)
+        val txt_settings_2: TextView = findViewById(R.id.setting_language)
+        val txt_settings_3: TextView = findViewById(R.id.setting_theme)
         val txt_settings_4: TextView = findViewById(R.id.setting_backup)
         val txt_settings_1_ans: TextView = findViewById(R.id.setting_info_1)
         val txt_settings_1_qns: TextView = findViewById(R.id.setting_info_1_ans)
         val txt_settings_1_1_ans: TextView = findViewById(R.id.setting_info_2)
         val txt_settings_1_2_qns: TextView = findViewById(R.id.setting_info_2_ans)
         val theme_switcher: SwitchMaterial = findViewById(R.id.theme_switcher)
-        val language_switcher: SwitchMaterial = findViewById(R.id.language_switcher)
-        val backup_switcher: SwitchMaterial = findViewById(R.id.backup_switcher)
+        val language_switcher_id: RadioButton = findViewById(R.id.language_switcher_id)
+        val language_switcher_en: RadioButton = findViewById(R.id.language_switcher_en)
+        val backup_switcher: Button = findViewById(R.id.button_backup)
 
         // Hide title bar
         Objects.requireNonNull(supportActionBar)?.hide()
@@ -85,6 +89,7 @@ class AudioSettingsActivity: AppCompatActivity() {
             txt_settings_1_2_qns.setTextColor(textnightColor)
             txt_settings_2.setTextColor(textnightColor)
             txt_settings_3.setTextColor(textnightColor)
+            txt_settings_4.setTextColor(textnightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -96,17 +101,18 @@ class AudioSettingsActivity: AppCompatActivity() {
         val lang = pref.getString("lang", "en")
         if (lang != null) {
             if (lang.equals("id")) {
-                language_switcher.isChecked = true
-                language_switcher.setText(R.string.audio_settings_3_1)
+                language_switcher_id.isChecked = true
+                language_switcher_en.isChecked = false
                 setLang("id")
             } else if (lang.equals("en")) {
-                language_switcher.isChecked = false
-                language_switcher.setText(R.string.audio_settings_3_2)
+                language_switcher_id.isChecked = false
+                language_switcher_en.isChecked = true
                 setLang("en")
             }
         } else {
-            language_switcher.isChecked = false
-            language_switcher.setText(R.string.audio_settings_3_2)
+            language_switcher_id.isChecked = false
+            language_switcher_en.isChecked = false
+            setLang("en")
         }
 
         // Call necessary class
@@ -140,37 +146,40 @@ class AudioSettingsActivity: AppCompatActivity() {
             }
         }
 
-        language_switcher.setOnClickListener{
-            if (language_switcher.isChecked()) {
+        language_switcher_id.setOnClickListener{
+            if (language_switcher_id.isChecked()) {
                 save.putString("lang", "id")
                 save.apply()
                 setLang("id")
                 this.recreate()
-                language_switcher.isChecked = true
+                language_switcher_id.isChecked = true
+                language_switcher_en.isChecked = false
             } else {
+                language_switcher_id.isChecked = false
+                language_switcher_en.isChecked = false
+            }
+        }
+
+        language_switcher_en.setOnClickListener{
+            if (language_switcher_id.isChecked()) {
                 save.putString("lang", "en")
                 save.apply()
                 setLang("en")
                 this.recreate()
-                language_switcher.isChecked = false
+                language_switcher_id.isChecked = false
+                language_switcher_en.isChecked = true
+            } else {
+                language_switcher_id.isChecked = false
+                language_switcher_en.isChecked = false
             }
         }
 
         backup_switcher.setOnClickListener{
-            if (backup_switcher.isChecked) {
                 // Initiate dialog
                 po = Dialog(this@AudioSettingsActivity)
 
                 // Call dialog
-                ShowPopup(
-                    "Backup Menu",
-                    "Backup current log files from the app to your sdcard",
-                    "Backup",
-                    "PLACEHOLDER",
-                    "Last Backup:",
-                    "PLACEHOLDER"
-                )
-            }
+                ShowPopup(resources.getString(R.string.audio_settings_4_1_1), resources.getString(R.string.audio_settings_4_1_2), resources.getString(R.string.audio_settings_4_1_3), resources.getString(R.string.PLACEHOLDER), resources.getString(R.string.audio_settings_4_1_4), resources.getString(R.string.PLACEHOLDER))
         }
     }
 
@@ -188,7 +197,7 @@ class AudioSettingsActivity: AppCompatActivity() {
         val an = AudioNode()
         val au = AudioUtils()
 
-        val currentTime = Calendar.getInstance().time
+        val backupTime = DateFormat.format("yyyy-MM-dd hh:mm:ss", Date())
 
         title_1 = po.findViewById(R.id.text_pop_up_1)
         title_2 = po.findViewById(R.id.text_pop_up_desc_2)
@@ -205,24 +214,24 @@ class AudioSettingsActivity: AppCompatActivity() {
         alt_desc_title_1.text = text_6
 
         cv_title_2.setOnClickListener{
-            au.BackupLogFiles(an.kao_files, "KAO_BACKUP.gz")
-            val file = File(an.kao_files+"KAO_BACKUP.gz")
+            au.BackupLogFiles(an.kao_files, an.kao_backup_files)
+            val file = File(an.kao_files+an.kao_backup_files)
             if (file.exists()) {
-                au.ExportLogFiles(an.kao_files,"KAO_BACKUP.gz", an.kao_backup)
-                val file_2 = File(an.kao_backup+"/"+"KAO_BACKUP.gz")
+                au.ExportLogFiles(an.kao_files,an.kao_backup_files, an.kao_backup_dir)
+                val file_2 = File(an.kao_backup_dir+"/"+an.kao_backup_files)
                 if (file_2.exists()) {
-                    desc_title_2.text = an.kao_backup+"/"+"KAO_BACKUP.gz"
-                    alt_desc_title_1.text = currentTime.toString()
-                    setSnackBar(findViewById(android.R.id.content), "Data Backup Available on Download Folder")
+                    desc_title_2.text = an.kao_backup_dir+"/"+an.kao_backup_files
+                    alt_desc_title_1.text = backupTime.toString()
+                    setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.audio_settings_4_1_1_1))
                 } else {
-                    desc_title_2.text = "NULL"
-                    alt_desc_title_1.text = "NULL"
-                    setSnackBar(findViewById(android.R.id.content), "Data Backup Failed on Export")
+                    desc_title_2.text = resources.getString(R.string.audio_settings_4_1_1_4)
+                    alt_desc_title_1.text = resources.getString(R.string.audio_settings_4_1_1_4)
+                    setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.audio_settings_4_1_1_2))
                 }
             } else {
-                desc_title_2.text = "NULL"
-                alt_desc_title_1.text = "NULL"
-                setSnackBar(findViewById(android.R.id.content), "Data Backup Failed on Backup")
+                desc_title_2.text = resources.getString(R.string.audio_settings_4_1_1_4)
+                alt_desc_title_1.text = resources.getString(R.string.audio_settings_4_1_1_4)
+                setSnackBar(findViewById(android.R.id.content), resources.getString(R.string.audio_settings_4_1_1_3))
             }
         }
 

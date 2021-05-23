@@ -82,4 +82,13 @@
     <string name="audio_settings_3_2">English</string>
     <string name="audio_settings_4">Backup</string>
     <string name="audio_settings_4_1">Backup log files</string>
+    <string name="audio_settings_4_1_1">Backup log</string>
+    <string name="audio_settings_4_1_2">Backup current application debug log files to your internal storage for debug or troubleshoot purpose</string>
+    <string name="audio_settings_4_1_3">Backup Now</string>
+    <string name="audio_settings_4_1_4">Last Backup</string>
+    <string name="audio_settings_4_1_1_1">Backup Success !, Log file Available on Download Folder</string>
+    <string name="audio_settings_4_1_1_2">Backup Failed !, Backup Process Failed While Exporting to Download Folder !</string>
+    <string name="audio_settings_4_1_1_3">Backup Failed !, Backup Process Failed On Initial Stage!</string>
+    <string name="audio_settings_4_1_1_4">Empty</string>
+    <string name="audio_settings_5">Misc</string>
 </resources>
