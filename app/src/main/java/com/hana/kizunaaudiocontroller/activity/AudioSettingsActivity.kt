@@ -17,19 +17,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
-import com.hana.kizunaaudiocontroller.datasource.AudioNode
-import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
 import com.hana.kizunaaudiocontroller.R
+import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
 import com.hana.kizunaaudiocontroller.databinding.ActivityAudioSettingsBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpBackupInfoBinding
 import com.hana.kizunaaudiocontroller.databinding.ContentAudioSettingsBinding
+import com.hana.kizunaaudiocontroller.datasource.AudioNode
 import java.io.File
 import java.util.*
 
 class AudioSettingsActivity : AppCompatActivity() {
 
     // Binding
-    private lateinit var binding: ActivityAudioSettingsBinding
     private lateinit var contentSettingsBinding: ContentAudioSettingsBinding
 
     private lateinit var po: Dialog
@@ -37,8 +36,10 @@ class AudioSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityAudioSettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val activityAudioSettingsBinding = ActivityAudioSettingsBinding.inflate(layoutInflater)
+        contentSettingsBinding = activityAudioSettingsBinding.detailContent
+
+        setContentView(activityAudioSettingsBinding.root)
 
         // Hide title bar
         supportActionBar?.hide()
@@ -62,7 +63,7 @@ class AudioSettingsActivity : AppCompatActivity() {
             val textNightColor = Color.parseColor("#FFFFFFFF")
 
             supportActionBar?.setBackgroundDrawable(colorDrawable)
-            binding.cvTitle.setCardBackgroundColor(nightColor)
+            activityAudioSettingsBinding.cvTitle.setCardBackgroundColor(nightColor)
             contentSettingsBinding.settingInfo.setTextColor(textNightColor)
             contentSettingsBinding.settingInfo1Ans.setTextColor(textNightColor)
             contentSettingsBinding.settingInfo1.setTextColor(textNightColor)
@@ -107,9 +108,9 @@ class AudioSettingsActivity : AppCompatActivity() {
         contentSettingsBinding.settingInfo1Ans.text = Build.VERSION.RELEASE
         contentSettingsBinding.settingInfo2Ans.text = au.readFromFile(this, an.kernel_file).trim()
 
-        binding.cvTitle.setOnClickListener {
+        activityAudioSettingsBinding.cvTitle.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)
-            val sharedView: View = binding.cvTitle
+            val sharedView: View = activityAudioSettingsBinding.cvTitle
             val transitionName = getString(R.string.app_main_menu_3)
             val transitionActivityOptions =
                 ActivityOptions.makeSceneTransitionAnimation(this, sharedView, transitionName)

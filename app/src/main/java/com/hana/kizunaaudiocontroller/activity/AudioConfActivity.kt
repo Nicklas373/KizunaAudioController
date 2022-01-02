@@ -29,7 +29,6 @@ import java.util.*
 
 class AudioConfActivity : AppCompatActivity() {
     // Binding
-    private lateinit var binding: ActivityAudioConfBinding
     private lateinit var confBinding: ContentAudioConfBinding
 
     // Separate environment
@@ -40,7 +39,9 @@ class AudioConfActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityAudioConfBinding.inflate(layoutInflater)
+        val binding = ActivityAudioConfBinding.inflate(layoutInflater)
+        confBinding = binding.detailContent
+
         setContentView(binding.root)
 
         supportActionBar?.hide()

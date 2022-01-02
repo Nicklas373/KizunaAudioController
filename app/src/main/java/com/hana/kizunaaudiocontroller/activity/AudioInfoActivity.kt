@@ -17,10 +17,7 @@ import com.hana.kizunaaudiocontroller.audioUtils.AudioInfo
 import com.hana.kizunaaudiocontroller.datasource.AudioNode
 import com.hana.kizunaaudiocontroller.audioUtils.AudioProc
 import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
-import com.hana.kizunaaudiocontroller.databinding.ActivityAudioInfoBinding
-import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpInfoBinding
-import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpInfoDetailsBinding
-import com.hana.kizunaaudiocontroller.databinding.ContentAudioInfoBinding
+import com.hana.kizunaaudiocontroller.databinding.*
 
 
 class AudioInfoActivity : AppCompatActivity() {
@@ -32,14 +29,13 @@ class AudioInfoActivity : AppCompatActivity() {
     private lateinit var descExt: TextView
 
     // Binding
-    private lateinit var binding: ActivityAudioInfoBinding
     private lateinit var contentInfoBinding: ContentAudioInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityAudioInfoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val binding = ActivityAudioInfoBinding.inflate(layoutInflater)
+        contentInfoBinding = binding.detailContent
 
         supportActionBar?.hide()
 

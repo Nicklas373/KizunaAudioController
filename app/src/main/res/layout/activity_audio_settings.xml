@@ -38,6 +38,7 @@
                 android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

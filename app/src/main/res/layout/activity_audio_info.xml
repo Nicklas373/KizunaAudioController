@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_app_menu_2"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:transitionName="@string/app_main_menu_2"
-        app:cardBackgroundColor="@color/blue_500"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="15dp"
-        app:cardMaxElevation="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
-        <TextView
-            android:id="@+id/app_menu_1_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/mandorin_font"
-            android:text="@string/app_main_menu_2"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/button_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|top"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ripple_effect"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_app_menu_2"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
-            android:fontFamily="@font/mandorin_font"
-            android:text="@string/app_menu_2_info"
-            android:textAllCaps="false"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
+            android:foreground="?android:attr/selectableItemBackground"
+            android:transitionName="@string/app_main_menu_2"
+            app:cardBackgroundColor="@color/blue_500"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="15dp"
+            app:cardMaxElevation="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/app_menu_1_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/app_main_menu_2"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/button_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/ripple_effect"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/app_menu_2_info"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -57,4 +63,4 @@
             android:id="@+id/detail_content"
             layout="@layout/content_audio_info" />
     </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

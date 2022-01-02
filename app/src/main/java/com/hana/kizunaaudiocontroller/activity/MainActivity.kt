@@ -26,14 +26,15 @@ class MainActivity : AppCompatActivity() {
     private val requestPermission = 20
 
     // Binding
-    private lateinit var binding: ActivityMainBinding
     private lateinit var contentBinding: ContentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        contentBinding = activityMainBinding.detailContent
+
+        setContentView(activityMainBinding.root)
 
         // Binding root class
         val ar = AudioRoot()
