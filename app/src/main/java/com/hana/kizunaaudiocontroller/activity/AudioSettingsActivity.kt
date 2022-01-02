@@ -22,6 +22,7 @@ import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
 import com.hana.kizunaaudiocontroller.R
 import com.hana.kizunaaudiocontroller.databinding.ActivityAudioSettingsBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpBackupInfoBinding
+import com.hana.kizunaaudiocontroller.databinding.ContentAudioSettingsBinding
 import java.io.File
 import java.util.*
 
@@ -29,6 +30,7 @@ class AudioSettingsActivity : AppCompatActivity() {
 
     // Binding
     private lateinit var binding: ActivityAudioSettingsBinding
+    private lateinit var contentSettingsBinding: ContentAudioSettingsBinding
 
     private lateinit var po: Dialog
 
@@ -53,7 +55,7 @@ class AudioSettingsActivity : AppCompatActivity() {
         val nightMode = pref.getBoolean("MODE_NIGHT", false)
         if (nightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            binding.themeSwitcher.isChecked = true
+            contentSettingsBinding.themeSwitcher.isChecked = true
 
             val colorDrawable = ColorDrawable(Color.parseColor("#2286c3"))
             val nightColor = Color.parseColor("#2286c3")
@@ -61,14 +63,14 @@ class AudioSettingsActivity : AppCompatActivity() {
 
             supportActionBar?.setBackgroundDrawable(colorDrawable)
             binding.cvTitle.setCardBackgroundColor(nightColor)
-            binding.settingInfo.setTextColor(textNightColor)
-            binding.settingInfo1Ans.setTextColor(textNightColor)
-            binding.settingInfo1.setTextColor(textNightColor)
-            binding.settingInfo2.setTextColor(textNightColor)
-            binding.settingInfo2Ans.setTextColor(textNightColor)
-            binding.settingLanguage.setTextColor(textNightColor)
-            binding.settingTheme.setTextColor(textNightColor)
-            binding.settingBackup.setTextColor(textNightColor)
+            contentSettingsBinding.settingInfo.setTextColor(textNightColor)
+            contentSettingsBinding.settingInfo1Ans.setTextColor(textNightColor)
+            contentSettingsBinding.settingInfo1.setTextColor(textNightColor)
+            contentSettingsBinding.settingInfo2.setTextColor(textNightColor)
+            contentSettingsBinding.settingInfo2Ans.setTextColor(textNightColor)
+            contentSettingsBinding.settingLanguage.setTextColor(textNightColor)
+            contentSettingsBinding.settingTheme.setTextColor(textNightColor)
+            contentSettingsBinding.settingBackup.setTextColor(textNightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -80,17 +82,17 @@ class AudioSettingsActivity : AppCompatActivity() {
         val lang = pref.getString("lang", "en")
         if (lang != null) {
             if (lang == "id") {
-                binding.languageSwitcherId.isChecked = true
-                binding.languageSwitcherEn.isChecked = false
+                contentSettingsBinding.languageSwitcherId.isChecked = true
+                contentSettingsBinding.languageSwitcherEn.isChecked = false
                 setLang("id")
             } else if (lang == "en") {
-                binding.languageSwitcherId.isChecked = false
-                binding.languageSwitcherEn.isChecked = true
+                contentSettingsBinding.languageSwitcherId.isChecked = false
+                contentSettingsBinding.languageSwitcherEn.isChecked = true
                 setLang("en")
             }
         } else {
-            binding.languageSwitcherId.isChecked = false
-            binding.languageSwitcherEn.isChecked = false
+            contentSettingsBinding.languageSwitcherId.isChecked = false
+            contentSettingsBinding.languageSwitcherEn.isChecked = false
             setLang("en")
         }
 
@@ -102,8 +104,8 @@ class AudioSettingsActivity : AppCompatActivity() {
         au.exportFullKernelFile(an.kernel_dump)
 
         // Fill textview
-        binding.settingInfo1Ans.text = Build.VERSION.RELEASE
-        binding.settingInfo2Ans.text = au.readFromFile(this, an.kernel_file).trim()
+        contentSettingsBinding.settingInfo1Ans.text = Build.VERSION.RELEASE
+        contentSettingsBinding.settingInfo2Ans.text = au.readFromFile(this, an.kernel_file).trim()
 
         binding.cvTitle.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)
@@ -114,8 +116,8 @@ class AudioSettingsActivity : AppCompatActivity() {
             startActivity(i, transitionActivityOptions.toBundle())
         }
 
-        binding.themeSwitcher.setOnClickListener {
-            if (binding.themeSwitcher.isChecked) {
+        contentSettingsBinding.themeSwitcher.setOnClickListener {
+            if (contentSettingsBinding.themeSwitcher.isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 save.putBoolean("MODE_NIGHT", true)
                 save.apply()
@@ -126,35 +128,35 @@ class AudioSettingsActivity : AppCompatActivity() {
             }
         }
 
-        binding.languageSwitcherId.setOnClickListener {
-            if (binding.languageSwitcherId.isChecked) {
+        contentSettingsBinding.languageSwitcherId.setOnClickListener {
+            if (contentSettingsBinding.languageSwitcherId.isChecked) {
                 save.putString("lang", "id")
                 save.apply()
                 setLang("id")
                 this.recreate()
-                binding.languageSwitcherId.isChecked = true
-                binding.languageSwitcherEn.isChecked = false
+                contentSettingsBinding.languageSwitcherId.isChecked = true
+                contentSettingsBinding.languageSwitcherEn.isChecked = false
             } else {
-                binding.languageSwitcherId.isChecked = false
-                binding.languageSwitcherEn.isChecked = false
+                contentSettingsBinding.languageSwitcherId.isChecked = false
+                contentSettingsBinding.languageSwitcherEn.isChecked = false
             }
         }
 
-        binding.languageSwitcherEn.setOnClickListener {
-            if (binding.languageSwitcherId.isChecked) {
+        contentSettingsBinding.languageSwitcherEn.setOnClickListener {
+            if (contentSettingsBinding.languageSwitcherId.isChecked) {
                 save.putString("lang", "en")
                 save.apply()
                 setLang("en")
                 this.recreate()
-                binding.languageSwitcherId.isChecked = false
-                binding.languageSwitcherEn.isChecked = true
+                contentSettingsBinding.languageSwitcherId.isChecked = false
+                contentSettingsBinding.languageSwitcherEn.isChecked = true
             } else {
-                binding.languageSwitcherId.isChecked = false
-                binding.languageSwitcherEn.isChecked = false
+                contentSettingsBinding.languageSwitcherId.isChecked = false
+                contentSettingsBinding.languageSwitcherEn.isChecked = false
             }
         }
 
-        binding.buttonBackup.setOnClickListener {
+        contentSettingsBinding.buttonBackup.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioSettingsActivity)
 

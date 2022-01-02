@@ -1,544 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_audio_conf"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:configChanges="uiMode"
-    tools:context=".activity.AudioConfActivity">
+    android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_app_menu_1"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:transitionName="@string/app_main_menu_1"
-        app:cardBackgroundColor="@color/blue_500"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="15dp"
-        app:cardMaxElevation="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
-        <TextView
-            android:id="@+id/app_menu_1_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/mandorin_font"
-            android:text="@string/app_main_menu_1"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/button_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|top"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ripple_effect"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_app_menu_1"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
-            android:fontFamily="@font/mandorin_font"
-            android:text="@string/app_menu_2_info"
-            android:textAllCaps="false"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
+            android:foreground="?android:attr/selectableItemBackground"
+            android:transitionName="@string/app_main_menu_1"
+            app:cardBackgroundColor="@color/blue_500"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="15dp"
+            app:cardMaxElevation="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <ScrollView
+            <TextView
+                android:id="@+id/app_menu_1_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/app_main_menu_1"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/button_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/ripple_effect"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/app_menu_2_info"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_app_menu_1_1"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#64b5f6"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="15dp"
-                app:cardMaxElevation="20dp">
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_app_menu_1"
-                    style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:checked="false"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|top"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_text"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|bottom"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_2_text"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/button_app_menu_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/ripple_effect"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_info"
-                    android:textAllCaps="false"
-                    android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_app_menu_1_2"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#64b5f6"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="15dp"
-                app:cardMaxElevation="20dp">
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_app_menu_1_2"
-                    style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:checked="false"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_2_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_2_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|top"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_2_text"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_2_1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|bottom"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_3_text"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/button_app_menu_1_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/ripple_effect"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_info"
-                    android:textAllCaps="false"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_app_menu_1_3"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#64b5f6"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="15dp"
-                app:cardMaxElevation="20dp">
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_app_menu_1_3"
-                    style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:checked="false"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_3_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_3_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|top"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_3_text"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_3_1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|bottom"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_3_text"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/button_app_menu_1_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/ripple_effect"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_info"
-                    android:textAllCaps="false"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_app_menu_1_4"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#64b5f6"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="15dp"
-                app:cardMaxElevation="20dp">
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_app_menu_1_4"
-                    style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:checked="false"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_4_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_4_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|top"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_4_text"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_4_1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|bottom"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_4_text"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/button_app_menu_1_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/ripple_effect"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_info"
-                    android:textAllCaps="false"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_app_menu_1_5"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#64b5f6"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="15dp"
-                app:cardMaxElevation="20dp">
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_app_menu_1_5"
-                    style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:checked="false"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_5_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_5_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|top"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_5_text"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_5_1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|bottom"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_5_text"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/button_app_menu_1_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/ripple_effect"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_info"
-                    android:textAllCaps="false"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_app_menu_1_6"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:visibility="gone"
-                app:cardBackgroundColor="#64b5f6"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="15dp"
-                app:cardMaxElevation="20dp">
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_app_menu_1_6"
-                    style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:checked="false"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_6_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_6_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|top"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_6_text"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/switch_app_menu_1_6_1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|bottom"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_6_text"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/button_app_menu_1_6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/ripple_effect"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/mandorin_font"
-                    android:text="@string/app_menu_1_info"
-                    android:textAllCaps="false"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/detail_content"
+            layout="@layout/content_audio_conf" />
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

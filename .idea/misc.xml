@@ -4,13 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_audio_conf.xml" value="0.276268115942029" />
-        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_audio_info.xml" value="0.21510416666666668" />
-        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_audio_settings.xml" value="0.21510416666666668" />
-        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_main.xml" value="0.21510416666666668" />
-        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_pop_up_backup_info.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_audio_info.xml" value="0.25" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_audio_settings.xml" value="0.22" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_pop_up_backup_info.xml" value="0.2" />
         <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_pop_up_conf.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_pop_up_info.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/activity_pop_up_info_details.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/content_audio_conf.xml" value="0.25" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/content_audio_info.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/content_audio_settings.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/Nickl/StudioProjects/KizunaAudioController/app/src/main/res/layout/content_main.xml" value="0.3278985507246377" />
       </map>
     </option>
   </component>

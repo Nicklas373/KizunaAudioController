@@ -24,11 +24,13 @@ import com.hana.kizunaaudiocontroller.R
 import com.hana.kizunaaudiocontroller.databinding.ActivityAudioConfBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpConfBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpInfoDetailsBinding
+import com.hana.kizunaaudiocontroller.databinding.ContentAudioConfBinding
 import java.util.*
 
 class AudioConfActivity : AppCompatActivity() {
     // Binding
     private lateinit var binding: ActivityAudioConfBinding
+    private lateinit var confBinding: ContentAudioConfBinding
 
     // Separate environment
     private lateinit var po: Dialog
@@ -54,13 +56,13 @@ class AudioConfActivity : AppCompatActivity() {
         // Getting sharedPreference value if exist
         val exp = pref.getBoolean("EXP_FEATURES", false)
         if (exp) {
-            binding.switchAppMenu15.isChecked = true
-            TransitionManager.beginDelayedTransition(binding.cvAppMenu16, AutoTransition())
-            binding.cvAppMenu16.visibility = View.VISIBLE
+            confBinding.switchAppMenu15.isChecked = true
+            TransitionManager.beginDelayedTransition(confBinding.cvAppMenu16, AutoTransition())
+            confBinding.cvAppMenu16.visibility = View.VISIBLE
         } else {
-            binding.switchAppMenu15.isChecked = false
-            TransitionManager.beginDelayedTransition(binding.cvAppMenu16, AutoTransition())
-            binding.cvAppMenu16.visibility = View.INVISIBLE
+            confBinding.switchAppMenu15.isChecked = false
+            TransitionManager.beginDelayedTransition(confBinding.cvAppMenu16, AutoTransition())
+            confBinding.cvAppMenu16.visibility = View.INVISIBLE
         }
 
         // Getting sharedPreference value if exist
@@ -72,12 +74,12 @@ class AudioConfActivity : AppCompatActivity() {
             val nightColor = Color.parseColor("#2286c3")
 
             binding.cvAppMenu1.setCardBackgroundColor(nightColor)
-            binding.cvAppMenu11.setCardBackgroundColor(nightColor)
-            binding.cvAppMenu12.setCardBackgroundColor(nightColor)
-            binding.cvAppMenu13.setCardBackgroundColor(nightColor)
-            binding.cvAppMenu14.setCardBackgroundColor(nightColor)
-            binding.cvAppMenu15.setCardBackgroundColor(nightColor)
-            binding.cvAppMenu16.setCardBackgroundColor(nightColor)
+            confBinding.cvAppMenu11.setCardBackgroundColor(nightColor)
+            confBinding.cvAppMenu12.setCardBackgroundColor(nightColor)
+            confBinding.cvAppMenu13.setCardBackgroundColor(nightColor)
+            confBinding.cvAppMenu14.setCardBackgroundColor(nightColor)
+            confBinding.cvAppMenu15.setCardBackgroundColor(nightColor)
+            confBinding.cvAppMenu16.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -122,11 +124,11 @@ class AudioConfActivity : AppCompatActivity() {
         val impedanceValue = au.readFromFile(this, an.impedance_file)
         val gatingValue = au.readFromFile(this, an.gating_file)
 
-        binding.switchAppMenu1.isChecked = uhqaValue > "1"
-        binding.switchAppMenu12.isChecked = hphValue > "1"
-        binding.switchAppMenu13.isChecked = ampValue > "1"
-        binding.switchAppMenu14.isChecked = impedanceValue > "1"
-        binding.switchAppMenu16.isChecked = gatingValue > "1"
+        confBinding.switchAppMenu1.isChecked = uhqaValue > "1"
+        confBinding.switchAppMenu12.isChecked = hphValue > "1"
+        confBinding.switchAppMenu13.isChecked = ampValue > "1"
+        confBinding.switchAppMenu14.isChecked = impedanceValue > "1"
+        confBinding.switchAppMenu16.isChecked = gatingValue > "1"
 
         binding.cvAppMenu1.setOnClickListener {
             val i = Intent(this@AudioConfActivity, MainActivity::class.java)
@@ -140,15 +142,15 @@ class AudioConfActivity : AppCompatActivity() {
             startActivity(i, transitionActivityOptions.toBundle())
         }
 
-        binding.switchAppMenu1.setOnClickListener {
+        confBinding.switchAppMenu1.setOnClickListener {
             if (kernelVer == upstream) {
-                if (binding.switchAppMenu1.isChecked) {
+                if (confBinding.switchAppMenu1.isChecked) {
                     au.writeToFile("1", an.uhqa_kernel_4_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_scs)
                     )
-                    binding.switchAppMenu11Text.text = String.format(
+                    confBinding.switchAppMenu11Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -160,7 +162,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_fid)
                     )
-                    binding.switchAppMenu11Text.text = String.format(
+                    confBinding.switchAppMenu11Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -168,13 +170,13 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             } else if (kernelVer == legacy) {
-                if (binding.switchAppMenu1.isChecked) {
+                if (confBinding.switchAppMenu1.isChecked) {
                     au.writeToFile("1", an.uhqa_kernel_3_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_scs)
                     )
-                    binding.switchAppMenu11Text.text = String.format(
+                    confBinding.switchAppMenu11Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -186,7 +188,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_fid)
                     )
-                    binding.switchAppMenu11Text.text = String.format(
+                    confBinding.switchAppMenu11Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -194,33 +196,33 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             }
-            binding.switchAppMenu11Text.visibility = View.VISIBLE
+            confBinding.switchAppMenu11Text.visibility = View.VISIBLE
             au.dropFile(an.uhqa_file)
         }
 
-        binding.switchAppMenu12.setOnClickListener {
+        confBinding.switchAppMenu12.setOnClickListener {
             if (kernelVer == upstream) {
-                binding.switchAppMenu12.isChecked = false
-                binding.switchAppMenu12.isClickable = false
-                binding.switchAppMenu12.isEnabled = false
+                confBinding.switchAppMenu12.isChecked = false
+                confBinding.switchAppMenu12.isClickable = false
+                confBinding.switchAppMenu12.isEnabled = false
                 setSnackBar(
                     findViewById(android.R.id.content),
                     resources.getString(R.string.app_menu_2_toast_hph_ne)
                 )
-                binding.switchAppMenu121Text.text = String.format(
+                confBinding.switchAppMenu121Text.text = String.format(
                     "%s %s | %s",
                     resources.getString(R.string.state_info),
                     resources.getString(R.string.state_unsupport),
                     resources.getString(R.string.state_disable)
                 )
             } else if (kernelVer == legacy) {
-                if (binding.switchAppMenu12.isChecked) {
+                if (confBinding.switchAppMenu12.isChecked) {
                     au.writeToFile("1", an.hph_kernel_3_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_2_toast_hph_scs)
                     )
-                    binding.switchAppMenu121Text.text = String.format(
+                    confBinding.switchAppMenu121Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -232,7 +234,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_2_toast_hph_fid)
                     )
-                    binding.switchAppMenu121Text.text = String.format(
+                    confBinding.switchAppMenu121Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -240,19 +242,19 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             }
-            binding.switchAppMenu121Text.visibility = View.VISIBLE
+            confBinding.switchAppMenu121Text.visibility = View.VISIBLE
             au.dropFile(an.hph_file)
         }
 
-        binding.switchAppMenu13.setOnClickListener {
+        confBinding.switchAppMenu13.setOnClickListener {
             if (kernelVer == upstream) {
-                if (binding.switchAppMenu13.isChecked) {
+                if (confBinding.switchAppMenu13.isChecked) {
                     au.writeToFile("1", an.amp_kernel_4_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_scs)
                     )
-                    binding.switchAppMenu131Text.text = String.format(
+                    confBinding.switchAppMenu131Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -264,7 +266,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_fid)
                     )
-                    binding.switchAppMenu131Text.text = String.format(
+                    confBinding.switchAppMenu131Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -272,13 +274,13 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             } else if (kernelVer == legacy) {
-                if (binding.switchAppMenu13.isChecked) {
+                if (confBinding.switchAppMenu13.isChecked) {
                     au.writeToFile("1", an.amp_kernel_3_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_scs)
                     )
-                    binding.switchAppMenu131Text.text = String.format(
+                    confBinding.switchAppMenu131Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -290,7 +292,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_fid)
                     )
-                    binding.switchAppMenu131Text.text = String.format(
+                    confBinding.switchAppMenu131Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -298,33 +300,33 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             }
-            binding.switchAppMenu131Text.visibility = View.VISIBLE
+            confBinding.switchAppMenu131Text.visibility = View.VISIBLE
             au.dropFile(an.amp_file)
         }
 
-        binding.switchAppMenu14.setOnClickListener {
+        confBinding.switchAppMenu14.setOnClickListener {
             if (kernelVer == upstream) {
-                binding.switchAppMenu14.isChecked = false
-                binding.switchAppMenu14.isClickable = false
-                binding.switchAppMenu14.isEnabled = false
+                confBinding.switchAppMenu14.isChecked = false
+                confBinding.switchAppMenu14.isClickable = false
+                confBinding.switchAppMenu14.isEnabled = false
                 setSnackBar(
                     findViewById(android.R.id.content),
                     resources.getString(R.string.app_menu_4_toast_impedance_ne)
                 )
-                binding.switchAppMenu141Text.text = String.format(
+                confBinding.switchAppMenu141Text.text = String.format(
                     "%s %s | %s",
                     resources.getString(R.string.state_info),
                     resources.getString(R.string.state_unsupport),
                     resources.getString(R.string.state_disable)
                 )
             } else if (kernelVer == legacy) {
-                if (binding.switchAppMenu14.isChecked) {
+                if (confBinding.switchAppMenu14.isChecked) {
                     au.writeToFile("1", an.impedance_kernel_3_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_4_toast_impedance_scs)
                     )
-                    binding.switchAppMenu141Text.text = String.format(
+                    confBinding.switchAppMenu141Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -336,7 +338,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_4_toast_impedance_fid)
                     )
-                    binding.switchAppMenu141Text.text = String.format(
+                    confBinding.switchAppMenu141Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -344,33 +346,33 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             }
-            binding.switchAppMenu14.visibility = View.VISIBLE
+            confBinding.switchAppMenu14.visibility = View.VISIBLE
             au.dropFile(an.impedance_file)
         }
 
-        binding.switchAppMenu15.setOnClickListener {
-            if (binding.switchAppMenu15.isChecked) {
-                TransitionManager.beginDelayedTransition(binding.cvAppMenu16, AutoTransition())
-                binding.switchAppMenu16.visibility = View.VISIBLE
+        confBinding.switchAppMenu15.setOnClickListener {
+            if (confBinding.switchAppMenu15.isChecked) {
+                TransitionManager.beginDelayedTransition(confBinding.cvAppMenu16, AutoTransition())
+                confBinding.switchAppMenu16.visibility = View.VISIBLE
                 save.putBoolean("EXP_FEATURES", true)
                 save.apply()
             } else {
-                TransitionManager.beginDelayedTransition(binding.cvAppMenu16, AutoTransition())
-                binding.cvAppMenu16.visibility = View.INVISIBLE
+                TransitionManager.beginDelayedTransition(confBinding.cvAppMenu16, AutoTransition())
+                confBinding.cvAppMenu16.visibility = View.INVISIBLE
                 save.putBoolean("EXP_FEATURES", false)
                 save.apply()
             }
         }
 
-        binding.switchAppMenu16.setOnClickListener {
+        confBinding.switchAppMenu16.setOnClickListener {
             if (kernelVer == upstream) {
-                if (binding.switchAppMenu16.isChecked) {
+                if (confBinding.switchAppMenu16.isChecked) {
                     au.writeToFile("1", an.gating_kernel_4_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_scs)
                     )
-                    binding.switchAppMenu161Text.text = String.format(
+                    confBinding.switchAppMenu161Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -382,7 +384,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_fid)
                     )
-                    binding.switchAppMenu161Text.text = String.format(
+                    confBinding.switchAppMenu161Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -390,13 +392,13 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             } else if (kernelVer == legacy) {
-                if (binding.switchAppMenu16.isChecked) {
+                if (confBinding.switchAppMenu16.isChecked) {
                     au.writeToFile("1", an.gating_kernel_3_x)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_scs)
                     )
-                    binding.switchAppMenu16.text = String.format(
+                    confBinding.switchAppMenu16.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -408,7 +410,7 @@ class AudioConfActivity : AppCompatActivity() {
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_fid)
                     )
-                    binding.switchAppMenu161Text.text = String.format(
+                    confBinding.switchAppMenu161Text.text = String.format(
                         "%s %s | %s",
                         resources.getString(R.string.state_info),
                         resources.getString(R.string.state_support),
@@ -416,11 +418,11 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             }
-            binding.switchAppMenu161Text.visibility = View.VISIBLE
+            confBinding.switchAppMenu161Text.visibility = View.VISIBLE
             au.dropFile(an.gating_file)
         }
 
-        binding.buttonAppMenu1.setOnClickListener {
+        confBinding.buttonAppMenu1.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioConfActivity)
 
@@ -431,7 +433,7 @@ class AudioConfActivity : AppCompatActivity() {
             )
         }
 
-        binding.buttonAppMenu12.setOnClickListener {
+        confBinding.buttonAppMenu12.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioConfActivity)
 
@@ -442,7 +444,7 @@ class AudioConfActivity : AppCompatActivity() {
             )
         }
 
-        binding.buttonAppMenu13.setOnClickListener {
+        confBinding.buttonAppMenu13.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioConfActivity)
 
@@ -453,7 +455,7 @@ class AudioConfActivity : AppCompatActivity() {
             )
         }
 
-        binding.buttonAppMenu14.setOnClickListener {
+        confBinding.buttonAppMenu14.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioConfActivity)
 
@@ -464,7 +466,7 @@ class AudioConfActivity : AppCompatActivity() {
             )
         }
 
-        binding.buttonAppMenu15.setOnClickListener {
+        confBinding.buttonAppMenu15.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioConfActivity)
 
@@ -475,7 +477,7 @@ class AudioConfActivity : AppCompatActivity() {
             )
         }
 
-        binding.buttonAppMenu16.setOnClickListener {
+        confBinding.buttonAppMenu16.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioConfActivity)
 

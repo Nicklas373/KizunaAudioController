@@ -20,6 +20,7 @@ import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
 import com.hana.kizunaaudiocontroller.databinding.ActivityAudioInfoBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpInfoBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpInfoDetailsBinding
+import com.hana.kizunaaudiocontroller.databinding.ContentAudioInfoBinding
 
 
 class AudioInfoActivity : AppCompatActivity() {
@@ -32,6 +33,7 @@ class AudioInfoActivity : AppCompatActivity() {
 
     // Binding
     private lateinit var binding: ActivityAudioInfoBinding
+    private lateinit var contentInfoBinding: ContentAudioInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +59,11 @@ class AudioInfoActivity : AppCompatActivity() {
             val nightColor = Color.parseColor("#2286c3")
 
             binding.cvAppMenu2.setCardBackgroundColor(nightColor)
-            binding.cvAchannel.setCardBackgroundColor(nightColor)
-            binding.cvAformat.setCardBackgroundColor(nightColor)
-            binding.cvAsession.setCardBackgroundColor(nightColor)
-            binding.cvAstate.setCardBackgroundColor(nightColor)
-            binding.cvAhal.setCardBackgroundColor(nightColor)
+            contentInfoBinding.cvAchannel.setCardBackgroundColor(nightColor)
+            contentInfoBinding.cvAformat.setCardBackgroundColor(nightColor)
+            contentInfoBinding.cvAsession.setCardBackgroundColor(nightColor)
+            contentInfoBinding.cvAstate.setCardBackgroundColor(nightColor)
+            contentInfoBinding.cvAhal.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -236,19 +238,19 @@ class AudioInfoActivity : AppCompatActivity() {
         ap.kaoProcString("Channel", an.kao_aclient, "2", "25", an.kao_chn_mask_init)
         ap.kaoProcString("Processing", an.kao_aclient, "1", "23", an.kao_prc_frm_init)
         ap.kaoProcInt("Processing", an.kao_aclient, "2", an.kao_prc_bit_init)
-        binding.audioOut.text = au.readFromFile(this, an.kao_out_stream_init_file)
-        binding.audioPid.text = au.readFromFile(this, an.kao_io_init_file)
-        binding.audioStandby.text = au.readFromFile(this, an.kao_standby_init_file)
-        binding.audioSampleRate.text = au.readFromFile(this, an.kao_rate_init_file)
-        binding.audioHalFrame.text = au.readFromFile(this, an.kao_frm_cnt_init_file)
-        binding.audioHalFormat.text =
+        contentInfoBinding.audioOut.text = au.readFromFile(this, an.kao_out_stream_init_file)
+        contentInfoBinding.audioPid.text = au.readFromFile(this, an.kao_io_init_file)
+        contentInfoBinding.audioStandby.text = au.readFromFile(this, an.kao_standby_init_file)
+        contentInfoBinding.audioSampleRate.text = au.readFromFile(this, an.kao_rate_init_file)
+        contentInfoBinding.audioHalFrame.text = au.readFromFile(this, an.kao_frm_cnt_init_file)
+        contentInfoBinding.audioHalFormat.text =
             ap.kaoBitDetect(au.readFromFile(this, an.kao_frm_bit_init_file).trim())
-        binding.audioChannelCount.text = au.readFromFile(this, an.kao_chn_cnt_init_file)
-        binding.audioChannelMask.text = au.readFromFile(this, an.kao_chn_mask_init_file)
-        binding.audioFormat.text =
+        contentInfoBinding.audioChannelCount.text = au.readFromFile(this, an.kao_chn_cnt_init_file)
+        contentInfoBinding.audioChannelMask.text = au.readFromFile(this, an.kao_chn_mask_init_file)
+        contentInfoBinding.audioFormat.text =
             ap.kaoBitDetect(au.readFromFile(this, an.kao_prc_frm_init_file).trim())
-        binding.audioFrame.text = au.readFromFile(this, an.kao_prc_bit_init_file)
-        binding.audioFlags.text = au.readFromFile(this, an.kao_init_file)
+        contentInfoBinding.audioFrame.text = au.readFromFile(this, an.kao_prc_bit_init_file)
+        contentInfoBinding.audioFlags.text = au.readFromFile(this, an.kao_init_file)
 
         binding.cvAppMenu2.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)
@@ -259,7 +261,7 @@ class AudioInfoActivity : AppCompatActivity() {
             startActivity(i, transitionActivityOptions.toBundle())
         }
 
-        binding.btnAudioDsp.setOnClickListener {
+        contentInfoBinding.btnAudioDsp.setOnClickListener {
             po = Dialog(this)
 
             // Call dialog
@@ -271,7 +273,7 @@ class AudioInfoActivity : AppCompatActivity() {
             )
         }
 
-        binding.btnAudioSession.setOnClickListener {
+        contentInfoBinding.btnAudioSession.setOnClickListener {
             po = Dialog(this)
 
             // Call dialog

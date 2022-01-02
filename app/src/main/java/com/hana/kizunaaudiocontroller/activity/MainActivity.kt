@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import com.hana.kizunaaudiocontroller.audioUtils.AudioRoot
 import com.hana.kizunaaudiocontroller.R
 import com.hana.kizunaaudiocontroller.databinding.ActivityMainBinding
+import com.hana.kizunaaudiocontroller.databinding.ContentMainBinding
 import java.util.*
 
 
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     // Binding
     private lateinit var binding: ActivityMainBinding
+    private lateinit var contentBinding: ContentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +57,9 @@ class MainActivity : AppCompatActivity() {
             val nightColor = Color.parseColor("#2286c3")
 
             supportActionBar?.setBackgroundDrawable(colorDrawable)
-            binding.cvAppMainMenu1.setCardBackgroundColor(nightColor)
-            binding.cvAppMainMenu2.setCardBackgroundColor(nightColor)
-            binding.cvAppMainMenu3.setCardBackgroundColor(nightColor)
+            contentBinding.cvAppMainMenu1.setCardBackgroundColor(nightColor)
+            contentBinding.cvAppMainMenu2.setCardBackgroundColor(nightColor)
+            contentBinding.cvAppMainMenu3.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -69,9 +71,9 @@ class MainActivity : AppCompatActivity() {
         window.enterTransition = Explode()
         window.returnTransition = Fade()
 
-        binding.cvAppMainMenu1.setOnClickListener {
+        contentBinding.cvAppMainMenu1.setOnClickListener {
             val i = Intent(this@MainActivity, AudioConfActivity::class.java)
-            val sharedView: View = binding.cvAppMainMenu1
+            val sharedView: View = contentBinding.cvAppMainMenu1
             val transitionName = getString(R.string.app_main_menu_1)
             val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
                 this@MainActivity,
@@ -81,9 +83,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(i, transitionActivityOptions.toBundle())
         }
 
-        binding.cvAppMainMenu2.setOnClickListener {
+        contentBinding.cvAppMainMenu2.setOnClickListener {
             val i = Intent(this@MainActivity, AudioInfoActivity::class.java)
-            val sharedView: View = binding.cvAppMainMenu2
+            val sharedView: View = contentBinding.cvAppMainMenu2
             val transitionName = getString(R.string.app_main_menu_2)
             val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
                 this@MainActivity,
@@ -93,9 +95,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(i, transitionActivityOptions.toBundle())
         }
 
-        binding.cvAppMainMenu3.setOnClickListener {
+        contentBinding.cvAppMainMenu3.setOnClickListener {
             val i = Intent(this@MainActivity, AudioSettingsActivity::class.java)
-            val sharedView: View = binding.cvAppMainMenu3
+            val sharedView: View = contentBinding.cvAppMainMenu3
             val transitionName = getString(R.string.audio_settings_title)
             val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
                 this@MainActivity,
