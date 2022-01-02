@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AudioSettingsActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AudioSettingsActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_title"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:transitionName="@string/audio_settings_title"
         app:cardBackgroundColor="@color/blue_500"
         app:cardCornerRadius="4dp"
@@ -34,8 +34,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/white"
             android:text="@string/audio_settings_title"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
     </androidx.cardview.widget.CardView>
@@ -51,161 +51,161 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/setting_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/blue_700"
-            android:textStyle="bold"
-            android:text="@string/audio_settings_2"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/setting_info_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/black"
-            android:text="@string/audio_settings_2_1"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/setting_info_1_ans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/ant_gray"
-            android:text="@string/PLACEHOLDER"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/setting_info_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/black"
-            android:text="@string/audio_settings_2_2"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/setting_info_2_ans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/ant_gray"
-            android:text="@string/PLACEHOLDER"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/setting_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/blue_700"
-            android:textStyle="bold"
-            android:text="@string/audio_settings_3"
-            android:textSize="20sp" />
-
-        <RadioButton
-            android:id="@+id/language_switcher_id"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/mandorin_font"
-            android:textSize="15sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/audio_settings_3_1" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/language_switcher_en"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/mandorin_font"
-            android:textSize="15sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/audio_settings_3_2" />
+            <TextView
+                android:id="@+id/setting_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_2"
+                android:textColor="@color/blue_700"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/setting_theme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/blue_700"
-            android:textStyle="bold"
-            android:text="@string/audio_settings_1"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/setting_info_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_2_1"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/theme_switcher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/audio_settings_1_1"
-            android:fontFamily="@font/mandorin_font"
-            android:textSize="15sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/setting_info_1_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/PLACEHOLDER"
+                android:textColor="@color/ant_gray"
+                android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/setting_backup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/mandorin_font"
-            android:textColor="@color/blue_700"
-            android:textStyle="bold"
-            android:text="@string/audio_settings_4"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/setting_info_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_2_2"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/button_backup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:text="@string/audio_settings_4_1"
-            android:fontFamily="@font/mandorin_font"
-            android:textSize="15sp"
-            android:textAllCaps="false"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="5dp"
-            android:focusable="true" />
+            <TextView
+                android:id="@+id/setting_info_2_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/PLACEHOLDER"
+                android:textColor="@color/ant_gray"
+                android:textSize="15sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/setting_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_3"
+                android:textColor="@color/blue_700"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/language_switcher_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_3_1"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/language_switcher_en"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_3_2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/setting_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_1"
+                android:textColor="@color/blue_700"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/theme_switcher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_1_1"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/setting_backup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/mandorin_font"
+                android:text="@string/audio_settings_4"
+                android:textColor="@color/blue_700"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_backup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/mandorin_font"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/audio_settings_4_1"
+                android:textAllCaps="false"
+                android:textSize="15sp" />
+
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

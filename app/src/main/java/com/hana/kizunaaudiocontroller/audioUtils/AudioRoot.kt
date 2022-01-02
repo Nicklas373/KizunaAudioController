@@ -1,4 +1,4 @@
-package com.hana.kizunaaudiocontroller
+package com.hana.kizunaaudiocontroller.audioUtils
 
 import java.io.DataOutputStream
 import java.io.File
