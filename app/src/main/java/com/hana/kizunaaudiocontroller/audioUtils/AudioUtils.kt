@@ -7,7 +7,6 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 
-
 class AudioUtils {
     fun readFromFile(context: Context, filename: String): String {
         val bufferedReader: BufferedReader = FileInputStream(
