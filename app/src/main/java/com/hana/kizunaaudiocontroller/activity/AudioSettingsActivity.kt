@@ -27,18 +27,16 @@ import java.io.File
 import java.util.*
 
 class AudioSettingsActivity : AppCompatActivity() {
-
-    // Binding
+    // Late binding
     private lateinit var contentSettingsBinding: ContentAudioSettingsBinding
-
     private lateinit var po: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Initialize binding
         val activityAudioSettingsBinding = ActivityAudioSettingsBinding.inflate(layoutInflater)
         contentSettingsBinding = activityAudioSettingsBinding.detailContent
-
         setContentView(activityAudioSettingsBinding.root)
 
         // Hide title bar
@@ -69,7 +67,6 @@ class AudioSettingsActivity : AppCompatActivity() {
             contentSettingsBinding.settingInfo1.setTextColor(textNightColor)
             contentSettingsBinding.settingInfo2.setTextColor(textNightColor)
             contentSettingsBinding.settingInfo2Ans.setTextColor(textNightColor)
-            contentSettingsBinding.settingLanguage.setTextColor(textNightColor)
             contentSettingsBinding.settingTheme.setTextColor(textNightColor)
             contentSettingsBinding.settingBackup.setTextColor(textNightColor)
         } else {
@@ -79,34 +76,16 @@ class AudioSettingsActivity : AppCompatActivity() {
             supportActionBar?.setBackgroundDrawable(colorDrawable)
         }
 
-        // Configure language interface
-        val lang = pref.getString("lang", "en")
-        if (lang != null) {
-            if (lang == "id") {
-                contentSettingsBinding.languageSwitcherId.isChecked = true
-                contentSettingsBinding.languageSwitcherEn.isChecked = false
-                setLang("id")
-            } else if (lang == "en") {
-                contentSettingsBinding.languageSwitcherId.isChecked = false
-                contentSettingsBinding.languageSwitcherEn.isChecked = true
-                setLang("en")
-            }
-        } else {
-            contentSettingsBinding.languageSwitcherId.isChecked = false
-            contentSettingsBinding.languageSwitcherEn.isChecked = false
-            setLang("en")
-        }
-
         // Call necessary class
         val an = AudioNode()
         val au = AudioUtils()
 
         // Read kernel files
-        au.exportFullKernelFile(an.kernel_dump)
+        au.exportFullKernelFile(an.kernelDump)
 
         // Fill textview
         contentSettingsBinding.settingInfo1Ans.text = Build.VERSION.RELEASE
-        contentSettingsBinding.settingInfo2Ans.text = au.readFromFile(this, an.kernel_file).trim()
+        contentSettingsBinding.settingInfo2Ans.text = au.readFromFile(this, an.kernelFile).trim()
 
         activityAudioSettingsBinding.cvTitle.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)
@@ -129,34 +108,6 @@ class AudioSettingsActivity : AppCompatActivity() {
             }
         }
 
-        contentSettingsBinding.languageSwitcherId.setOnClickListener {
-            if (contentSettingsBinding.languageSwitcherId.isChecked) {
-                save.putString("lang", "id")
-                save.apply()
-                setLang("id")
-                this.recreate()
-                contentSettingsBinding.languageSwitcherId.isChecked = true
-                contentSettingsBinding.languageSwitcherEn.isChecked = false
-            } else {
-                contentSettingsBinding.languageSwitcherId.isChecked = false
-                contentSettingsBinding.languageSwitcherEn.isChecked = false
-            }
-        }
-
-        contentSettingsBinding.languageSwitcherEn.setOnClickListener {
-            if (contentSettingsBinding.languageSwitcherId.isChecked) {
-                save.putString("lang", "en")
-                save.apply()
-                setLang("en")
-                this.recreate()
-                contentSettingsBinding.languageSwitcherId.isChecked = false
-                contentSettingsBinding.languageSwitcherEn.isChecked = true
-            } else {
-                contentSettingsBinding.languageSwitcherId.isChecked = false
-                contentSettingsBinding.languageSwitcherEn.isChecked = false
-            }
-        }
-
         contentSettingsBinding.buttonBackup.setOnClickListener {
             // Initiate dialog
             po = Dialog(this@AudioSettingsActivity)
@@ -173,13 +124,6 @@ class AudioSettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLang(language: String) {
-        val locale = Locale(language)
-        val config = baseContext.resources.configuration
-        config.locale = locale
-        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
-    }
-
     private fun showPopup(
         text_1: String?,
         text_2: String?,
@@ -188,11 +132,9 @@ class AudioSettingsActivity : AppCompatActivity() {
         text_5: String?,
         text_6: String?
     ) {
-        po.setContentView(R.layout.activity_pop_up_backup_info)
-
-        // Binding
-        val pob: ActivityPopUpBackupInfoBinding =
-            ActivityPopUpBackupInfoBinding.inflate(layoutInflater)
+        // Initialize binding
+        val poBinding = ActivityPopUpBackupInfoBinding.inflate(layoutInflater)
+        po.setContentView(poBinding.root)
 
         // Call necessary class
         val an = AudioNode()
@@ -200,38 +142,41 @@ class AudioSettingsActivity : AppCompatActivity() {
 
         val backupTime = DateFormat.format("yyyy-MM-dd hh:mm:ss", Date())
 
-        pob.textPopUp1.text = text_1
-        pob.textPopUpDesc1.text = text_2
-        pob.textPopUpDesc2.text = text_3
-        pob.textPopUpDesc3.text = text_4
-        pob.textPopUpDesc4.text = text_5
-        pob.textPopUpDesc5.text = text_6
+        // Set binding
+        poBinding.textPopUp1.text = text_1
+        poBinding.textPopUpDesc1.text = text_2
+        poBinding.textPopUpDesc2.text = text_3
+        poBinding.textPopUpDesc3.text = text_4
+        poBinding.textPopUpDesc4.text = text_5
+        poBinding.textPopUpDesc5.text = text_6
 
-        pob.cvTitle2.setOnClickListener {
-            au.backupLogFiles(an.kao_files, an.kao_backup_files)
-            val file = File(an.kao_files + an.kao_backup_files)
+        poBinding.cvTitle2.setOnClickListener {
+            au.backupLogFiles(an.kaoFiles, an.kaoBackupFiles)
+            val file = File(an.kaoFiles + an.kaoBackupFiles)
             if (file.exists()) {
-                au.exportLogFiles(an.kao_files, an.kao_backup_files, an.kao_backup_dir)
-                val file2 = File(an.kao_backup_dir + "/" + an.kao_backup_files)
+                au.exportLogFiles(an.kaoFiles, an.kaoBackupFiles, an.kaoBackupDir)
+                val file2 = File(an.kaoBackupDir + "/" + an.kaoBackupFiles)
                 if (file2.exists()) {
-                    val backupDir = an.kao_backup_dir + "/" + an.kao_backup_files
-                    pob.textPopUpDesc3.text = backupDir
-                    pob.textPopUpDesc5.text = backupTime.toString()
+                    val backupDir = an.kaoBackupDir + "/" + an.kaoBackupFiles
+                    poBinding.textPopUpDesc3.text = backupDir
+                    poBinding.textPopUpDesc5.text = backupTime.toString()
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.audio_settings_4_1_1_1)
                     )
                 } else {
-                    pob.textPopUpDesc3.text = resources.getString(R.string.audio_settings_4_1_1_4)
-                    pob.textPopUpDesc5.text = resources.getString(R.string.audio_settings_4_1_1_4)
+                    poBinding.textPopUpDesc3.text =
+                        resources.getString(R.string.audio_settings_4_1_1_4)
+                    poBinding.textPopUpDesc5.text =
+                        resources.getString(R.string.audio_settings_4_1_1_4)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.audio_settings_4_1_1_2)
                     )
                 }
             } else {
-                pob.textPopUpDesc3.text = resources.getString(R.string.audio_settings_4_1_1_4)
-                pob.textPopUpDesc5.text = resources.getString(R.string.audio_settings_4_1_1_4)
+                poBinding.textPopUpDesc3.text = resources.getString(R.string.audio_settings_4_1_1_4)
+                poBinding.textPopUpDesc5.text = resources.getString(R.string.audio_settings_4_1_1_4)
                 setSnackBar(
                     findViewById(android.R.id.content),
                     resources.getString(R.string.audio_settings_4_1_1_3)
@@ -239,7 +184,7 @@ class AudioSettingsActivity : AppCompatActivity() {
             }
         }
 
-        pob.textPopUp1.setOnClickListener { po.dismiss() }
+        poBinding.textPopUp1.setOnClickListener { po.dismiss() }
         po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         po.show()
     }
@@ -248,9 +193,9 @@ class AudioSettingsActivity : AppCompatActivity() {
         val snackBar = Snackbar.make(root!!, snackTitle!!, Snackbar.LENGTH_SHORT)
         snackBar.show()
         val view = snackBar.view
-        val txtv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        val txtV = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
         val typeface = ResourcesCompat.getFont(this@AudioSettingsActivity, R.font.mandorin_font)
-        txtv.gravity = Gravity.START
-        txtv.typeface = typeface
+        txtV.gravity = Gravity.START
+        txtV.typeface = typeface
     }
 }
