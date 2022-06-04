@@ -24,6 +24,7 @@ import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpConfBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpInfoDetailsBinding
 import com.hana.kizunaaudiocontroller.databinding.ContentAudioConfBinding
 import com.hana.kizunaaudiocontroller.datasource.AudioNode
+import java.io.File
 
 class AudioConfActivity : AppCompatActivity() {
     // Late binding
@@ -97,23 +98,52 @@ class AudioConfActivity : AppCompatActivity() {
         val midstream = "4.4"
         val legacy = "3.18"
 
-        // Check kernel version
-        if (kernelVer == upstream || kernelVer == midstream) {
-            au.dumpFile(an.uhqaKernelUpstream, an.uhqaForceFile)
-            au.dumpFile(an.ampKernelUpstream, an.ampForceFile)
-            au.dumpFile(an.gatingKernelUpstream, an.gatingForceFile)
+        // Declare required audio kernel configuration
+        val uhqaFile = File(an.uhqaKernelUpstream)
+        val ampFile = File(an.ampKernelUpstream)
+        val gatingFile = File(an.gatingKernelUpstream)
+        val uhqaLegacyFile = File(an.uhqaKernelLegacy)
+        val ampLegacyFile = File(an.ampKernelLegacy)
+        val hphLegacyFile = File(an.hphKernelLegacy)
+        val impedanceLegacyFile = File(an.impedanceKernelLegacy)
+        val gatingLegacyFile = File(an.gatingKernelLegacy)
 
-            // Not supported on 4.9 Kernel since techpack aren't
-            // use older than wcd9335
-            au.writeToFile("0", an.hphForceFile)
-            au.writeToFile("0", an.impedanceForceFile)
-        } else if (kernelVer == legacy) {
-            au.dumpFile(an.uhqaKernelLegacy, an.uhqaForceFile)
-            au.dumpFile(an.hphKernelLegacy, an.hphForceFile)
-            au.dumpFile(an.ampKernelLegacy, an.ampForceFile)
-            au.dumpFile(an.impedanceKernelLegacy, an.impedanceForceFile)
-            au.dumpFile(an.gatingKernelLegacy, an.gatingForceFile)
-        }
+        // Get required audio kernel configuration
+        getAudioConfFile(
+            uhqaFile,
+            uhqaLegacyFile,
+            an.uhqaKernelUpstream,
+            an.uhqaForceFile,
+            an.uhqaKernelLegacy
+        )
+        getAudioConfFile(
+            ampFile,
+            ampLegacyFile,
+            an.ampKernelUpstream,
+            an.ampForceFile,
+            an.ampKernelUpstream
+        )
+        getAudioConfFile(
+            gatingFile,
+            gatingLegacyFile,
+            an.gatingKernelUpstream,
+            an.gatingForceFile,
+            an.gatingKernelLegacy
+        )
+        getAudioConfFile(
+            hphLegacyFile,
+            hphLegacyFile,
+            an.hphKernelLegacy,
+            an.hphForceFile,
+            an.hphKernelLegacy
+        )
+        getAudioConfFile(
+            impedanceLegacyFile,
+            impedanceLegacyFile,
+            an.impedanceKernelLegacy,
+            an.impedanceForceFile,
+            an.impedanceKernelLegacy
+        )
 
         // Set switch value on init
         val uhqaValue = au.readFromFile(this, an.uhqaFile)
@@ -494,6 +524,25 @@ class AudioConfActivity : AppCompatActivity() {
                 resources.getString(R.string.app_menu_1_info_details),
                 resources.getString(R.string.app_menu_1_info_ext)
             )
+        }
+    }
+
+    private fun getAudioConfFile(
+        audioFile: File,
+        audioFileLegacy: File,
+        audioPath1: String,
+        audioFilePath: String,
+        audioPath2: String
+    ) {
+        val au = AudioUtils()
+        if (audioFile.exists()) {
+            au.dumpFile(audioPath1, audioFilePath)
+        } else {
+            if (audioFileLegacy.exists()) {
+                au.dumpFile(audioPath2, audioFilePath)
+            } else {
+                au.writeToFile("0", audioFilePath)
+            }
         }
     }
 
