@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.hana.kizunaaudiocontroller.*
@@ -19,23 +18,20 @@ import com.hana.kizunaaudiocontroller.audioUtils.AudioProc
 import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
 import com.hana.kizunaaudiocontroller.databinding.*
 
-
 class AudioInfoActivity : AppCompatActivity() {
+    // Late binding
+    private lateinit var contentInfoBinding: ContentAudioInfoBinding
 
     // Separate environment
     private lateinit var po: Dialog
-    private lateinit var title: TextView
-    private lateinit var desc: TextView
-    private lateinit var descExt: TextView
-
-    // Binding
-    private lateinit var contentInfoBinding: ContentAudioInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Initialize binding
         val binding = ActivityAudioInfoBinding.inflate(layoutInflater)
         contentInfoBinding = binding.detailContent
+        setContentView(binding.root)
 
         supportActionBar?.hide()
 
@@ -80,13 +76,13 @@ class AudioInfoActivity : AppCompatActivity() {
         val state4 = "(DIRECT)"
 
         // Reset old cache at beginning
-        ai.kaoReset(an.kao_files)
+        ai.kaoReset(an.kaoFiles)
 
         // Begin less conditional bash processing
-        ai.mediaFlinger(an.mediaflinger_dump)
-        ai.libraryEffects(an.mediaflinger_dump, an.unfiltered_library, an.library)
-        ai.limitAudioClient("Notification", an.mediaflinger_dump, "3", an.audio_client_tl_init)
-        ai.limitAudioClient("Global", an.mediaflinger_dump, "3", an.audio_client_bl_init)
+        ai.mediaFlinger(an.mediaflingerDump)
+        ai.libraryEffects(an.mediaflingerDump, an.unfilteredLibrary, an.library)
+        ai.limitAudioClient("Notification", an.mediaflingerDump, "3", an.audioClientTlInit)
+        ai.limitAudioClient("Global", an.mediaflingerDump, "3", an.audioClientBlInit)
 
         /* Show current app or services that was using audio services in the system
          *
@@ -98,28 +94,28 @@ class AudioInfoActivity : AppCompatActivity() {
          * or pid with name from the services in audioflinger.
          */
         if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.Q) {
-            val aClientTl = au.readFromFile(this, an.audio_client_tl_init_file).toInt().plus(3)
-            val aClientBl = au.readFromFile(this, an.audio_client_bl_init_file).toInt().minus(1)
+            val aClientTl = au.readFromFile(this, an.audioClientTlInitFile).toInt().plus(3)
+            val aClientBl = au.readFromFile(this, an.audioClientBlInitFile).toInt().minus(1)
             ai.currentAudioClient10(
                 aClientTl,
                 aClientBl,
-                an.mediaflinger_dump,
-                an.audio_client_init
+                an.mediaflingerDump,
+                an.audioClientInit
             )
         } else {
-            val aClientTl = au.readFromFile(this, an.audio_client_tl_init_file).toInt().plus(2)
-            val aClientBl = au.readFromFile(this, an.audio_client_bl_init_file).toInt().minus(1)
+            val aClientTl = au.readFromFile(this, an.audioClientTlInitFile).toInt().plus(2)
+            val aClientBl = au.readFromFile(this, an.audioClientBlInitFile).toInt().minus(1)
             ai.currentAudioClient11(
                 aClientTl,
                 aClientBl,
-                an.mediaflinger_dump,
-                an.audio_client_init
+                an.mediaflingerDump,
+                an.audioClientInit
             )
         }
 
         // Begin bash processing for specific condition
-        ai.kaoAudioInit("DIRECT", an.mediaflinger_dump, "1", an.kao_audio_init)
-        val audioState = au.readFromFile(this, an.kao_init_file).trim()
+        ai.kaoAudioInit("DIRECT", an.mediaflingerDump, "1", an.kaoAudioInit)
+        val audioState = au.readFromFile(this, an.kaoInitFile).trim()
 
         /* If AudioState is empty then direct route to use MIXER path instead, but
          * If not then it should check whether value is dash or not, since dash is actually
@@ -130,123 +126,123 @@ class AudioInfoActivity : AppCompatActivity() {
         if (audioState.isEmpty()) {
             ai.kaoLimitAudioClient(
                 "MIXER",
-                an.mediaflinger_dump,
+                an.mediaflingerDump,
                 "1",
                 "+3",
-                an.kao_aclient_top_limit
+                an.kaoAclientTopLimit
             )
             ai.kaoLimitAudioClient(
                 "Suspended",
-                an.mediaflinger_dump,
+                an.mediaflingerDump,
                 "1",
                 "+3",
-                an.kao_aclient_bottom_limit
+                an.kaoAclientBottomLimit
             )
-            val kaoTopLimit = au.readFromFile(this, an.kao_top_limit_file).toInt().plus(1)
-            val kaoBottomLimit = au.readFromFile(this, an.kao_bottom_limit_file).toInt().minus(2)
-            ai.kaoAudioClient(kaoTopLimit, kaoBottomLimit, an.mediaflinger_dump, an.kao_aclient)
-            ap.kaoProcString("Output", an.kao_aclient, "1", "20", an.kao_out_stream_init)
+            val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
+            val kaoBottomLimit = au.readFromFile(this, an.kaoBottomLimitFile).toInt().minus(2)
+            ai.kaoAudioClient(kaoTopLimit, kaoBottomLimit, an.mediaflingerDump, an.kaoAclient)
+            ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
         } else if (audioState.isNotEmpty()) {
             if (audioState == "-") {
-                ai.kaoAudioInitExt("MIXER", an.mediaflinger_dump, "1", "+63", an.kao_audio_init)
+                ai.kaoAudioInitExt("MIXER", an.mediaflingerDump, "1", "+63", an.kaoAudioInit)
                 ai.kaoLimitAudioClient(
                     "MIXER",
-                    an.mediaflinger_dump,
+                    an.mediaflingerDump,
                     "1",
                     "+3",
-                    an.kao_aclient_top_limit
+                    an.kaoAclientTopLimit
                 )
                 ai.kaoLimitAudioClient(
                     "Suspended",
-                    an.mediaflinger_dump,
+                    an.mediaflingerDump,
                     "1",
                     "+3",
-                    an.kao_aclient_bottom_limit
+                    an.kaoAclientBottomLimit
                 )
-                val kaoTopLimit = au.readFromFile(this, an.kao_top_limit_file).toInt().plus(1)
+                val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
                 val kaoBottomLimit =
-                    au.readFromFile(this, an.kao_bottom_limit_file).toInt().minus(2)
-                ai.kaoAudioClient(kaoTopLimit, kaoBottomLimit, an.mediaflinger_dump, an.kao_aclient)
-                ap.kaoProcString("Output", an.kao_aclient, "1", "20", an.kao_out_stream_init)
+                    au.readFromFile(this, an.kaoBottomLimitFile).toInt().minus(2)
+                ai.kaoAudioClient(kaoTopLimit, kaoBottomLimit, an.mediaflingerDump, an.kaoAclient)
+                ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
             } else {
-                ai.kaoAudioInitExt("DIRECT", an.mediaflinger_dump, "1", "+64", an.kao_audio_init)
-                val audioStateAlt = au.readFromFile(this, an.kao_init_file).trim()
+                ai.kaoAudioInitExt("DIRECT", an.mediaflingerDump, "1", "+64", an.kaoAudioInit)
+                val audioStateAlt = au.readFromFile(this, an.kaoInitFile).trim()
                 if (state1 == audioStateAlt || state3 == audioStateAlt || state4 == audioStateAlt) {
                     ai.kaoLimitAudioClient(
                         "DIRECT",
-                        an.mediaflinger_dump,
+                        an.mediaflingerDump,
                         "1",
                         "+3",
-                        an.kao_aclient_top_limit
+                        an.kaoAclientTopLimit
                     )
                     ai.kaoLimitAudioClient(
                         "DIRECT",
-                        an.mediaflinger_dump,
+                        an.mediaflingerDump,
                         "2",
                         "+3",
-                        an.kao_aclient_bottom_limit
+                        an.kaoAclientBottomLimit
                     )
-                    val kaoTopLimit = au.readFromFile(this, an.kao_top_limit_file).toInt().plus(1)
-                    val kaoBottomLimit = au.readFromFile(this, an.kao_bottom_limit_file).toInt()
+                    val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
+                    val kaoBottomLimit = au.readFromFile(this, an.kaoBottomLimitFile).toInt()
                     ai.kaoAudioClient(
                         kaoTopLimit,
                         kaoBottomLimit,
-                        an.mediaflinger_dump,
-                        an.kao_aclient
+                        an.mediaflingerDump,
+                        an.kaoAclient
                     )
-                    ap.kaoProcString("Output", an.kao_aclient, "1", "20", an.kao_out_stream_init)
+                    ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
                 } else if (audioStateAlt == state2) {
                     ai.kaoLimitAudioClient(
                         "MIXER",
-                        an.mediaflinger_dump,
+                        an.mediaflingerDump,
                         "1",
                         "+3",
-                        an.kao_aclient_top_limit
+                        an.kaoAclientTopLimit
                     )
                     ai.kaoLimitAudioClient(
                         "Suspended",
-                        an.mediaflinger_dump,
+                        an.mediaflingerDump,
                         "1",
                         "+3",
-                        an.kao_aclient_bottom_limit
+                        an.kaoAclientBottomLimit
                     )
-                    val kaoTopLimit = au.readFromFile(this, an.kao_top_limit_file).toInt().plus(1)
+                    val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
                     val kaoBottomLimit =
-                        au.readFromFile(this, an.kao_bottom_limit_file).toInt().minus(2)
+                        au.readFromFile(this, an.kaoBottomLimitFile).toInt().minus(2)
                     ai.kaoAudioClient(
                         kaoTopLimit,
                         kaoBottomLimit,
-                        an.mediaflinger_dump,
-                        an.kao_aclient
+                        an.mediaflingerDump,
+                        an.kaoAclient
                     )
-                    ap.kaoProcString("Output", an.kao_aclient, "1", "20", an.kao_out_stream_init)
+                    ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
                 }
             }
         }
 
         // Take several value & Put it on textview
-        ap.kaoIOHandle("I/O", an.kao_aclient, "13", an.kao_io_init)
-        ap.kaoProcString("Standby", an.kao_aclient, "1", "9", an.kao_standby_init)
-        ap.kaoProcInt("rate", an.kao_aclient, "1", an.kao_smp_rate_init)
-        ap.kaoProcInt("count", an.kao_aclient, "1", an.kao_frm_cnt_init)
-        ap.kaoProcString("format", an.kao_aclient, "1", "16", an.kao_frm_bit_init)
-        ap.kaoProcInt("Channel", an.kao_aclient, "1", an.kao_chn_cnt_init)
-        ap.kaoProcString("Channel", an.kao_aclient, "2", "25", an.kao_chn_mask_init)
-        ap.kaoProcString("Processing", an.kao_aclient, "1", "23", an.kao_prc_frm_init)
-        ap.kaoProcInt("Processing", an.kao_aclient, "2", an.kao_prc_bit_init)
-        contentInfoBinding.audioOut.text = au.readFromFile(this, an.kao_out_stream_init_file)
-        contentInfoBinding.audioPid.text = au.readFromFile(this, an.kao_io_init_file)
-        contentInfoBinding.audioStandby.text = au.readFromFile(this, an.kao_standby_init_file)
-        contentInfoBinding.audioSampleRate.text = au.readFromFile(this, an.kao_rate_init_file)
-        contentInfoBinding.audioHalFrame.text = au.readFromFile(this, an.kao_frm_cnt_init_file)
+        ap.kaoIOHandle("I/O", an.kaoAclient, "13", an.kaoIoInit)
+        ap.kaoProcString("Standby", an.kaoAclient, "1", "9", an.kaoStandbyInit)
+        ap.kaoProcInt("rate", an.kaoAclient, "1", an.kaoSmpRateInit)
+        ap.kaoProcInt("count", an.kaoAclient, "1", an.kaoFrmCntInit)
+        ap.kaoProcString("format", an.kaoAclient, "1", "16", an.kaoFrmBitInit)
+        ap.kaoProcInt("Channel", an.kaoAclient, "1", an.kaoChnCntInit)
+        ap.kaoProcString("Channel", an.kaoAclient, "2", "25", an.kaoChnMaskInit)
+        ap.kaoProcString("Processing", an.kaoAclient, "1", "23", an.kaoPrcFrmInit)
+        ap.kaoProcInt("Processing", an.kaoAclient, "2", an.kaoPrcBitInit)
+        contentInfoBinding.audioOut.text = au.readFromFile(this, an.kaoOutStreamInitFile)
+        contentInfoBinding.audioPid.text = au.readFromFile(this, an.kaoIoInitFile)
+        contentInfoBinding.audioStandby.text = au.readFromFile(this, an.kaoStandbyInitFile)
+        contentInfoBinding.audioSampleRate.text = au.readFromFile(this, an.kaoRateInitFile)
+        contentInfoBinding.audioHalFrame.text = au.readFromFile(this, an.kaoFrmCntInitFile)
         contentInfoBinding.audioHalFormat.text =
-            ap.kaoBitDetect(au.readFromFile(this, an.kao_frm_bit_init_file).trim())
-        contentInfoBinding.audioChannelCount.text = au.readFromFile(this, an.kao_chn_cnt_init_file)
-        contentInfoBinding.audioChannelMask.text = au.readFromFile(this, an.kao_chn_mask_init_file)
+            ap.kaoBitDetect(au.readFromFile(this, an.kaoFrmBitInitFile).trim())
+        contentInfoBinding.audioChannelCount.text = au.readFromFile(this, an.kaoChnCntInitFile)
+        contentInfoBinding.audioChannelMask.text = au.readFromFile(this, an.kaoChnMaskInitFile)
         contentInfoBinding.audioFormat.text =
-            ap.kaoBitDetect(au.readFromFile(this, an.kao_prc_frm_init_file).trim())
-        contentInfoBinding.audioFrame.text = au.readFromFile(this, an.kao_prc_bit_init_file)
-        contentInfoBinding.audioFlags.text = au.readFromFile(this, an.kao_init_file)
+            ap.kaoBitDetect(au.readFromFile(this, an.kaoPrcFrmInitFile).trim())
+        contentInfoBinding.audioFrame.text = au.readFromFile(this, an.kaoPrcBitInitFile)
+        contentInfoBinding.audioFlags.text = au.readFromFile(this, an.kaoInitFile)
 
         binding.cvAppMenu2.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)
@@ -265,7 +261,7 @@ class AudioInfoActivity : AppCompatActivity() {
                 resources.getString(R.string.audio_effects),
                 resources.getString(R.string.audio_effects_details),
                 resources.getString(R.string.audio_effects_list),
-                au.readFromFile(this, an.library_files).trim()
+                au.readFromFile(this, an.libraryFiles).trim()
             )
         }
 
@@ -277,7 +273,7 @@ class AudioInfoActivity : AppCompatActivity() {
                 resources.getString(R.string.audio_session),
                 resources.getString(R.string.audio_session_details),
                 resources.getString(R.string.audio_session_list),
-                au.readFromFile(this, an.audio_client_init_file).trim()
+                au.readFromFile(this, an.audioClientInitFile).trim()
             )
         }
 
@@ -294,15 +290,15 @@ class AudioInfoActivity : AppCompatActivity() {
     }
 
     private fun showPopup(text_1: String?, text_2: String?, text_3: String?, text_4: String?) {
-        po.setContentView(R.layout.activity_pop_up_info)
+        // Initialize binding
+        val poBinding = ActivityPopUpInfoBinding.inflate(layoutInflater)
+        po.setContentView(poBinding.root)
 
-        // Binding
-        val pob: ActivityPopUpInfoBinding = ActivityPopUpInfoBinding.inflate(layoutInflater)
-
-        title.text = text_1
-        desc.text = text_2
-        pob.textPopUpDesc2.text = text_3
-        pob.textPopUpDesc3.text = text_4
+        // Set binding
+        poBinding.textPopUp1.text = text_1
+        poBinding.textPopUpDesc1.text = text_2
+        poBinding.textPopUpDesc2.text = text_3
+        poBinding.textPopUpDesc3.text = text_4
 
         // sharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
@@ -313,29 +309,29 @@ class AudioInfoActivity : AppCompatActivity() {
         if (nightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             val nightColor = Color.parseColor("#607d8b")
-            pob.cvTitle1.setCardBackgroundColor(nightColor)
-            pob.cvTitle2.setCardBackgroundColor(nightColor)
+            poBinding.cvTitle1.setCardBackgroundColor(nightColor)
+            poBinding.cvTitle2.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             val dayColor = Color.parseColor("#2286c3")
-            pob.cvTitle1.setCardBackgroundColor(dayColor)
-            pob.cvTitle2.setCardBackgroundColor(dayColor)
+            poBinding.cvTitle1.setCardBackgroundColor(dayColor)
+            poBinding.cvTitle2.setCardBackgroundColor(dayColor)
         }
 
-        title.setOnClickListener { po.dismiss() }
+        poBinding.cvPopUp1.setOnClickListener { po.dismiss() }
         po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         po.show()
     }
 
     private fun showPopupAdd(text_1: String?, text_2: String?, text_3: String) {
-        po.setContentView(R.layout.activity_pop_up_info_details)
+        // Initialize binding
+        val poBinding = ActivityPopUpInfoDetailsBinding.inflate(layoutInflater)
+        po.setContentView(poBinding.root)
 
-        // Binding
-        val pob: ActivityPopUpInfoDetailsBinding =
-            ActivityPopUpInfoDetailsBinding.inflate(layoutInflater)
-        title.text = text_1
-        desc.text = text_2
-        descExt.text = text_3
+        // Set binding
+        poBinding.textPopUp1.text = text_1
+        poBinding.textPopUpDesc1.text = text_2
+        poBinding.textPopUpDesc2.text = text_3
 
         // sharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
@@ -346,14 +342,14 @@ class AudioInfoActivity : AppCompatActivity() {
         if (nightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             val nightColor = Color.parseColor("#607d8b")
-            pob.cvTitle1.setCardBackgroundColor(nightColor)
+            poBinding.cvTitle1.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             val dayColor = Color.parseColor("#2286c3")
-            pob.cvTitle1.setCardBackgroundColor(dayColor)
+            poBinding.cvTitle1.setCardBackgroundColor(dayColor)
         }
 
-        title.setOnClickListener { po.dismiss() }
+        poBinding.cvPopUp1.setOnClickListener { po.dismiss() }
         po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         po.show()
     }
