@@ -91,4 +91,7 @@
     <string name="audio_settings_4_1_1_3">Backup Failed !, Backup Process Failed On Initial Stage!</string>
     <string name="audio_settings_4_1_1_4">Empty</string>
     <string name="audio_settings_5">Misc</string>
+    <string name="audio_root_access_true">Root Access Granted !</string>
+    <string name="audio_root_access_false">Root Access Failure !</string>
+    <string name="audio_root_access_reason">This application will not work properly without root access !</string>
 </resources>

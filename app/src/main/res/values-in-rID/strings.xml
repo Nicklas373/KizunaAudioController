@@ -22,4 +22,7 @@
     <string name="audio_settings_1">Tema</string>
     <string name="audio_settings_title">Pengaturan</string>
     <string name="audio_btn_info">Status</string>
+    <string name="audio_root_access_true" translatable="false">Akses Root Di Izinkan !</string>
+    <string name="audio_root_access_false">Akses Root Gagal !</string>
+    <string name="audio_root_access_reason">Aplikasi ini tidak dapat berjalan dengan baik jika tidak diberikan akses root !</string>
 </resources>

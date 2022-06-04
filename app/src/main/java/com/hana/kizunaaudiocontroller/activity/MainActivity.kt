@@ -9,17 +9,19 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
+import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.hana.kizunaaudiocontroller.audioUtils.AudioRoot
+import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.snackbar.Snackbar
 import com.hana.kizunaaudiocontroller.R
+import com.hana.kizunaaudiocontroller.audioUtils.AudioRoot
 import com.hana.kizunaaudiocontroller.databinding.ActivityMainBinding
 import com.hana.kizunaaudiocontroller.databinding.ContentMainBinding
-import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     // Late binding
@@ -39,14 +41,24 @@ class MainActivity : AppCompatActivity() {
         // Binding root class
         val ar = AudioRoot()
 
+        // sharedPreference begin
+        val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
+        val save = pref.edit()
+
         // Ask necessary permission for storage access
         ar.run(Runnable { askPerm() })
 
         // Ask necessary root access
-        ar.run(Runnable { ar.checkRooted() })
-
-        // sharedPreference begin
-        val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
+        ar.run(Runnable {
+            ar.checkRooted()
+            if (!ar.checkRooted()) {
+                save.putBoolean("ROOT_ACCESS", false)
+                save.apply()
+            } else {
+                save.putBoolean("ROOT_ACCESS", true)
+                save.apply()
+            }
+        })
 
         // Getting sharedPreference value if exist
         // Configure theme interface
@@ -72,40 +84,88 @@ class MainActivity : AppCompatActivity() {
         window.enterTransition = Explode()
         window.returnTransition = Fade()
 
+        // Get root status
+        val rootAccess = pref.getBoolean("ROOT_ACCESS", false)
+
         contentBinding.cvAppMainMenu1.setOnClickListener {
-            val i = Intent(this@MainActivity, AudioConfActivity::class.java)
-            val sharedView: View = contentBinding.cvAppMainMenu1
-            val transitionName = getString(R.string.app_main_menu_1)
-            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
-                this@MainActivity,
-                sharedView,
-                transitionName
-            )
-            startActivity(i, transitionActivityOptions.toBundle())
+            if (rootAccess) {
+                val i = Intent(this@MainActivity, AudioConfActivity::class.java)
+                val sharedView: View = contentBinding.cvAppMainMenu1
+                val transitionName = getString(R.string.app_main_menu_1)
+                val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
+                    this@MainActivity,
+                    sharedView,
+                    transitionName
+                )
+                startActivity(i, transitionActivityOptions.toBundle())
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_true)
+                )
+            } else {
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_false)
+                )
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_reason)
+                )
+            }
         }
 
         contentBinding.cvAppMainMenu2.setOnClickListener {
-            val i = Intent(this@MainActivity, AudioInfoActivity::class.java)
-            val sharedView: View = contentBinding.cvAppMainMenu2
-            val transitionName = getString(R.string.app_main_menu_2)
-            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
-                this@MainActivity,
-                sharedView,
-                transitionName
-            )
-            startActivity(i, transitionActivityOptions.toBundle())
+            if (rootAccess) {
+                val i = Intent(this@MainActivity, AudioInfoActivity::class.java)
+                val sharedView: View = contentBinding.cvAppMainMenu2
+                val transitionName = getString(R.string.app_main_menu_2)
+                val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
+                    this@MainActivity,
+                    sharedView,
+                    transitionName
+                )
+                startActivity(i, transitionActivityOptions.toBundle())
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_true)
+                )
+            } else {
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_false)
+                )
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_reason)
+                )
+            }
         }
 
         contentBinding.cvAppMainMenu3.setOnClickListener {
-            val i = Intent(this@MainActivity, AudioSettingsActivity::class.java)
-            val sharedView: View = contentBinding.cvAppMainMenu3
-            val transitionName = getString(R.string.audio_settings_title)
-            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
-                this@MainActivity,
-                sharedView,
-                transitionName
-            )
-            startActivity(i, transitionActivityOptions.toBundle())
+            if (rootAccess) {
+                val i = Intent(this@MainActivity, AudioSettingsActivity::class.java)
+                val sharedView: View = contentBinding.cvAppMainMenu3
+                val transitionName = getString(R.string.audio_settings_title)
+                val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
+                    this@MainActivity,
+                    sharedView,
+                    transitionName
+                )
+                startActivity(i, transitionActivityOptions.toBundle())
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_true)
+                )
+            } else {
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_false)
+                )
+                setSnackBar(
+                    findViewById(android.R.id.content),
+                    resources.getString(R.string.audio_root_access_reason)
+                )
+            }
         }
     }
 
@@ -121,5 +181,15 @@ class MainActivity : AppCompatActivity() {
                 requestPermission
             )
         }
+    }
+
+    private fun setSnackBar(root: View?, snackTitle: String?) {
+        val snackBar = Snackbar.make(root!!, snackTitle!!, Snackbar.LENGTH_SHORT)
+        snackBar.show()
+        val view = snackBar.view
+        val txtV = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        val typeface = ResourcesCompat.getFont(this, R.font.mandorin_font)
+        txtV.gravity = Gravity.START
+        txtV.typeface = typeface
     }
 }
