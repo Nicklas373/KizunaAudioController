@@ -75,46 +75,6 @@
         app:layout_constraintTop_toBottomOf="@+id/setting_info_2" />
 
     <TextView
-        android:id="@+id/setting_language"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/mandorin_font"
-        android:text="@string/audio_settings_3"
-        android:textColor="@color/blue_700"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setting_info_2_ans" />
-
-    <RadioButton
-        android:id="@+id/language_switcher_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="@font/mandorin_font"
-        android:text="@string/audio_settings_3_1"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setting_language" />
-
-    <RadioButton
-        android:id="@+id/language_switcher_en"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="@font/mandorin_font"
-        android:text="@string/audio_settings_3_2"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/language_switcher_id" />
-
-    <TextView
         android:id="@+id/setting_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,7 +86,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/language_switcher_en" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_info_2_ans" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/theme_switcher"

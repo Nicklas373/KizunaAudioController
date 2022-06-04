@@ -22,18 +22,18 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+    // Late binding
+    private lateinit var contentBinding: ContentMainBinding
+
     // Declare variables
     private val requestPermission = 20
-
-    // Binding
-    private lateinit var contentBinding: ContentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Initialize binding
         val activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         contentBinding = activityMainBinding.detailContent
-
         setContentView(activityMainBinding.root)
 
         // Binding root class
