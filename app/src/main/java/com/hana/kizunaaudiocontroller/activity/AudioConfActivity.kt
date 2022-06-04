@@ -13,35 +13,31 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
-import com.hana.kizunaaudiocontroller.datasource.AudioNode
-import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
 import com.hana.kizunaaudiocontroller.R
+import com.hana.kizunaaudiocontroller.audioUtils.AudioUtils
 import com.hana.kizunaaudiocontroller.databinding.ActivityAudioConfBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpConfBinding
 import com.hana.kizunaaudiocontroller.databinding.ActivityPopUpInfoDetailsBinding
 import com.hana.kizunaaudiocontroller.databinding.ContentAudioConfBinding
-import java.util.*
+import com.hana.kizunaaudiocontroller.datasource.AudioNode
 
 class AudioConfActivity : AppCompatActivity() {
-    // Binding
+    // Late binding
     private lateinit var confBinding: ContentAudioConfBinding
 
     // Separate environment
     private lateinit var po: Dialog
-    private lateinit var title: TextView
-    private lateinit var title1: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Initialize binding
         val binding = ActivityAudioConfBinding.inflate(layoutInflater)
         confBinding = binding.detailContent
-
         setContentView(binding.root)
 
         supportActionBar?.hide()
@@ -93,37 +89,38 @@ class AudioConfActivity : AppCompatActivity() {
         val au = AudioUtils()
 
         // Read kernel files
-        au.exportKernelFile(an.kernel_dump)
-        val kernelVer = au.readFromFile(this, an.kernel_file)
+        au.exportKernelFile(an.kernelDump)
+        val kernelVer = au.readFromFile(this, an.kernelFile)
 
         // Declare static string for kernel version
         val upstream = "4.9"
+        val midstream = "4.4"
         val legacy = "3.18"
 
         // Check kernel version
-        if (kernelVer == upstream) {
-            au.dumpFile(an.uhqa_kernel_4_x, an.uhqa_force_file)
-            au.dumpFile(an.amp_kernel_4_x, an.amp_force_file)
-            au.dumpFile(an.gating_kernel_4_x, an.gating_force_file)
+        if (kernelVer == upstream || kernelVer == midstream) {
+            au.dumpFile(an.uhqaKernelUpstream, an.uhqaForceFile)
+            au.dumpFile(an.ampKernelUpstream, an.ampForceFile)
+            au.dumpFile(an.gatingKernelUpstream, an.gatingForceFile)
 
             // Not supported on 4.9 Kernel since techpack aren't
             // use older than wcd9335
-            au.writeToFile("0", an.hph_force_file)
-            au.writeToFile("0", an.impedance_force_file)
+            au.writeToFile("0", an.hphForceFile)
+            au.writeToFile("0", an.impedanceForceFile)
         } else if (kernelVer == legacy) {
-            au.dumpFile(an.uhqa_kernel_3_x, an.uhqa_force_file)
-            au.dumpFile(an.hph_kernel_3_x, an.hph_force_file)
-            au.dumpFile(an.amp_kernel_3_x, an.amp_force_file)
-            au.dumpFile(an.impedance_kernel_3_x, an.impedance_file)
-            au.dumpFile(an.gating_kernel_3_x, an.gating_force_file)
+            au.dumpFile(an.uhqaKernelLegacy, an.uhqaForceFile)
+            au.dumpFile(an.hphKernelLegacy, an.hphForceFile)
+            au.dumpFile(an.ampKernelLegacy, an.ampForceFile)
+            au.dumpFile(an.impedanceKernelLegacy, an.impedanceForceFile)
+            au.dumpFile(an.gatingKernelLegacy, an.gatingForceFile)
         }
 
         // Set switch value on init
-        val uhqaValue = au.readFromFile(this, an.uhqa_file)
-        val hphValue = au.readFromFile(this, an.hph_file)
-        val ampValue = au.readFromFile(this, an.amp_file)
-        val impedanceValue = au.readFromFile(this, an.impedance_file)
-        val gatingValue = au.readFromFile(this, an.gating_file)
+        val uhqaValue = au.readFromFile(this, an.uhqaFile)
+        val hphValue = au.readFromFile(this, an.hphFile)
+        val ampValue = au.readFromFile(this, an.ampFile)
+        val impedanceValue = au.readFromFile(this, an.impedanceFile)
+        val gatingValue = au.readFromFile(this, an.gatingFile)
 
         confBinding.switchAppMenu1.isChecked = uhqaValue > "1"
         confBinding.switchAppMenu12.isChecked = hphValue > "1"
@@ -144,9 +141,9 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         confBinding.switchAppMenu1.setOnClickListener {
-            if (kernelVer == upstream) {
+            if (kernelVer == upstream || kernelVer == midstream) {
                 if (confBinding.switchAppMenu1.isChecked) {
-                    au.writeToFile("1", an.uhqa_kernel_4_x)
+                    au.writeToFile("1", an.uhqaKernelUpstream)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_scs)
@@ -158,7 +155,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.uhqa_kernel_4_x)
+                    au.writeToFile("0", an.uhqaKernelUpstream)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_fid)
@@ -172,7 +169,7 @@ class AudioConfActivity : AppCompatActivity() {
                 }
             } else if (kernelVer == legacy) {
                 if (confBinding.switchAppMenu1.isChecked) {
-                    au.writeToFile("1", an.uhqa_kernel_3_x)
+                    au.writeToFile("1", an.uhqaKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_scs)
@@ -184,7 +181,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.uhqa_kernel_3_x)
+                    au.writeToFile("0", an.uhqaKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_1_toast_uhqa_fid)
@@ -198,11 +195,11 @@ class AudioConfActivity : AppCompatActivity() {
                 }
             }
             confBinding.switchAppMenu11Text.visibility = View.VISIBLE
-            au.dropFile(an.uhqa_file)
+            au.dropFile(an.uhqaFile)
         }
 
         confBinding.switchAppMenu12.setOnClickListener {
-            if (kernelVer == upstream) {
+            if (kernelVer == upstream || kernelVer == midstream) {
                 confBinding.switchAppMenu12.isChecked = false
                 confBinding.switchAppMenu12.isClickable = false
                 confBinding.switchAppMenu12.isEnabled = false
@@ -218,7 +215,7 @@ class AudioConfActivity : AppCompatActivity() {
                 )
             } else if (kernelVer == legacy) {
                 if (confBinding.switchAppMenu12.isChecked) {
-                    au.writeToFile("1", an.hph_kernel_3_x)
+                    au.writeToFile("1", an.hphKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_2_toast_hph_scs)
@@ -230,7 +227,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.hph_kernel_3_x)
+                    au.writeToFile("0", an.hphKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_2_toast_hph_fid)
@@ -244,13 +241,13 @@ class AudioConfActivity : AppCompatActivity() {
                 }
             }
             confBinding.switchAppMenu121Text.visibility = View.VISIBLE
-            au.dropFile(an.hph_file)
+            au.dropFile(an.hphFile)
         }
 
         confBinding.switchAppMenu13.setOnClickListener {
-            if (kernelVer == upstream) {
+            if (kernelVer == upstream || kernelVer == midstream) {
                 if (confBinding.switchAppMenu13.isChecked) {
-                    au.writeToFile("1", an.amp_kernel_4_x)
+                    au.writeToFile("1", an.ampKernelUpstream)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_scs)
@@ -262,7 +259,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.amp_kernel_4_x)
+                    au.writeToFile("0", an.ampKernelUpstream)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_fid)
@@ -276,7 +273,7 @@ class AudioConfActivity : AppCompatActivity() {
                 }
             } else if (kernelVer == legacy) {
                 if (confBinding.switchAppMenu13.isChecked) {
-                    au.writeToFile("1", an.amp_kernel_3_x)
+                    au.writeToFile("1", an.ampKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_scs)
@@ -288,7 +285,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.amp_kernel_3_x)
+                    au.writeToFile("0", an.ampKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_3_toast_amp_fid)
@@ -302,11 +299,11 @@ class AudioConfActivity : AppCompatActivity() {
                 }
             }
             confBinding.switchAppMenu131Text.visibility = View.VISIBLE
-            au.dropFile(an.amp_file)
+            au.dropFile(an.ampFile)
         }
 
         confBinding.switchAppMenu14.setOnClickListener {
-            if (kernelVer == upstream) {
+            if (kernelVer == upstream || kernelVer == midstream) {
                 confBinding.switchAppMenu14.isChecked = false
                 confBinding.switchAppMenu14.isClickable = false
                 confBinding.switchAppMenu14.isEnabled = false
@@ -322,7 +319,7 @@ class AudioConfActivity : AppCompatActivity() {
                 )
             } else if (kernelVer == legacy) {
                 if (confBinding.switchAppMenu14.isChecked) {
-                    au.writeToFile("1", an.impedance_kernel_3_x)
+                    au.writeToFile("1", an.impedanceKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_4_toast_impedance_scs)
@@ -334,7 +331,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.impedance_kernel_3_x)
+                    au.writeToFile("0", an.impedanceKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_4_toast_impedance_fid)
@@ -347,18 +344,16 @@ class AudioConfActivity : AppCompatActivity() {
                     )
                 }
             }
-            confBinding.switchAppMenu14.visibility = View.VISIBLE
-            au.dropFile(an.impedance_file)
+            confBinding.switchAppMenu141Text.visibility = View.VISIBLE
+            au.dropFile(an.impedanceFile)
         }
 
         confBinding.switchAppMenu15.setOnClickListener {
             if (confBinding.switchAppMenu15.isChecked) {
-                TransitionManager.beginDelayedTransition(confBinding.cvAppMenu16, AutoTransition())
-                confBinding.switchAppMenu16.visibility = View.VISIBLE
+                confBinding.cvAppMenu16.visibility = View.VISIBLE
                 save.putBoolean("EXP_FEATURES", true)
                 save.apply()
             } else {
-                TransitionManager.beginDelayedTransition(confBinding.cvAppMenu16, AutoTransition())
                 confBinding.cvAppMenu16.visibility = View.INVISIBLE
                 save.putBoolean("EXP_FEATURES", false)
                 save.apply()
@@ -366,9 +361,9 @@ class AudioConfActivity : AppCompatActivity() {
         }
 
         confBinding.switchAppMenu16.setOnClickListener {
-            if (kernelVer == upstream) {
+            if (kernelVer == upstream || kernelVer == midstream) {
                 if (confBinding.switchAppMenu16.isChecked) {
-                    au.writeToFile("1", an.gating_kernel_4_x)
+                    au.writeToFile("1", an.gatingKernelUpstream)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_scs)
@@ -380,7 +375,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.gating_kernel_4_x)
+                    au.writeToFile("0", an.gatingKernelUpstream)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_fid)
@@ -394,7 +389,7 @@ class AudioConfActivity : AppCompatActivity() {
                 }
             } else if (kernelVer == legacy) {
                 if (confBinding.switchAppMenu16.isChecked) {
-                    au.writeToFile("1", an.gating_kernel_3_x)
+                    au.writeToFile("1", an.gatingKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_scs)
@@ -406,7 +401,7 @@ class AudioConfActivity : AppCompatActivity() {
                         resources.getString(R.string.state_enable)
                     )
                 } else {
-                    au.writeToFile("0", an.gating_kernel_3_x)
+                    au.writeToFile("0", an.gatingKernelLegacy)
                     setSnackBar(
                         findViewById(android.R.id.content),
                         resources.getString(R.string.app_menu_6_toast_gating_fid)
@@ -420,7 +415,7 @@ class AudioConfActivity : AppCompatActivity() {
                 }
             }
             confBinding.switchAppMenu161Text.visibility = View.VISIBLE
-            au.dropFile(an.gating_file)
+            au.dropFile(an.gatingFile)
         }
 
         confBinding.buttonAppMenu1.setOnClickListener {
@@ -503,13 +498,13 @@ class AudioConfActivity : AppCompatActivity() {
     }
 
     private fun showPopup(text_1: String?, text_2: String?) {
-        po.setContentView(R.layout.activity_pop_up_conf)
+        // Initialize binding
+        val poBinding = ActivityPopUpConfBinding.inflate(layoutInflater)
+        po.setContentView(poBinding.root)
 
-        // Binding
-        val pob: ActivityPopUpConfBinding = ActivityPopUpConfBinding.inflate(layoutInflater)
-
-        pob.textPopUp1.text = text_1
-        pob.textPopUpDesc1.text = text_2
+        // Set binding
+        poBinding.textPopUp1.text = text_1
+        poBinding.textPopUpDesc1.text = text_2
 
         // sharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
@@ -520,28 +515,27 @@ class AudioConfActivity : AppCompatActivity() {
         if (nightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             val nightColor = Color.parseColor("#607d8b")
-            pob.cvTitle1.setCardBackgroundColor(nightColor)
+            poBinding.cvTitle1.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             val dayColor = Color.parseColor("#2286c3")
-            pob.cvTitle1.setCardBackgroundColor(dayColor)
+            poBinding.cvTitle1.setCardBackgroundColor(dayColor)
         }
 
-        title.setOnClickListener { po.dismiss() }
+        poBinding.cvPopUp1.setOnClickListener { po.dismiss() }
         po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         po.show()
     }
 
     private fun showPopupAdd(text_1: String?, text_2: String?, text_3: String) {
-        po.setContentView(R.layout.activity_pop_up_info_details)
+        // Initialize binding
+        val poBinding = ActivityPopUpInfoDetailsBinding.inflate(layoutInflater)
+        po.setContentView(poBinding.root)
 
-        // Binding
-        val pob: ActivityPopUpInfoDetailsBinding =
-            ActivityPopUpInfoDetailsBinding.inflate(layoutInflater)
-
-        pob.textPopUp1.text = text_1
-        pob.textPopUpDesc1.text = text_2
-        pob.textPopUpDesc2.text = text_3
+        // Set binding
+        poBinding.textPopUp1.text = text_1
+        poBinding.textPopUpDesc1.text = text_2
+        poBinding.textPopUpDesc2.text = text_3
 
         // sharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
@@ -552,14 +546,14 @@ class AudioConfActivity : AppCompatActivity() {
         if (nightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             val nightColor = Color.parseColor("#607d8b")
-            title1.setCardBackgroundColor(nightColor)
+            poBinding.cvTitle1.setCardBackgroundColor(nightColor)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             val dayColor = Color.parseColor("#2286c3")
-            title1.setCardBackgroundColor(dayColor)
+            poBinding.cvTitle1.setCardBackgroundColor(dayColor)
         }
 
-        title.setOnClickListener { po.dismiss() }
+        poBinding.cvPopUp1.setOnClickListener { po.dismiss() }
         po.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         po.show()
     }
@@ -568,9 +562,9 @@ class AudioConfActivity : AppCompatActivity() {
         val snackBar = Snackbar.make(root!!, snackTitle!!, Snackbar.LENGTH_SHORT)
         snackBar.show()
         val view = snackBar.view
-        val txtv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        val txtV = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
         val typeface = ResourcesCompat.getFont(this@AudioConfActivity, R.font.mandorin_font)
-        txtv.gravity = Gravity.START
-        txtv.typeface = typeface
+        txtV.gravity = Gravity.START
+        txtV.typeface = typeface
     }
 }
