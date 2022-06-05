@@ -33,16 +33,16 @@ class AudioInfoActivity : AppCompatActivity() {
         contentInfoBinding = binding.detailContent
         setContentView(binding.root)
 
+        // Hide title bar
         supportActionBar?.hide()
 
         // Set an animation transition
         window.enterTransition = Explode()
         window.returnTransition = Fade()
 
-        // sharedPreference begin
+        // SharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
 
-        // Getting sharedPreference value if exist
         // Configure theme interface
         val nightMode = pref.getBoolean("MODE_NIGHT", false)
         if (nightMode) {
@@ -124,6 +124,7 @@ class AudioInfoActivity : AppCompatActivity() {
          * if not then we will re-filter audio state and correct state after it.
          */
         if (audioState.isEmpty()) {
+            ai.kaoAudioInitExt("AudioStreamOut", an.mediaflingerDump, "1", "+41", an.kaoAudioInit)
             ai.kaoLimitAudioClient(
                 "MIXER",
                 an.mediaflingerDump,
@@ -144,7 +145,13 @@ class AudioInfoActivity : AppCompatActivity() {
             ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
         } else if (audioState.isNotEmpty()) {
             if (audioState == "-") {
-                ai.kaoAudioInitExt("MIXER", an.mediaflingerDump, "1", "+63", an.kaoAudioInit)
+                ai.kaoAudioInitExt(
+                    "AudioStreamOut",
+                    an.mediaflingerDump,
+                    "1",
+                    "+41",
+                    an.kaoAudioInit
+                )
                 ai.kaoLimitAudioClient(
                     "MIXER",
                     an.mediaflingerDump,
@@ -165,7 +172,13 @@ class AudioInfoActivity : AppCompatActivity() {
                 ai.kaoAudioClient(kaoTopLimit, kaoBottomLimit, an.mediaflingerDump, an.kaoAclient)
                 ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
             } else {
-                ai.kaoAudioInitExt("DIRECT", an.mediaflingerDump, "1", "+64", an.kaoAudioInit)
+                ai.kaoAudioInitExt(
+                    "AudioStreamOut",
+                    an.mediaflingerDump,
+                    "1",
+                    "+42",
+                    an.kaoAudioInit
+                )
                 val audioStateAlt = au.readFromFile(this, an.kaoInitFile).trim()
                 if (state1 == audioStateAlt || state3 == audioStateAlt || state4 == audioStateAlt) {
                     ai.kaoLimitAudioClient(
@@ -300,7 +313,7 @@ class AudioInfoActivity : AppCompatActivity() {
         poBinding.textPopUpDesc2.text = text_3
         poBinding.textPopUpDesc3.text = text_4
 
-        // sharedPreference begin
+        // SharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
 
         // Getting sharedPreference value if exist
@@ -333,7 +346,7 @@ class AudioInfoActivity : AppCompatActivity() {
         poBinding.textPopUpDesc1.text = text_2
         poBinding.textPopUpDesc2.text = text_3
 
-        // sharedPreference begin
+        // SharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
 
         // Getting sharedPreference value if exist
