@@ -46,7 +46,7 @@ class AudioSettingsActivity : AppCompatActivity() {
         window.enterTransition = Explode()
         window.returnTransition = Fade()
 
-        // sharedPreference begin
+        // SharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
         val save = pref.edit()
 

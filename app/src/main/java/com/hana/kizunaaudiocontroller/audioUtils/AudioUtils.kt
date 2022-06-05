@@ -34,10 +34,6 @@ class AudioUtils {
         Shell.SU.run("cd $bak_dir && tar -czf $name *.txt")
     }
 
-    fun exportKernelFile(local_dir: String) {
-        Shell.SU.run("uname -r | head -c 3 > $local_dir")
-    }
-
     fun exportFullKernelFile(local_dir: String) {
         Shell.SU.run("uname -a > $local_dir")
     }

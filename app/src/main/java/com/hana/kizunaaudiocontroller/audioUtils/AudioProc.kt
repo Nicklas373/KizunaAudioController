@@ -30,10 +30,6 @@ class AudioProc {
         Shell.SU.run("grep -w $type $aClient | sed -n '$sed p' | sed 's/^.\\{$cut\\}//'  > $proc")
     }
 
-    fun kaoExpensiveProc(type: String, aClient: String, sed: String, tail: String) {
-        Shell.SU.run("grep -w $type $aClient | sed -n '$sed p' | tail -c $tail")
-    }
-
     fun kaoBitDetect(input: String): String {
         var out = "NULL"
         when (input) {
