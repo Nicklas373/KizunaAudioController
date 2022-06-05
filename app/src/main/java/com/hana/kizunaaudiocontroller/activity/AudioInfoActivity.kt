@@ -81,8 +81,13 @@ class AudioInfoActivity : AppCompatActivity() {
         // Begin less conditional bash processing
         ai.mediaFlinger(an.mediaflingerDump)
         ai.libraryEffects(an.mediaflingerDump, an.unfilteredLibrary, an.library)
-        ai.limitAudioClient("Notification", an.mediaflingerDump, "3", an.audioClientTlInit)
-        ai.limitAudioClient("Global", an.mediaflingerDump, "3", an.audioClientBlInit)
+        if (android.os.Build.DEVICE == "z3q") {
+            ai.limitAudioClient("Notification", an.mediaflingerDump, "2", an.audioClientTlInit)
+            ai.limitAudioClient("Global", an.mediaflingerDump, "2", an.audioClientBlInit)
+        } else {
+            ai.limitAudioClient("Notification", an.mediaflingerDump, "3", an.audioClientTlInit)
+            ai.limitAudioClient("Global", an.mediaflingerDump, "3", an.audioClientBlInit)
+        }
 
         /* Show current app or services that was using audio services in the system
          *
@@ -94,14 +99,25 @@ class AudioInfoActivity : AppCompatActivity() {
          * or pid with name from the services in audioflinger.
          */
         if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.Q) {
-            val aClientTl = au.readFromFile(this, an.audioClientTlInitFile).toInt().plus(3)
+            if (android.os.Build.DEVICE == "z3q") {
+            val aClientTl = au.readFromFile(this, an.audioClientTlInitFile).toInt().plus(2)
             val aClientBl = au.readFromFile(this, an.audioClientBlInitFile).toInt().minus(1)
-            ai.currentAudioClient10(
-                aClientTl,
-                aClientBl,
-                an.mediaflingerDump,
-                an.audioClientInit
-            )
+                ai.currentAudioClient10(
+                    aClientTl,
+                    aClientBl,
+                    an.mediaflingerDump,
+                    an.audioClientInit
+                )
+            } else {
+                val aClientTl = au.readFromFile(this, an.audioClientTlInitFile).toInt().plus(3)
+                val aClientBl = au.readFromFile(this, an.audioClientBlInitFile).toInt().minus(1)
+                ai.currentAudioClient10(
+                    aClientTl,
+                    aClientBl,
+                    an.mediaflingerDump,
+                    an.audioClientInit
+                )
+            }
         } else {
             val aClientTl = au.readFromFile(this, an.audioClientTlInitFile).toInt().plus(2)
             val aClientBl = au.readFromFile(this, an.audioClientBlInitFile).toInt().minus(1)
@@ -125,13 +141,23 @@ class AudioInfoActivity : AppCompatActivity() {
          */
         if (audioState.isEmpty()) {
             ai.kaoAudioInitExt("AudioStreamOut", an.mediaflingerDump, "1", "+41", an.kaoAudioInit)
-            ai.kaoLimitAudioClient(
-                "MIXER",
-                an.mediaflingerDump,
-                "1",
-                "+3",
-                an.kaoAclientTopLimit
-            )
+            if (android.os.Build.DEVICE == "z3q") {
+                ai.kaoLimitAudioClient(
+                    "MIXER",
+                    an.mediaflingerDump,
+                    "1",
+                    "+2",
+                    an.kaoAclientTopLimit
+                )
+            } else {
+                ai.kaoLimitAudioClient(
+                    "MIXER",
+                    an.mediaflingerDump,
+                    "1",
+                    "+3",
+                    an.kaoAclientTopLimit
+                )
+            }
             ai.kaoLimitAudioClient(
                 "Suspended",
                 an.mediaflingerDump,
@@ -145,66 +171,23 @@ class AudioInfoActivity : AppCompatActivity() {
             ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
         } else if (audioState.isNotEmpty()) {
             if (audioState == "-") {
-                ai.kaoAudioInitExt(
-                    "AudioStreamOut",
-                    an.mediaflingerDump,
-                    "1",
-                    "+41",
-                    an.kaoAudioInit
-                )
-                ai.kaoLimitAudioClient(
-                    "MIXER",
-                    an.mediaflingerDump,
-                    "1",
-                    "+3",
-                    an.kaoAclientTopLimit
-                )
-                ai.kaoLimitAudioClient(
-                    "Suspended",
-                    an.mediaflingerDump,
-                    "1",
-                    "+3",
-                    an.kaoAclientBottomLimit
-                )
-                val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
-                val kaoBottomLimit =
-                    au.readFromFile(this, an.kaoBottomLimitFile).toInt().minus(2)
-                ai.kaoAudioClient(kaoTopLimit, kaoBottomLimit, an.mediaflingerDump, an.kaoAclient)
-                ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
-            } else {
-                ai.kaoAudioInitExt(
-                    "AudioStreamOut",
-                    an.mediaflingerDump,
-                    "1",
-                    "+42",
-                    an.kaoAudioInit
-                )
-                val audioStateAlt = au.readFromFile(this, an.kaoInitFile).trim()
-                if (state1 == audioStateAlt || state3 == audioStateAlt || state4 == audioStateAlt) {
+                ai.kaoAudioInitExt("AudioStreamOut", an.mediaflingerDump, "1", "+41", an.kaoAudioInit)
+                if (android.os.Build.DEVICE == "z3q") {
                     ai.kaoLimitAudioClient(
-                        "DIRECT",
+                        "MIXER",
                         an.mediaflingerDump,
                         "1",
-                        "+3",
+                        "+2",
                         an.kaoAclientTopLimit
                     )
                     ai.kaoLimitAudioClient(
-                        "DIRECT",
+                        "Suspended",
                         an.mediaflingerDump,
-                        "2",
-                        "+3",
+                        "1",
+                        "+2",
                         an.kaoAclientBottomLimit
                     )
-                    val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
-                    val kaoBottomLimit = au.readFromFile(this, an.kaoBottomLimitFile).toInt()
-                    ai.kaoAudioClient(
-                        kaoTopLimit,
-                        kaoBottomLimit,
-                        an.mediaflingerDump,
-                        an.kaoAclient
-                    )
-                    ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
-                } else if (audioStateAlt == state2) {
+                } else {
                     ai.kaoLimitAudioClient(
                         "MIXER",
                         an.mediaflingerDump,
@@ -219,6 +202,88 @@ class AudioInfoActivity : AppCompatActivity() {
                         "+3",
                         an.kaoAclientBottomLimit
                     )
+                }
+                val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
+                val kaoBottomLimit =
+                    au.readFromFile(this, an.kaoBottomLimitFile).toInt().minus(2)
+                ai.kaoAudioClient(kaoTopLimit, kaoBottomLimit, an.mediaflingerDump, an.kaoAclient)
+                ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
+            } else {
+                ai.kaoAudioInitExt("AudioStreamOut", an.mediaflingerDump, "1", "+42", an.kaoAudioInit)
+                val audioStateAlt = au.readFromFile(this, an.kaoInitFile).trim()
+                if (state1 == audioStateAlt || state3 == audioStateAlt || state4 == audioStateAlt) {
+                    if (android.os.Build.DEVICE == "z3q") {
+                        ai.kaoLimitAudioClient(
+                            "DIRECT",
+                            an.mediaflingerDump,
+                            "1",
+                            "+2",
+                            an.kaoAclientTopLimit
+                        )
+                        ai.kaoLimitAudioClient(
+                            "DIRECT",
+                            an.mediaflingerDump,
+                            "2",
+                            "+2",
+                            an.kaoAclientBottomLimit
+                        )
+                    } else {
+                        ai.kaoLimitAudioClient(
+                            "DIRECT",
+                            an.mediaflingerDump,
+                            "1",
+                            "+3",
+                            an.kaoAclientTopLimit
+                        )
+                        ai.kaoLimitAudioClient(
+                            "DIRECT",
+                            an.mediaflingerDump,
+                            "2",
+                            "+3",
+                            an.kaoAclientBottomLimit
+                        )
+                    }
+                    val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
+                    val kaoBottomLimit = au.readFromFile(this, an.kaoBottomLimitFile).toInt()
+                    ai.kaoAudioClient(
+                        kaoTopLimit,
+                        kaoBottomLimit,
+                        an.mediaflingerDump,
+                        an.kaoAclient
+                    )
+                    ap.kaoProcString("Output", an.kaoAclient, "1", "20", an.kaoOutStreamInit)
+                } else if (audioStateAlt == state2) {
+                    if (android.os.Build.DEVICE == "z3q") {
+                        ai.kaoLimitAudioClient(
+                            "MIXER",
+                            an.mediaflingerDump,
+                            "1",
+                            "+2",
+                            an.kaoAclientTopLimit
+                        )
+                        ai.kaoLimitAudioClient(
+                            "Suspended",
+                            an.mediaflingerDump,
+                            "1",
+                            "+2",
+                            an.kaoAclientBottomLimit
+                        )
+                    } else {
+                        ai.kaoLimitAudioClient(
+                            "MIXER",
+                            an.mediaflingerDump,
+                            "1",
+                            "+3",
+                            an.kaoAclientTopLimit
+                        )
+                        ai.kaoLimitAudioClient(
+                            "Suspended",
+                            an.mediaflingerDump,
+                            "1",
+                            "+3",
+                            an.kaoAclientBottomLimit
+                        )
+                    }
                     val kaoTopLimit = au.readFromFile(this, an.kaoTopLimitFile).toInt().plus(1)
                     val kaoBottomLimit =
                         au.readFromFile(this, an.kaoBottomLimitFile).toInt().minus(2)
