@@ -41,26 +41,15 @@ class MainActivity : AppCompatActivity() {
         // Binding root class
         val ar = AudioRoot()
 
-        // sharedPreference begin
+        // SharedPreference begin
         val pref = applicationContext.getSharedPreferences("KAO_MAIN_PREF", 0)
-        val save = pref.edit()
 
         // Ask necessary permission for storage access
         ar.run(Runnable { askPerm() })
 
         // Ask necessary root access
-        ar.run(Runnable {
-            ar.checkRooted()
-            if (!ar.checkRooted()) {
-                save.putBoolean("ROOT_ACCESS", false)
-                save.apply()
-            } else {
-                save.putBoolean("ROOT_ACCESS", true)
-                save.apply()
-            }
-        })
+        ar.run(Runnable { ar.checkRooted() })
 
-        // Getting sharedPreference value if exist
         // Configure theme interface
         val nightMode = pref.getBoolean("MODE_NIGHT", false)
         if (nightMode) {
@@ -84,11 +73,8 @@ class MainActivity : AppCompatActivity() {
         window.enterTransition = Explode()
         window.returnTransition = Fade()
 
-        // Get root status
-        val rootAccess = pref.getBoolean("ROOT_ACCESS", false)
-
         contentBinding.cvAppMainMenu1.setOnClickListener {
-            if (rootAccess) {
+            if (ar.checkRooted()) {
                 val i = Intent(this@MainActivity, AudioConfActivity::class.java)
                 val sharedView: View = contentBinding.cvAppMainMenu1
                 val transitionName = getString(R.string.app_main_menu_1)
@@ -115,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         contentBinding.cvAppMainMenu2.setOnClickListener {
-            if (rootAccess) {
+            if (ar.checkRooted()) {
                 val i = Intent(this@MainActivity, AudioInfoActivity::class.java)
                 val sharedView: View = contentBinding.cvAppMainMenu2
                 val transitionName = getString(R.string.app_main_menu_2)
@@ -142,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         contentBinding.cvAppMainMenu3.setOnClickListener {
-            if (rootAccess) {
+            if (ar.checkRooted()) {
                 val i = Intent(this@MainActivity, AudioSettingsActivity::class.java)
                 val sharedView: View = contentBinding.cvAppMainMenu3
                 val transitionName = getString(R.string.audio_settings_title)
